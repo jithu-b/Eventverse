@@ -1,0 +1,243 @@
+.gallery-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.gallery-page h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.gallery-empty {
+  color: var(--color-text-muted, #a0a0b8);
+}
+
+.gallery-carousel-track {
+  display: flex;
+  gap: 16px;
+  overflow: hidden;
+  animation: gallery-scroll 40s linear infinite;
+  margin-bottom: 40px;
+}
+
+.gallery-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes gallery-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.gallery-carousel-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: 220px;
+  height: 150px;
+  border-radius: var(--radius-md, 10px);
+  overflow: hidden;
+}
+
+.gallery-carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+.gallery-section-heading {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.gallery-event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.gallery-event-card {
+  display: block;
+  border-radius: var(--radius-md, 10px);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background: var(--color-surface, rgba(255, 255, 255, 0.04));
+}
+
+.gallery-event-card img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.gallery-event-card-body {
+  padding: 12px;
+}
+
+.gallery-event-card-body h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.gallery-event-card-body p {
+  font-size: 12px;
+  color: var(--color-text-muted, #a0a0b8);
+}
+
+.gallery-back-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--color-primary, #6366f1);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.gallery-upload-card {
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.gallery-upload-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.gallery-caption-input {
+  flex: 1;
+  min-width: 160px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--color-border, #2e2e4a);
+  background: transparent;
+  color: inherit;
+}
+
+.gallery-upload-error {
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.gallery-event-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.gallery-photo-item {
+  position: relative;
+  border-radius: var(--radius-md, 10px);
+  overflow: hidden;
+  background: var(--color-surface, rgba(255, 255, 255, 0.04));
+}
+
+.gallery-photo-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-photo-caption {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.gallery-photo-delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.gallery-photo-delete:hover {
+  background: #ef4444;
+}
+
+.gallery-upload-hint {
+  font-size: 13px;
+  color: var(--color-text-muted, #a0a0b8);
+  margin-top: 10px;
+}
+
+.gallery-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.gallery-page-header h1 {
+  margin-bottom: 0;
+}
+
+.gallery-event-select {
+  padding: 8px 12px;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--color-border, #2e2e4a);
+  background: transparent;
+  color: inherit;
+}
+
+.gallery-file-input-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md, 10px);
+  border: 1.5px dashed var(--color-border, #2e2e4a);
+  background: var(--color-surface, rgba(255, 255, 255, 0.04));
+  color: var(--color-text-muted, #a0a0b8);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.gallery-file-input-label:hover {
+  border-color: var(--color-primary, #6366f1);
+  color: var(--color-primary, #6366f1);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.gallery-file-input-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,90 @@
+:root {
+  --brand-500: #7c5cff;
+  --brand-600: #6a45ff;
+  --brand-400: #9b82ff;
+  --accent-cyan: #22d3ee;
+  --brand-gradient: linear-gradient(135deg, var(--brand-500) 0%, var(--accent-cyan) 100%);
+
+  --bg-base: #f5f5f7;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #ececef;
+
+  --surface-glass: rgba(255, 255, 255, 0.6);
+  --surface-glass-strong: rgba(255, 255, 255, 0.8);
+  --surface-border: rgba(15, 15, 20, 0.08);
+  --surface-border-strong: rgba(15, 15, 20, 0.14);
+
+  --text-primary: #0f0f14;
+  --text-secondary: #55555f;
+  --text-tertiary: #8a8a94;
+  --text-inverse: #ffffff;
+
+  --success-500: #22c55e;
+  --warning-500: #f59e0b;
+  --danger-500: #ef4444;
+  --info-500: #3b82f6;
+
+  --shadow-sm: 0 1px 2px rgba(15, 15, 20, 0.06);
+  --shadow-md: 0 4px 16px rgba(15, 15, 20, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 15, 20, 0.12);
+  --shadow-glow: 0 0 0 1px rgba(124, 92, 255, 0.15), 0 8px 24px rgba(124, 92, 255, 0.18);
+
+  --blur-glass: 20px;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+
+  --text-xs: 12px;
+  --text-sm: 13.5px;
+  --text-base: 15px;
+  --text-md: 17px;
+  --text-lg: 20px;
+  --text-xl: 26px;
+  --text-2xl: 34px;
+  --text-3xl: 44px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+
+  --nav-height: 68px;
+  --container-max: 1200px;
+}
+
+[data-theme="dark"] {
+  --bg-base: #0a0a0f;
+  --bg-elevated: #131318;
+  --bg-sunken: #050507;
+
+  --surface-glass: rgba(255, 255, 255, 0.06);
+  --surface-glass-strong: rgba(255, 255, 255, 0.1);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --surface-border-strong: rgba(255, 255, 255, 0.14);
+
+  --text-primary: #f5f5f7;
+  --text-secondary: #a3a3ad;
+  --text-tertiary: #6e6e78;
+  --text-inverse: #0f0f14;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 0 1px rgba(124, 92, 255, 0.3), 0 8px 32px rgba(124, 92, 255, 0.25);
+}

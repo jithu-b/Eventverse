@@ -1,0 +1,38 @@
+.attendance-page {
+  min-height: calc(100vh - 140px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.attendance-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+}
+
+.attendance-card h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.attendance-sub {
+  font-size: 14px;
+  color: var(--color-text-muted, #a0a0b8);
+  margin-bottom: 20px;
+}
+
+.attendance-submit {
+  width: 100%;
+}
+
+.attendance-success-card {
+  text-align: center;
+}
+
+.attendance-success-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}

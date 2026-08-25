@@ -1,0 +1,29 @@
+# --- Python / Flask backend ---
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/instance/
+backend/uploads/banners/*
+backend/uploads/certificates/*
+backend/uploads/execom/*
+backend/uploads/gallery/*
+!backend/uploads/banners/.gitkeep
+!backend/uploads/certificates/.gitkeep
+!backend/uploads/execom/.gitkeep
+!backend/uploads/gallery/.gitkeep
+backend/.env
+
+# --- Node / React frontend ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+
+# --- General ---
+.DS_Store
+*.log
+.vscode/
+.idea/
+*.sqlite3
+*.db

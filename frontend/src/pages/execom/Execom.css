@@ -1,0 +1,155 @@
+.execom-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.execom-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.execom-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.execom-header p {
+  color: var(--color-text-muted, #a0a0b8);
+  font-size: 15px;
+}
+
+.execom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 720px) {
+  .execom-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .execom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.execom-card {
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.execom-avatar {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--color-primary, #6366f1);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.execom-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.execom-position {
+  font-size: 13px;
+  color: var(--color-text-muted, #a0a0b8);
+}
+
+.execom-add-toggle {
+  margin-top: 16px;
+}
+
+.execom-form-card {
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.execom-form-card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.execom-empty-card {
+  padding: 24px;
+  text-align: center;
+}
+
+.execom-file-label {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px dashed var(--color-border, #2e2e4a);
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  font-size: 14px;
+  margin: 8px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.execom-file-label:hover {
+  border-color: var(--color-primary, #6366f1);
+}
+
+.execom-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.execom-file-name {
+  font-size: 13px;
+  color: var(--color-text-muted, #a0a0b8);
+  margin-bottom: 8px;
+}
+
+.execom-photo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 12px;
+}
+
+.execom-year {
+  color: var(--color-text-muted, #a0a0b8);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.execom-card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.execom-card-editing {
+  text-align: left;
+}
+
+.execom-edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}

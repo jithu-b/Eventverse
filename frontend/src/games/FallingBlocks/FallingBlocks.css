@@ -1,0 +1,31 @@
+/* ==========================================================
+   Falling Blocks
+   ========================================================== */
+
+.falling-blocks-board {
+  background: var(--bg-sunken);
+  min-height: 380px;
+}
+
+.falling-block {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s var(--ease-out);
+}
+
+.falling-block.is-good {
+  background: var(--info-500);
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.5);
+}
+
+.falling-block.is-bad {
+  background: var(--danger-500);
+  box-shadow: 0 3px 12px rgba(239, 68, 68, 0.5);
+}
+
+.falling-block:active {
+  transform: translate(-50%, -50%) scale(0.85);
+}

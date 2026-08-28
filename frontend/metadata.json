@@ -1,0 +1,6 @@
+{
+  "name": "EventVerse - TinkerHub SBCE",
+  "description": "Premium campus event discovery, organizer management, timed quizzes, live scoring, and certificate platform for TinkerHub SBCE.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

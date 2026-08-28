@@ -1,123 +1,159 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { quizApi } from "../../api/quizApi.js";
-import { useToast } from "../../components/ui/Toast.jsx";
-import { useTimer, formatTime } from "../../hooks/useTimer.js";
-import Card from "../../components/ui/Card.jsx";
-import Button from "../../components/ui/Button.jsx";
-import Loader from "../../components/ui/Loader.jsx";
+import { useTimer } from "../../hooks/useTimer.js";
 import CountdownTimer from "../../components/shared/CountdownTimer.jsx";
+import Button from "../../components/ui/Button.jsx";
+import Card from "../../components/ui/Card.jsx";
+import Loader from "../../components/ui/Loader.jsx";
 import "./Quiz.css";
 
-const OPTION_KEYS = ["a", "b", "c", "d"];
-
 export default function QuizAttempt() {
-  const { quizId } = useParams();
+  const { id: eventId } = useParams();
   const navigate = useNavigate();
-  const { showToast } = useToast();
 
-  const [loading, setLoading] = useState(true);
+  const [quiz, setQuiz] = useState(null);
   const [attemptId, setAttemptId] = useState(null);
-  const [quizTitle, setQuizTitle] = useState("");
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-
-  const handleTimeUp = useCallback(() => {
-    handleSubmit();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const { seconds, start, reset } = useTimer({ mode: "down", onComplete: handleTimeUp });
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    let ignore = false;
-    async function startQuiz() {
-      setLoading(true);
-      try {
-        const res = await quizApi.startAttempt(quizId);
-        if (ignore) return;
-        setAttemptId(res.data.attempt_id);
-        setQuizTitle(res.data.quiz_title || "Quiz");
-        setQuestions(res.data.questions || []);
-        const totalSeconds = (res.data.duration_minutes || 10) * 60;
-        reset(totalSeconds);
-        start();
-      } catch (err) {
-        if (ignore) return;
-        showToast(err.response?.data?.error || "Could not start quiz", "error");
-        navigate(-1);
-      } finally {
-        if (!ignore) setLoading(false);
-      }
-    }
-    startQuiz();
-    return () => {
-      ignore = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quizId]);
+    quizApi
+      .getByEvent(eventId)
+      .then((res) => setQuiz(res.data.quiz))
+      .catch(() => setError("No quiz found for this event."))
+      .finally(() => setLoading(false));
+  }, [eventId]);
 
-  const selectAnswer = (questionId, optionKey) => {
-    console.log("SELECT_ANSWER", questionId, optionKey);
-    setAnswers((prev) => {
-      const next = { ...prev, [questionId]: optionKey };
-      console.log("ANSWERS_STATE_NOW", next);
-      return next;
-    });
-  };
-
-  async function handleSubmit() {
-    console.log("SUBMIT_CLICKED", { attemptId: attemptId, submitting: submitting, answers: answers });
-    if (submitting || !attemptId) return;
+  const handleSubmit = useCallback(async () => {
+    if (!attemptId || submitting) return;
     setSubmitting(true);
     try {
       const res = await quizApi.submitAttempt(attemptId, answers);
-      showToast("Quiz submitted!", "success");
-      navigate(`/quiz/${quizId}/results`, { state: { result: res.data } });
+      navigate(`/events/${eventId}/quiz/results`, { state: { result: res.data } });
     } catch (err) {
-      showToast(err.response?.data?.error || "Submission failed", "error");
-    } finally {
+      setError(err.response?.data?.error || "Failed to submit quiz.");
       setSubmitting(false);
     }
+  }, [attemptId, answers, eventId, navigate, submitting]);
+
+  const timer = useTimer({
+    initialSeconds: quiz ? quiz.duration_minutes * 60 : 0,
+    mode: "down",
+    onComplete: handleSubmit,
+  });
+
+  const handleStart = async () => {
+    setLoading(true);
+    try {
+      const res = await quizApi.startAttempt(quiz.id);
+      setAttemptId(res.data.attempt_id);
+      setQuestions(res.data.questions);
+      timer.reset(quiz.duration_minutes * 60);
+      timer.start();
+    } catch (err) {
+      setError(err.response?.data?.error || "Could not start quiz.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const selectAnswer = (questionId, optionKey) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: optionKey }));
+  };
+
+  if (loading) return <Loader fullScreen label="Loading quiz..." />;
+  if (error && !questions.length) {
+    return <div className="page container"><div className="events-empty glass-panel">{error}</div></div>;
+  }
+  if (!quiz) return null;
+
+  // ---- Pre-start screen ----
+  if (!attemptId) {
+    return (
+      <div className="page container quiz-intro-page">
+        <Card className="quiz-intro-card animate-scale-in">
+          <Card.Body>
+            <h2>{quiz.title}</h2>
+            <p className="text-secondary mt-3">
+              {quiz.question_count} questions · {quiz.duration_minutes} minutes · Questions are shuffled
+            </p>
+            <ul className="quiz-rules mt-5">
+              <li>Once started, the timer cannot be paused.</li>
+              <li>The quiz auto-submits when time runs out.</li>
+              <li>Each question is scored automatically.</li>
+            </ul>
+            <Button fullWidth className="mt-6" onClick={handleStart}>
+              Start Quiz
+            </Button>
+          </Card.Body>
+        </Card>
+      </div>
+    );
   }
 
-  if (loading) return <Loader fullScreen />;
+  const question = questions[currentIndex];
+  const isLast = currentIndex === questions.length - 1;
 
   return (
-    <div className="quiz-page stagger-down">
-      <div className="quiz-header">
-        <h1>{quizTitle}</h1>
-        <CountdownTimer formatted={formatTime(seconds)} seconds={seconds} />
+    <div className="page container quiz-attempt-page">
+      <div className="quiz-attempt-header">
+        <div className="quiz-progress">
+          Question {currentIndex + 1} of {questions.length}
+        </div>
+        <CountdownTimer
+          formatted={timer.formatted}
+          seconds={timer.seconds}
+          totalSeconds={quiz.duration_minutes * 60}
+          warnAt={30}
+        />
       </div>
 
-      <div className="quiz-questions">
-        {questions.map((q, idx) => (
-          <Card key={q.id} className="quiz-question-card">
-            <p className="quiz-question-number">Question {idx + 1}</p>
-            <h3 className="quiz-question-text">{q.question_text}</h3>
-            <div className="quiz-options">
-              {OPTION_KEYS.map((key) => {
-                const optionText = q[`option_${key}`];
-                if (!optionText) return null;
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    className={`quiz-option ${answers[q.id] === key ? "quiz-option-selected" : ""}`}
-                    onClick={() => selectAnswer(q.id, key)}
-                  >
-                    {optionText}
-                  </button>
-                );
-              })}
-            </div>
-          </Card>
-        ))}
+      {error && <div className="auth-error-banner mb-4">{error}</div>}
+
+      <Card className="quiz-question-card animate-fade-in-up" key={question.id}>
+        <Card.Body>
+          <h3>{question.question_text}</h3>
+          <div className="quiz-options mt-5">
+            {["a", "b", "c", "d"].map((key) => {
+              const text = question[`option_${key}`];
+              if (!text) return null;
+              const isSelected = answers[question.id] === key;
+              return (
+                <button
+                  key={key}
+                  className={`quiz-option ${isSelected ? "is-selected" : ""}`}
+                  onClick={() => selectAnswer(question.id, key)}
+                >
+                  <span className="quiz-option-key">{key.toUpperCase()}</span>
+                  <span>{text}</span>
+                </button>
+              );
+            })}
+          </div>
+        </Card.Body>
+      </Card>
+
+      <div className="quiz-nav-buttons">
+        <Button
+          variant="outline"
+          disabled={currentIndex === 0}
+          onClick={() => setCurrentIndex((i) => i - 1)}
+        >
+          Previous
+        </Button>
+        {isLast ? (
+          <Button onClick={handleSubmit} loading={submitting}>
+            Submit Quiz
+          </Button>
+        ) : (
+          <Button onClick={() => setCurrentIndex((i) => i + 1)}>Next</Button>
+        )}
       </div>
-      <Button variant="primary" size="lg" onClick={handleSubmit} loading={submitting} className="quiz-submit-btn">
-        Submit Quiz
-      </Button>
     </div>
   );
 }

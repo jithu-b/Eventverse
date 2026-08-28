@@ -1,5 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 
+/**
+ * Reusable countdown / stopwatch hook, shared by quizzes and all 10 games.
+ *
+ * @param {number} initialSeconds - starting time. For a stopwatch, pass 0 and mode="up".
+ * @param {"down"|"up"} mode - "down" counts to zero (quiz/game timers), "up" counts elapsed time.
+ * @param {function} onComplete - fired once when a countdown reaches zero.
+ */
 export function useTimer({ initialSeconds = 60, mode = "down", onComplete } = {}) {
   const [seconds, setSeconds] = useState(initialSeconds);
   const [isRunning, setIsRunning] = useState(false);
@@ -55,7 +62,11 @@ export function useTimer({ initialSeconds = 60, mode = "down", onComplete } = {}
 }
 
 export function formatTime(totalSeconds) {
-  const m = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
-  const s = Math.floor(totalSeconds % 60).toString().padStart(2, "0");
+  const m = Math.floor(totalSeconds / 60)
+    .toString()
+    .padStart(2, "0");
+  const s = Math.floor(totalSeconds % 60)
+    .toString()
+    .padStart(2, "0");
   return `${m}:${s}`;
 }

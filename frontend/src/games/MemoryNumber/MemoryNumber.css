@@ -1,0 +1,52 @@
+/* ==========================================================
+   Memory Number
+   ========================================================== */
+
+.memory-number-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  min-height: 340px;
+}
+
+.memory-sequence-display {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.memory-digit {
+  width: 52px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--brand-gradient);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.memory-input-form {
+  text-align: center;
+}
+
+.memory-input {
+  width: 220px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--surface-border-strong);
+  background: var(--surface-glass);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  text-align: center;
+  letter-spacing: 0.2em;
+}
+
+.memory-input:focus {
+  border-color: var(--brand-500);
+}

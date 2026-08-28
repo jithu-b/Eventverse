@@ -1,12 +1,20 @@
 import "./Button.css";
 
+/**
+ * Shared Button component.
+ *
+ * variant: "primary" | "secondary" | "ghost" | "danger" | "outline"
+ * size: "sm" | "md" | "lg"
+ */
 export default function Button({
   children,
   variant = "primary",
   size = "md",
-  type = "button",
-  disabled = false,
   loading = false,
+  disabled = false,
+  fullWidth = false,
+  icon = null,
+  type = "button",
   onClick,
   className = "",
   ...rest
@@ -14,12 +22,19 @@ export default function Button({
   return (
     <button
       type={type}
+      className={`btn btn-${variant} btn-${size} ${fullWidth ? "btn-full" : ""} ${className}`}
       disabled={disabled || loading}
       onClick={onClick}
-      className={`btn btn-${variant} btn-${size} ${loading ? "btn-loading" : ""} ${className}`}
       {...rest}
     >
-      {loading ? <span className="btn-spinner" /> : children}
+      {loading ? (
+        <span className="btn-spinner" />
+      ) : (
+        <>
+          {icon && <span className="btn-icon">{icon}</span>}
+          <span>{children}</span>
+        </>
+      )}
     </button>
   );
 }

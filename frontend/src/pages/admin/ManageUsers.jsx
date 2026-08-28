@@ -1,97 +1,122 @@
 import { useEffect, useState } from "react";
 import { adminApi } from "../../api/adminApi.js";
-import { useToast } from "../../components/ui/Toast.jsx";
 import Card from "../../components/ui/Card.jsx";
 import Badge from "../../components/ui/Badge.jsx";
-import Button from "../../components/ui/Button.jsx";
+import Input from "../../components/ui/Input.jsx";
 import Loader from "../../components/ui/Loader.jsx";
 import "./Admin.css";
 
-const ROLES = ["participant", "organizer", "admin"];
+const ROLES = ["admin", "organizer", "participant"];
 
 export default function ManageUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { showToast } = useToast();
+  const [search, setSearch] = useState("");
+  const [updatingId, setUpdatingId] = useState(null);
 
   useEffect(() => {
     loadUsers();
   }, []);
 
-  async function loadUsers() {
+  const loadUsers = () => {
     setLoading(true);
-    try {
-      const res = await adminApi.listUsers();
-      setUsers(res.data.users || []);
-    } catch (err) {
-      console.error("Failed to load users:", err);
-    } finally {
-      setLoading(false);
-    }
-  }
+    adminApi
+      .listUsers()
+      .then((res) => setUsers(res.data.users || []))
+      .catch(() => setUsers([]))
+      .finally(() => setLoading(false));
+  };
 
   const handleRoleChange = async (userId, newRole) => {
+    setUpdatingId(userId);
     try {
       await adminApi.updateUserRole(userId, newRole);
-      showToast("Role updated", "success");
-      loadUsers();
-    } catch (err) {
-      showToast(err.response?.data?.error || "Update failed", "error");
+      setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, role: newRole } : u)));
+    } catch {
+      /* silently ignore, could add toast here */
+    } finally {
+      setUpdatingId(null);
     }
   };
 
-  const handleDelete = async (userId) => {
-    if (!window.confirm("Delete this user? This cannot be undone.")) return;
+  const handleDeactivate = async (userId) => {
+    if (!window.confirm("Deactivate this user? They will lose access.")) return;
     try {
       await adminApi.deactivateUser(userId);
-      showToast("User deleted", "success");
-      loadUsers();
-    } catch (err) {
-      showToast(err.response?.data?.error || "Delete failed", "error");
+      setUsers((prev) => prev.filter((u) => u.id !== userId));
+    } catch {
+      /* ignore */
     }
   };
 
-  if (loading) return <Loader fullScreen />;
+  const filtered = users.filter(
+    (u) =>
+      u.name.toLowerCase().includes(search.toLowerCase()) ||
+      u.email.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <div className="admin-page stagger-down">
-      <h1>Manage Users</h1>
-      <Card className="admin-table-card">
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.id}>
-                <td>{u.name || "—"}</td>
-                <td>{u.email}</td>
-                <td>
-                  <select
-                    value={u.role}
-                    onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                    className="admin-role-select"
-                  >
-                    {ROLES.map((r) => (
-                      <option key={r} value={r}>{r}</option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <Button variant="danger" size="sm" onClick={() => handleDelete(u.id)}>
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Card>
+    <div className="page container">
+      <div className="dashboard-section-header">
+        <div>
+          <h1>Manage Users</h1>
+          <p className="text-secondary mt-2">{users.length} total users</p>
+        </div>
+        <div style={{ width: 280 }}>
+          <Input placeholder="Search by name or email..." value={search} onChange={(e) => setSearch(e.target.value)} />
+        </div>
+      </div>
+
+      {loading ? (
+        <Loader label="Loading users..." />
+      ) : (
+        <Card>
+          <div className="admin-table-wrapper">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Joined</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((u) => (
+                  <tr key={u.id}>
+                    <td>{u.name}</td>
+                    <td className="text-secondary">{u.email}</td>
+                    <td>
+                      <select
+                        className="admin-role-select"
+                        value={u.role}
+                        disabled={updatingId === u.id}
+                        onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                      >
+                        {ROLES.map((r) => (
+                          <option key={r} value={r}>
+                            {r}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="text-secondary">
+                      {new Date(u.created_at).toLocaleDateString()}
+                    </td>
+                    <td>
+                      <button className="admin-action-danger" onClick={() => handleDeactivate(u.id)}>
+                        Deactivate
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {filtered.length === 0 && <p className="text-secondary text-center" style={{ padding: "var(--space-6)" }}>No users found.</p>}
+          </div>
+        </Card>
+      )}
     </div>
   );
 }

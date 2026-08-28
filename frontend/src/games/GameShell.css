@@ -1,0 +1,99 @@
+/* ==========================================================
+   GameShell — shared wrapper for all 10 mini-games
+   ========================================================== */
+
+.game-shell-page {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.game-shell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.game-personal-best {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.game-personal-best strong {
+  color: var(--brand-500);
+}
+
+.game-shell-stage {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  position: relative;
+}
+
+.game-instructions-panel,
+.game-over-panel {
+  text-align: center;
+  max-width: 400px;
+  animation: fadeInUp var(--duration-base) var(--ease-out);
+}
+
+.game-final-score {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--brand-500);
+  margin: var(--space-4) 0;
+}
+
+.game-final-score span {
+  font-size: var(--text-base);
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.game-new-best {
+  color: var(--success-500);
+  font-weight: 600;
+}
+
+/* ---------- Common in-game HUD, reused by individual games ---------- */
+.game-hud {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  z-index: 5;
+}
+
+.game-hud-score {
+  color: var(--text-primary);
+}
+
+.game-hud-timer {
+  color: var(--brand-500);
+}
+
+.game-play-area {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 640px) {
+  .game-shell-stage {
+    min-height: 340px;
+    padding: var(--space-4);
+  }
+}

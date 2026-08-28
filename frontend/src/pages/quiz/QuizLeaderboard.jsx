@@ -1,40 +1,48 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { quizApi } from "../../api/quizApi.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import LeaderboardTable from "../../components/shared/LeaderboardTable.jsx";
-import Card from "../../components/ui/Card.jsx";
-import Loader from "../../components/ui/Loader.jsx";
 import "./Quiz.css";
 
 export default function QuizLeaderboard() {
-  const { quizId } = useParams();
+  const { id: eventId } = useParams();
   const { user } = useAuth();
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadLeaderboard() {
-      try {
-        const res = await quizApi.getLeaderboard(quizId);
-        setEntries(res.data.leaderboard || []);
-      } catch (err) {
-        console.error("Failed to load leaderboard:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadLeaderboard();
-  }, [quizId]);
+    let intervalId;
 
-  if (loading) return <Loader fullScreen />;
+    const fetchLeaderboard = () => {
+      quizApi
+        .getByEvent(eventId)
+        .then((res) => quizApi.getLeaderboard(res.data.quiz.id))
+        .then((res) => setEntries(res.data.leaderboard || []))
+        .catch(() => setEntries([]))
+        .finally(() => setLoading(false));
+    };
+
+    fetchLeaderboard();
+    // live-ish updates via polling every 5s
+    intervalId = setInterval(fetchLeaderboard, 5000);
+    return () => clearInterval(intervalId);
+  }, [eventId]);
 
   return (
-    <div className="quiz-page stagger-down">
-      <h1>Quiz Leaderboard</h1>
-      <Card>
-        <LeaderboardTable entries={entries} currentUserId={user?.id} scoreLabel="Score" />
-      </Card>
+    <div className="page container" style={{ maxWidth: 600, margin: "0 auto" }}>
+      <div className="section-title text-center">
+        <h2>Quiz Leaderboard</h2>
+        <p>Live rankings — updates automatically</p>
+      </div>
+
+      <LeaderboardTable entries={entries} currentUserId={user?.id} scoreLabel="pts" loading={loading} />
+
+      <div className="text-center mt-5">
+        <Link to={`/events/${eventId}`} className="btn btn-outline">
+          Back to Event
+        </Link>
+      </div>
     </div>
   );
 }

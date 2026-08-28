@@ -1,23 +1,59 @@
-.loader {
-  border: 3px solid rgba(255,255,255,0.15);
-  border-top-color: var(--color-primary, #6c5ce7);
-  border-radius: 50%;
-  animation: loader-spin 0.7s linear infinite;
-}
+/* ==========================================================
+   Loader
+   ========================================================== */
 
-.loader-sm { width: 16px; height: 16px; border-width: 2px; }
-.loader-md { width: 28px; height: 28px; }
-.loader-lg { width: 48px; height: 48px; border-width: 4px; }
+.loader-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
 
 .loader-fullscreen {
   position: fixed;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--color-bg, #0f0f1a);
+  gap: var(--space-3);
+  background: var(--bg-base);
+  z-index: 3000;
 }
 
-@keyframes loader-spin {
-  to { transform: rotate(360deg); }
+.loader {
+  display: inline-flex;
+}
+
+.loader-ring {
+  display: block;
+  border-radius: 50%;
+  border: 3px solid var(--surface-border);
+  border-top-color: var(--brand-500);
+  animation: spin 0.7s linear infinite;
+}
+
+.loader-sm .loader-ring { width: 16px; height: 16px; border-width: 2px; }
+.loader-md .loader-ring { width: 28px; height: 28px; border-width: 3px; }
+.loader-lg .loader-ring { width: 44px; height: 44px; border-width: 4px; }
+
+.loader-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* also used by ProtectedRoute's inline route-loading state */
+.route-loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.route-loading .spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid var(--surface-border);
+  border-top-color: var(--brand-500);
+  animation: spin 0.7s linear infinite;
 }

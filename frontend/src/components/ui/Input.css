@@ -1,43 +1,69 @@
+/* ==========================================================
+   Input
+   ========================================================== */
+
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
+  gap: var(--space-2);
+  width: 100%;
 }
 
 .input-label {
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--color-text-muted, #a0a0b8);
+  color: var(--text-primary);
 }
 
-.input-required {
-  color: var(--color-danger, #e74c3c);
-  margin-left: 4px;
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--surface-glass);
+  border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-4);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.15);
+}
+
+.input-wrapper.input-error {
+  border-color: var(--danger-500);
+}
+
+.input-wrapper.input-error:focus-within {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.input-icon {
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
 }
 
 .input-field {
-  padding: 12px 14px;
-  border-radius: var(--radius-md, 10px);
-  border: 1px solid var(--color-border, rgba(255,255,255,0.1));
-  background: var(--color-surface, #1e1e2e);
-  color: var(--color-text, #f1f1f1);
-  font-size: 14px;
-  font-family: inherit;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  flex: 1;
+  padding: var(--space-3) 0;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: transparent;
 }
 
-.input-field:focus {
-  outline: none;
-  border-color: var(--color-primary, #6c5ce7);
-  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
-}
-
-.input-error {
-  border-color: var(--color-danger, #e74c3c);
+.input-field::placeholder {
+  color: var(--text-tertiary);
 }
 
 .input-error-text {
-  font-size: 12px;
-  color: var(--color-danger, #e74c3c);
+  font-size: var(--text-xs);
+  color: var(--danger-500);
+}
+
+.input-hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
 }

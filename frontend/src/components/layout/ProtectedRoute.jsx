@@ -1,13 +1,20 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
-import Loader from "../ui/Loader.jsx";
 
+/**
+ * Wraps a route element and enforces auth + role checks.
+ * Usage: <ProtectedRoute roles={["admin"]}><AdminDashboard /></ProtectedRoute>
+ */
 export default function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
-    return <Loader fullScreen />;
+    return (
+      <div className="route-loading">
+        <div className="spinner" />
+      </div>
+    );
   }
 
   if (!user) {
@@ -15,7 +22,7 @@ export default function ProtectedRoute({ children, roles }) {
   }
 
   if (roles && roles.length > 0 && !roles.includes(user.role)) {
-    return <Navigate to="/events" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

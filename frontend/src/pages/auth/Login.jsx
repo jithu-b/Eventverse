@@ -1,72 +1,104 @@
 import { useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
-import { useToast } from "../../components/ui/Toast.jsx";
 import Input from "../../components/ui/Input.jsx";
 import Button from "../../components/ui/Button.jsx";
-import Card from "../../components/ui/Card.jsx";
 import "./Auth.css";
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
-  const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/events";
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
+  };
+
+  const validate = () => {
+    const next = {};
+    if (!form.email.trim()) next.email = "Email is required";
+    if (!form.password) next.password = "Password is required";
+    setErrors(next);
+    return Object.keys(next).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError("");
+    if (!validate()) return;
+
     setLoading(true);
     try {
-      await login(form.email, form.password);
-      showToast("Welcome back!", "success");
-      navigate(from, { replace: true });
+      const user = await login(form.email, form.password);
+      const redirectTo =
+        location.state?.from?.pathname ||
+        (user.role === "admin"
+          ? "/dashboard/admin"
+          : user.role === "organizer"
+          ? "/dashboard/organizer"
+          : "/dashboard/participant");
+      navigate(redirectTo, { replace: true });
     } catch (err) {
-      showToast(err.response?.data?.error || "Login failed", "error");
+      setApiError(err.response?.data?.error || "Invalid email or password.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-page stagger-down">
-      <Card className="auth-card">
-        <h2 className="auth-title">Log in to EventVerse</h2>
-        <form onSubmit={handleSubmit}>
+    <div className="auth-page">
+      <div className="auth-card glass-panel animate-scale-in">
+        <div className="auth-header">
+          <span className="brand-mark auth-brand-mark" />
+          <h2>Welcome back</h2>
+          <p>Log in to continue to EventVerse</p>
+        </div>
+
+        {apiError && <div className="auth-error-banner">{apiError}</div>}
+
+        <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <Input
             label="Email"
-            name="email"
             type="email"
+            name="email"
+            placeholder="you@example.com"
             value={form.email}
             onChange={handleChange}
-            placeholder="you@example.com"
-            required
+            error={errors.email}
+            autoComplete="email"
           />
           <Input
             label="Password"
-            name="password"
             type="password"
+            name="password"
+            placeholder="••••••••"
             value={form.password}
             onChange={handleChange}
-            placeholder="••••••••"
-            required
+            error={errors.password}
+            autoComplete="current-password"
           />
-          <Button type="submit" variant="primary" size="lg" loading={loading} className="auth-submit">
+
+          <div className="auth-form-meta">
+            <Link to="/forgot-password" className="auth-link">
+              Forgot password?
+            </Link>
+          </div>
+
+          <Button type="submit" fullWidth loading={loading}>
             Log in
           </Button>
         </form>
-        <div className="auth-links">
-          <Link to="/forgot-password">Forgot password?</Link>
-          <span>New here? <Link to="/register">Create an account</Link></span>
-        </div>
-      </Card>
+
+        <p className="auth-footer-text">
+          Don't have an account? <Link to="/register" className="auth-link">Sign up</Link>
+        </p>
+      </div>
     </div>
   );
 }

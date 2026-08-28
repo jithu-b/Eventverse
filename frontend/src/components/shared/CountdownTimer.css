@@ -1,34 +1,48 @@
+/* ==========================================================
+   CountdownTimer
+   ========================================================== */
+
 .countdown-timer {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 140px;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-.countdown-text {
-  font-size: 20px;
+.countdown-time {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
   font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
-  color: var(--color-text, #f1f1f1);
+  transition: color var(--duration-base) var(--ease-out);
 }
 
-.countdown-urgent .countdown-text {
-  color: var(--color-danger, #e74c3c);
+.countdown-timer.is-warning .countdown-time {
+  color: var(--danger-500);
+  animation: pulseGlow 1s ease-in-out infinite;
+}
+
+.countdown-timer.is-done .countdown-time {
+  color: var(--text-tertiary);
 }
 
 .countdown-bar-track {
+  width: 140px;
   height: 6px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.1);
+  border-radius: var(--radius-full);
+  background: var(--surface-border);
   overflow: hidden;
 }
 
 .countdown-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-primary, #6c5ce7), var(--color-accent, #00cec9));
+  border-radius: var(--radius-full);
+  background: var(--brand-gradient);
   transition: width 1s linear;
 }
 
-.countdown-urgent .countdown-bar-fill {
-  background: var(--color-danger, #e74c3c);
+.countdown-timer.is-warning .countdown-bar-fill {
+  background: var(--danger-500);
 }

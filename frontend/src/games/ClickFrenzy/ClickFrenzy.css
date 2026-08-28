@@ -1,0 +1,23 @@
+/* ==========================================================
+   Click Frenzy
+   ========================================================== */
+
+.click-frenzy-board {
+  background: var(--bg-sunken);
+  min-height: 380px;
+}
+
+.click-frenzy-target {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  box-shadow: 0 4px 20px rgba(124, 92, 255, 0.5);
+  transition: left 0.05s linear, top 0.05s linear;
+  animation: popIn 0.15s var(--ease-out);
+}
+
+.click-frenzy-target:active {
+  transform: scale(0.85);
+}

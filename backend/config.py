@@ -18,7 +18,7 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES = 60 * 60 * 24  # 24 hours, in seconds
 
     # ---- Database ----
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///instance/eventverse.db")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL") or "sqlite:///" + os.path.join(os.path.abspath(os.path.dirname(__file__)), "instance", "eventverse.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # ---- CORS ----
@@ -28,7 +28,7 @@ class Config:
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER") or os.path.join(os.path.abspath(os.path.dirname(__file__)), "uploads")
     BANNER_FOLDER = os.path.join(UPLOAD_FOLDER, "banners")
     CERTIFICATE_FOLDER = os.path.join(UPLOAD_FOLDER, "certificates")
-    MAX_CONTENT_LENGTH = 5 * 1024 * 1024  # 5 MB upload limit
+    MAX_CONTENT_LENGTH = 200 * 1024 * 1024  # 200 MB upload limit (supports multi-photo uploads)
 
     # ---- Frontend ----
     FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")

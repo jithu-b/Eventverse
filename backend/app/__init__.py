@@ -1,6 +1,7 @@
 """
 Application factory — creates and configures the Flask app.
 """
+import os
 from flask import Flask, send_from_directory
 from config import Config
 from app.extensions import db, jwt, bcrypt, cors
@@ -41,6 +42,7 @@ def create_app(config_class=Config):
     from app.routes.photo_routes import photo_bp
     app.register_blueprint(photo_bp, url_prefix="/api/photos")
 
+
     from app.routes.execom_routes import execom_bp
     app.register_blueprint(execom_bp, url_prefix="/api/execom")
 
@@ -57,6 +59,17 @@ def create_app(config_class=Config):
     @app.get("/api/health")
     def health():
         return {"status": "ok", "service": "EventVerse API"}
+
+    # ---- serve built React frontend (production) ----
+    frontend_dist = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "frontend", "dist")
+
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def serve_frontend(path):
+        target = os.path.join(frontend_dist, path)
+        if path and os.path.isfile(target):
+            return send_from_directory(frontend_dist, path)
+        return send_from_directory(frontend_dist, "index.html")
 
     # ---- global error handlers ----
     @app.errorhandler(404)

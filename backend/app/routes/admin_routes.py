@@ -4,6 +4,7 @@ All routes require the admin role.
 """
 import csv
 import io
+from datetime import datetime
 
 from flask import Blueprint, request, jsonify, Response
 
@@ -23,13 +24,70 @@ admin_bp = Blueprint("admin", __name__)
 @jwt_required_custom
 @role_required("admin")
 def overview():
+    total_users = User.query.count()
+    total_registrations = Registration.query.count()
+    total_attendance = Attendance.query.count()
+    attendance_rate = round((total_attendance / total_registrations * 100), 1) if total_registrations else 0.0
     return jsonify({
-        "total_users": User.query.count(),
+        "total_users": total_users,
         "total_events": Event.query.count(),
         "total_quizzes": Quiz.query.count(),
+        "total_registrations": total_registrations,
+        "attendance_rate": attendance_rate,
         "total_games_played": 0,  # see reports for a full breakdown by game
         "total_certificates": Certificate.query.count(),
     }), 200
+
+
+@admin_bp.get("/activity")
+@jwt_required_custom
+@role_required("admin")
+def recent_activity():
+    items = []
+    for r in Registration.query.order_by(Registration.registered_at.desc()).limit(15).all():
+        if r.user and r.event and r.registered_at:
+            items.append({"id": f"reg-{r.id}", "user": r.user.name, "action": "registered for",
+                           "target": r.event.title, "timestamp": r.registered_at, "type": "registration"})
+    for a in Attendance.query.order_by(Attendance.checked_in_at.desc()).limit(15).all():
+        if a.user and a.event and a.checked_in_at:
+            items.append({"id": f"att-{a.id}", "user": a.user.name, "action": "scanned QR attendance for",
+                           "target": a.event.title, "timestamp": a.checked_in_at, "type": "attendance"})
+    for qa in QuizAttempt.query.filter(QuizAttempt.submitted_at.isnot(None)).order_by(QuizAttempt.submitted_at.desc()).limit(15).all():
+        if qa.user and qa.quiz and qa.submitted_at:
+            items.append({"id": f"quiz-{qa.id}", "user": qa.user.name, "action": f"scored {qa.score}% on",
+                           "target": qa.quiz.title, "timestamp": qa.submitted_at, "type": "quiz"})
+    for c in Certificate.query.order_by(Certificate.issued_at.desc()).limit(15).all():
+        if c.user and c.event and c.issued_at:
+            items.append({"id": f"cert-{c.id}", "user": c.user.name, "action": "earned a certificate for",
+                           "target": c.event.title, "timestamp": c.issued_at, "type": "certificate"})
+    for e in Event.query.order_by(Event.created_at.desc()).limit(10).all():
+        if e.created_at:
+            items.append({"id": f"evt-{e.id}", "user": (e.organizer.name if e.organizer else "Organizer"),
+                           "action": "published new event", "target": e.title, "timestamp": e.created_at,
+                           "type": "event_created"})
+    items.sort(key=lambda x: x["timestamp"], reverse=True)
+    items = items[:15]
+
+    def humanize(dt):
+        seconds = (datetime.utcnow() - dt).total_seconds()
+        if seconds < 60:
+            return "Just now"
+        minutes = int(seconds // 60)
+        if minutes < 60:
+            return f"{minutes} min{'s' if minutes != 1 else ''} ago"
+        hours = int(minutes // 60)
+        if hours < 24:
+            return f"{hours} hour{'s' if hours != 1 else ''} ago"
+        days = int(hours // 24)
+        return f"{days} day{'s' if days != 1 else ''} ago"
+
+    result = [{
+        "id": it["id"], "user": it["user"],
+        "userAvatar": f"https://ui-avatars.com/api/?name={it['user'].replace(' ', '+')}&background=EC4899&color=fff",
+        "action": it["action"], "target": it["target"], "timestamp": humanize(it["timestamp"]), "type": it["type"],
+    } for it in items]
+
+    return jsonify({"activities": result}), 200
 
 
 @admin_bp.get("/users")

@@ -4,6 +4,7 @@ registration, and per-organizer event listing.
 """
 import os
 import uuid
+import json
 from datetime import datetime
 
 from flask import Blueprint, request, jsonify, current_app
@@ -58,6 +59,14 @@ def _save_banner(file_storage):
 def _enabled_games_for_event(event):
     games = Game.query.filter_by(event_id=event.id, enabled=True).all()
     return [{"slug": g.game_type, "name": g.game_type.replace("-", " ").title()} for g in games]
+
+
+def _parse_json_list(value):
+    try:
+        parsed = json.loads(value) if value else []
+        return parsed if isinstance(parsed, list) else []
+    except (ValueError, TypeError):
+        return []
 
 
 @event_bp.get("")
@@ -117,10 +126,24 @@ def create_event():
     event = Event(
         organizer_id=user.id,
         title=data["title"],
+        subtitle=data.get("subtitle", ""),
         description=data.get("description", ""),
+        detailed_about=data.get("detailed_about", ""),
+        category=data.get("category", ""),
+        status=data.get("status", "upcoming"),
+        featured=data.get("featured", False),
+        location=data.get("location", ""),
+        location_details=data.get("location_details", ""),
         start_time=_parse_datetime(data.get("start_time")),
         end_time=_parse_datetime(data.get("end_time")),
         registration_limit=data.get("registration_limit", 50),
+        speakers=_parse_json_list(data.get("speakers")),
+        what_you_will_learn=_parse_json_list(data.get("what_you_will_learn")),
+        prerequisites=_parse_json_list(data.get("prerequisites")),
+        schedule=_parse_json_list(data.get("schedule")),
+        tags=_parse_json_list(data.get("tags")),
+        organizer_role=data.get("organizer_role", ""),
+        organizer_avatar=data.get("organizer_avatar", ""),
         quiz_enabled=data.get("quiz_enabled", False),
         games_enabled=data.get("games_enabled", False),
         certificate_enabled=data.get("certificate_enabled", False),
@@ -159,9 +182,19 @@ def update_event(event_id):
     except ValidationError as err:
         return jsonify({"error": "Validation failed", "details": err.messages}), 400
 
-    for field in ["title", "description", "registration_limit", "quiz_enabled", "games_enabled", "certificate_enabled"]:
+    simple_fields = [
+        "title", "subtitle", "description", "detailed_about", "category", "status",
+        "featured", "location", "location_details", "registration_limit",
+        "organizer_role", "organizer_avatar",
+        "quiz_enabled", "games_enabled", "certificate_enabled",
+    ]
+    for field in simple_fields:
         if field in data:
             setattr(event, field, data[field])
+
+    for field in ["speakers", "what_you_will_learn", "prerequisites", "schedule", "tags"]:
+        if field in data:
+            setattr(event, field, _parse_json_list(data[field]))
 
     if "start_time" in data:
         event.start_time = _parse_datetime(data["start_time"])

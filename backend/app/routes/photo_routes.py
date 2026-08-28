@@ -6,6 +6,8 @@ import uuid
 
 from flask import Blueprint, request, jsonify, current_app
 from werkzeug.utils import secure_filename
+from PIL import Image
+import pillow_heif
 
 from app.extensions import db
 from app.models.photo import Photo
@@ -14,7 +16,8 @@ from app.utils.decorators import jwt_required_custom, role_required, get_current
 
 photo_bp = Blueprint("photo", __name__)
 
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
+pillow_heif.register_heif_opener()
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic", "heif"}
 
 
 def _allowed_file(filename):
@@ -27,11 +30,20 @@ def _save_photo(file_storage):
     if not _allowed_file(file_storage.filename):
         return None
     ext = file_storage.filename.rsplit(".", 1)[1].lower()
-    filename = secure_filename(f"{uuid.uuid4().hex}.{ext}")
     gallery_dir = os.path.join(current_app.config["UPLOAD_FOLDER"], "gallery")
     os.makedirs(gallery_dir, exist_ok=True)
-    filepath = os.path.join(gallery_dir, filename)
-    file_storage.save(filepath)
+
+    if ext in ("heic", "heif"):
+        filename = secure_filename(f"{uuid.uuid4().hex}.jpg")
+        filepath = os.path.join(gallery_dir, filename)
+        image = Image.open(file_storage)
+        image = image.convert("RGB")
+        image.save(filepath, format="JPEG", quality=90)
+    else:
+        filename = secure_filename(f"{uuid.uuid4().hex}.{ext}")
+        filepath = os.path.join(gallery_dir, filename)
+        file_storage.save(filepath)
+
     return f"/uploads/gallery/{filename}"
 
 
@@ -55,22 +67,35 @@ def upload_photo():
     event = Event.query.get(event_id)
     if not event:
         return jsonify({"error": "Event not found"}), 404
-    if "photo" not in request.files:
-        return jsonify({"error": "photo file is required"}), 400
-    photo_url = _save_photo(request.files["photo"])
-    if not photo_url:
-        return jsonify({"error": "Invalid or missing photo file"}), 400
+    files = request.files.getlist("photos") or request.files.getlist("photo")
+    if not files or all(f.filename == "" for f in files):
+        return jsonify({"error": "at least one photo file is required"}), 400
 
     user_id = get_current_user_id()
-    photo = Photo(
-        event_id=event_id,
-        uploaded_by=user_id,
-        photo_url=photo_url,
-        caption=request.form.get("caption"),
-    )
-    db.session.add(photo)
+    caption = request.form.get("caption")
+    created = []
+    skipped = 0
+    for file_storage in files:
+        photo_url = _save_photo(file_storage)
+        if not photo_url:
+            skipped += 1
+            continue
+        photo = Photo(
+            event_id=event_id,
+            uploaded_by=user_id,
+            photo_url=photo_url,
+            caption=caption,
+        )
+        db.session.add(photo)
+        created.append(photo)
+    if not created:
+        return jsonify({"error": "No valid photo files were uploaded"}), 400
     db.session.commit()
-    return jsonify({"photo": photo.to_dict()}), 201
+    return jsonify({
+        "photos": [p.to_dict() for p in created],
+        "uploaded_count": len(created),
+        "skipped_count": skipped,
+    }), 201
 
 
 @photo_bp.delete("/<int:photo_id>")

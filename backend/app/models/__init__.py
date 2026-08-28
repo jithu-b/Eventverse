@@ -13,6 +13,7 @@ from app.models.leaderboard import LeaderboardEntry
 from app.models.certificate import Certificate
 from app.models.photo import Photo
 from app.models.execom import ExecomMember
+from app.models.execom import ExecomMember
 
 __all__ = [
     "User",

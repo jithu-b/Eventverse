@@ -1,5 +1,9 @@
 import axiosClient from './axiosClient';
 
+export type LayoutViewMode = 'editorial' | 'grid';
+
+export type LayoutViewMode = 'editorial' | 'grid';
+
 export interface MemberSocial {
   instagram: string;
   github: string;

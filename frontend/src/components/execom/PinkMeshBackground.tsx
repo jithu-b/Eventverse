@@ -1,9 +1,35 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from './ThemeContext';
+import { useIsMobileOrTablet } from '../../hooks/useIsMobileOrTablet';
 
 export const PinkMeshBackground: React.FC = () => {
   const { isBlush } = useTheme();
+  const isMobile = useIsMobileOrTablet();
+
+  if (isMobile) {
+    return (
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden select-none">
+        <div className={`absolute inset-0 ${isBlush ? 'bg-[#faf7f9]' : 'bg-[#ffffff]'} mesh-bg`} />
+        <div
+          className="absolute -top-[10%] -left-[10%] w-[300px] h-[300px] rounded-full opacity-40 blur-[40px]"
+          style={{
+            background: isBlush
+              ? 'radial-gradient(circle, rgba(254, 205, 222, 0.85) 0%, transparent 70%)'
+              : 'radial-gradient(circle, rgba(226, 232, 240, 0.9) 0%, transparent 70%)',
+          }}
+        />
+        <div
+          className="absolute bottom-[5%] -right-[10%] w-[280px] h-[280px] rounded-full opacity-35 blur-[40px]"
+          style={{
+            background: isBlush
+              ? 'radial-gradient(circle, rgba(253, 186, 211, 0.8) 0%, transparent 75%)'
+              : 'radial-gradient(circle, rgba(203, 213, 225, 0.7) 0%, transparent 75%)',
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden select-none transition-colors duration-500">

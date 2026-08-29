@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LayoutGrid, Columns, Sparkles, Quote, User } from 'lucide-react';
-import { ExicomMember, LayoutViewMode } from './types';
+import { ExicomMember, LayoutViewMode } from '../../api/execomApi';
 import { ExicomMemberCard } from './ExicomMemberCard';
 import { useTheme } from './ThemeContext';
+import { useIsMobileOrTablet } from '../../hooks/useIsMobileOrTablet';
 
 interface ExicomGridProps {
   members: ExicomMember[];
@@ -12,6 +13,7 @@ interface ExicomGridProps {
 
 export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember }) => {
   const { isBlush } = useTheme();
+  const isMobile = useIsMobileOrTablet();
   const [viewMode, setViewMode] = useState<LayoutViewMode>('editorial');
   const [activeMemberIndex, setActiveMemberIndex] = useState<number>(0);
 
@@ -42,8 +44,8 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.05,
+        staggerChildren: isMobile ? 0.05 : 0.12,
+        delayChildren: isMobile ? 0.02 : 0.05,
       },
     },
   };
@@ -55,7 +57,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.8,
+        duration: isMobile ? 0.35 : 0.8,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -80,7 +82,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>2024–2025 Board</span>
+            <span>2026–2027 Board</span>
           </div>
           <h2
             className={`font-editorial text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight transition-colors duration-300 ${

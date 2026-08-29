@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Save, RotateCcw, Image, Sparkles, User, Link2, Check, AlertCircle } from 'lucide-react';
+import tinkerhubLogo from '../../assets/tinkerhub-logo.png';
 import { ExicomMember } from './types';
 import { execomApi } from '../../api/execomApi';
+import { mediaUrl } from '../../api/photoApi';
 
 interface MemberDataEditorDrawerProps {
   isOpen: boolean;
@@ -117,12 +119,12 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
             {/* Drawer Header */}
             <div className="p-6 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-pink-50/70 to-rose-50/70">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-pink-500 text-white flex items-center justify-center shadow-xs">
-                  <Sparkles className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-xl bg-pink-500 flex items-center justify-center shadow-xs overflow-hidden">
+                  <img src={tinkerhubLogo} alt="TinkerHub" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h2 className="font-display text-lg font-bold text-pink-950">
-                    Customize Exicom Data
+                    Customize Execom Data
                   </h2>
                   <p className="text-xs text-pink-700">
                     Edit portraits, names, roles & socials in real-time
@@ -140,18 +142,45 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
 
             {/* Member Selector Tabs */}
             <div className="flex overflow-x-auto p-3 gap-2 border-b border-pink-100 bg-pink-50/40">
-              {editableMembers.map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => setSelectedMemberId(m.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                    m.id === selectedMemberId
-                      ? 'bg-pink-600 text-white shadow-xs'
-                      : 'bg-white text-pink-900/80 hover:bg-pink-100 border border-pink-200/70'
-                  }`}
-                >
-                  {m.number} • {m.role}
-                </button>
+              {editableMembers.map((m, idx) => (
+                <div key={m.id} className="flex items-center gap-0.5">
+                  <button
+                    onClick={() => setSelectedMemberId(m.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                      m.id === selectedMemberId
+                        ? 'bg-pink-600 text-white shadow-xs'
+                        : 'bg-white text-pink-900/80 hover:bg-pink-100 border border-pink-200/70'
+                    }`}
+                  >
+                    {m.number} • {m.role}
+                  </button>
+                  <div className="flex flex-col">
+                    <button
+                      disabled={idx === 0}
+                      onClick={() => {
+                        const arr = [...editableMembers];
+                        [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
+                        setEditableMembers(arr.map((mm, i) => ({ ...mm, number: String(i + 1).padStart(2, '0') })));
+                      }}
+                      className="p-0.5 rounded hover:bg-pink-100 text-pink-700 disabled:opacity-20 disabled:cursor-not-allowed"
+                      title="Move up"
+                    >
+                      ▲
+                    </button>
+                    <button
+                      disabled={idx === editableMembers.length - 1}
+                      onClick={() => {
+                        const arr = [...editableMembers];
+                        [arr[idx + 1], arr[idx]] = [arr[idx], arr[idx + 1]];
+                        setEditableMembers(arr.map((mm, i) => ({ ...mm, number: String(i + 1).padStart(2, '0') })));
+                      }}
+                      className="p-0.5 rounded hover:bg-pink-100 text-pink-700 disabled:opacity-20 disabled:cursor-not-allowed"
+                      title="Move down"
+                    >
+                      ▼
+                    </button>
+                  </div>
+                </div>
               ))}
               <button
                 onClick={() => {
@@ -245,7 +274,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                 </label>
                 {currentMember.image && (
                   <img
-                    src={currentMember.image}
+                    src={mediaUrl(currentMember.image)}
                     alt="Preview"
                     className="w-full max-h-72 object-cover rounded-xl border border-pink-200 mb-2 bg-pink-50"
                   />
@@ -268,7 +297,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                 </label>
                 {currentMember.hoverImage && (
                   <img
-                    src={currentMember.hoverImage}
+                    src={mediaUrl(currentMember.hoverImage)}
                     alt="Preview"
                     className="w-full max-h-72 object-cover rounded-xl border border-pink-200 mb-2 bg-pink-50"
                   />

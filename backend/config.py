@@ -22,7 +22,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # ---- CORS ----
-    CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173")
+    CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
 
     # ---- File storage ----
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER") or os.path.join(os.path.abspath(os.path.dirname(__file__)), "uploads")

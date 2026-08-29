@@ -9,11 +9,13 @@ import { ExicomFooter } from '../components/execom/ExicomFooter';
 import { MemberDataEditorDrawer } from '../components/execom/MemberDataEditorDrawer';
 import { ThemeProvider } from '../components/execom/ThemeContext';
 import { execomApi, ExicomMember } from '../api/execomApi';
+import { useIsMobileOrTablet } from '../hooks/useIsMobileOrTablet';
 import { useAuth } from '../context/AuthContext';
 
 function ExecomPageInner() {
   const { authUser } = useAuth();
   const isAdmin = authUser?.role === 'admin';
+  const isMobile = useIsMobileOrTablet();
 
   const [members, setMembers] = useState<ExicomMember[]>([]);
   const [selectedMember, setSelectedMember] = useState<ExicomMember | null>(null);
@@ -42,7 +44,7 @@ function ExecomPageInner() {
   return (
     <div className="relative min-h-screen overflow-x-hidden font-sans bg-[#faf7f9] text-[#2e1c24] selection:bg-pink-200 selection:text-pink-900">
       <PinkMeshBackground />
-      <FloatingSparkles count={34} />
+      <FloatingSparkles count={isMobile ? 10 : 34} />
       <ScrollProgressBar targetId="exicom-members" />
 
       <main className="relative z-10">

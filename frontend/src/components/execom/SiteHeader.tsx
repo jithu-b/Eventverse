@@ -80,7 +80,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onOpenEditor, onScrollTo
                 : 'bg-slate-900 hover:bg-slate-800 shadow-slate-300'
             }`}
           >
-            Exicom 2024–25
+            Execom 2026–27
           </button>
           <a
             href="#exicom-members"

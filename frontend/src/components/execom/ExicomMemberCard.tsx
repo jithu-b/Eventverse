@@ -1,9 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, useSpring, useMotionValue, useTransform } from 'motion/react';
 import { ArrowUpRight, Sparkles, Image as ImageIcon, Camera, Eye } from 'lucide-react';
-import { ExicomMember } from './types';
+import { ExicomMember } from '../../api/execomApi';
 import { SocialLinks } from './SocialLinks';
 import { useTheme } from './ThemeContext';
+import { useIsMobileOrTablet } from '../../hooks/useIsMobileOrTablet';
+import { mediaUrl } from '../../api/photoApi';
 
 interface ExicomMemberCardProps {
   member: ExicomMember;
@@ -159,7 +161,15 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
   const is3DActive = isTouchDevice ? mobileShow3D : isHovered;
 
   // Cinematic staggered entrance animation variants
-  const cardEntranceVariants = {
+  const isMobileCard = useIsMobileOrTablet();
+  const cardEntranceVariants = isMobileCard ? {
+    hidden: { opacity: 0, y: 16 },
+    visible: (customIndex: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, delay: Math.min(customIndex * 0.04, 0.2), ease: 'easeOut' },
+    }),
+  } : {
     hidden: {
       opacity: 0,
       y: 50,
@@ -319,7 +329,7 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             }`}
           >
             <img
-              src={member.image ? `http://localhost:5000${member.image}` : undefined}
+              src={member.image ? mediaUrl(member.image) : undefined}
               alt={`${member.name} - ${member.role}`}
               loading={priority ? 'eager' : 'lazy'}
               onLoad={() => setImageLoaded(true)}
@@ -376,7 +386,7 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
           >
             {/* The Underlying Candid/Action Photo */}
             <img
-              src={member.hoverImage ? `http://localhost:5000${member.hoverImage}` : undefined}
+              src={member.hoverImage ? mediaUrl(member.hoverImage) : undefined}
               alt={`${member.name} candid in action`}
               loading="lazy"
               onLoad={() => setSecondaryLoaded(true)}

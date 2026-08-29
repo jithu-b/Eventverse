@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronRight, Sparkles, Quote, CheckCircle2, Copy, Check, Camera, User } from 'lucide-react';
-import { ExicomMember } from './types';
+import { ExicomMember } from '../../api/execomApi';
 import { SocialLinks } from './SocialLinks';
 import { useTheme } from './ThemeContext';
+import { mediaUrl } from '../../api/photoApi';
 
 interface MemberProfileModalProps {
   member: ExicomMember | null;
@@ -156,7 +157,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                   initial={{ opacity: 0.4, scale: 1.03 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.35 }}
-                  src={activePhoto === 'primary' ? `http://localhost:5000${member.image}` : `http://localhost:5000${member.hoverImage}`}
+                  src={activePhoto === 'primary' ? mediaUrl(member.image) : mediaUrl(member.hoverImage)}
                   alt={`${member.name} - ${activePhoto === 'primary' ? 'Portrait' : 'In Action'}`}
                   className="w-full h-full object-cover object-center"
                 />

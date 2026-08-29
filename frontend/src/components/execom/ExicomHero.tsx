@@ -9,7 +9,7 @@ interface ExicomHeroProps {
 
 export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => {
   const { isBlush } = useTheme();
-  const letters = 'EXICOM'.split('');
+  const letters = 'EXECOM'.split('');
 
   return (
     <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
@@ -27,7 +27,7 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
             isBlush ? 'bg-pink-500 ring-2 ring-pink-300' : 'bg-slate-800 ring-2 ring-slate-400'
           }`}
         />
-        <span>Executive Committee 2024–2025</span>
+        <span>Executive Committee 2026–2027</span>
         <span className={isBlush ? 'text-pink-300' : 'text-slate-300'}>•</span>
         <span className={isBlush ? 'text-pink-900/60 font-medium' : 'text-slate-600 font-medium'}>
           Student Tech Community
@@ -171,7 +171,7 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
             : 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-950 shadow-slate-400/30 hover:shadow-lg hover:shadow-slate-400/50 focus:ring-slate-700'
         }`}
       >
-        <span>Explore The Exicom</span>
+        <span>Explore The Execom</span>
         <ArrowDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" />
       </motion.button>
     </section>

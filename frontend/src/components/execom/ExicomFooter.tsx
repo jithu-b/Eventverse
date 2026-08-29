@@ -113,7 +113,7 @@ export const ExicomFooter: React.FC<ExicomFooterProps> = ({ onScrollToTop }) => 
         >
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span>Exicom 2024–2025 • Student Technology Community</span>
+            <span>Execom 2026–2027 • Student Technology Community</span>
           </div>
 
           <div className="flex items-center gap-1">

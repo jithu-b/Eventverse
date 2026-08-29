@@ -130,24 +130,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <span className="text-xl sm:text-2xl font-extrabold text-[#18131A] font-outfit">
               Good morning, {user.name.split(' ')[0]} 👋
             </span>
-            <span className="px-2.5 py-0.5 text-[10px] font-extrabold uppercase bg-pink-100 text-[#DB2777] rounded-full border border-pink-200">
-              {user.role} view
-            </span>
+
           </div>
           <p className="text-xs sm:text-sm text-[#6B6470]">
             Here’s what’s happening in <strong>EventVerse</strong> across TinkerHub SBCE today.
           </p>
         </div>
 
-          {user.role === 'admin' && (
-            <GradientButton
-              size="sm"
-              onClick={onCreateEvent}
-              icon={<PlusCircle className="w-4 h-4" />}
-            >
-              Create Event
-            </GradientButton>
-          )}
       </div>
 
       {/* 2. Top Statistic Cards Row */}

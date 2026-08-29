@@ -19,7 +19,6 @@ import { HomePage } from './pages/HomePage';
 import { EventDiscoveryPage } from './pages/EventDiscoveryPage';
 import { EventDetailPage } from './pages/EventDetailPage';
 import { DashboardPage } from './pages/DashboardPage';
-import { LeaderboardPage } from './pages/LeaderboardPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { ExecomPage } from './pages/ExecomPage';
 import { EventRegistrationModal } from './components/events/EventRegistrationModal';
@@ -30,16 +29,16 @@ import { CertificateClaimModal } from './components/certificates/CertificateClai
 import { CreateEventModal } from './components/modals/CreateEventModal';
 import { GlobalSearchModal } from './components/modals/GlobalSearchModal';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { AuthPage } from './pages/AuthPage';
-import { eventApi } from './api/eventApi';
+import { AdminPage } from './pages/AdminPage';
+import { STATIC_EVENTS } from './data/staticEvents';
 
 function AppContent() {
   // Navigation View State
-  type ViewType = 'home' | 'discover' | 'event-detail' | 'dashboard' | 'leaderboard' | 'gallery' | 'execom';
+  type ViewType = 'home' | 'discover' | 'event-detail' | 'dashboard' | 'gallery' | 'execom' | 'admin';
 
   const parseLocation = (): { view: ViewType; eventId: string | null } => {
     const segments = window.location.pathname.split('/').filter(Boolean);
-    const validViews: ViewType[] = ['home', 'discover', 'event-detail', 'dashboard', 'leaderboard', 'gallery', 'execom'];
+    const validViews: ViewType[] = ['home', 'discover', 'event-detail', 'dashboard', 'gallery', 'execom'];
     const view = (segments[0] as ViewType) || 'home';
     if (validViews.includes(view)) {
       return { view, eventId: segments[1] || null };
@@ -56,7 +55,6 @@ function AppContent() {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [user, setUser] = useState<UserProfile>(eventService.getUser());
-  const [leaderboard, setLeaderboard] = useState(eventService.getLeaderboard());
   const [activities, setActivities] = useState(eventService.getActivities());
   const [notifications, setNotifications] = useState(eventService.getNotifications());
 
@@ -75,9 +73,8 @@ function AppContent() {
 
   // Initial load
   useEffect(() => {
-    eventApi.list().then(setEvents).catch(console.error);
+    setEvents(STATIC_EVENTS);
     setUser(eventService.getUser());
-    setLeaderboard(eventService.getLeaderboard());
     setActivities(eventService.getActivities());
     setNotifications(eventService.getNotifications());
   }, []);
@@ -174,7 +171,6 @@ function AppContent() {
   const handleQuizSubmitScore = (quizId: string, score: number, maxScore: number, timeSpent: number) => {
     const result = eventService.submitQuizScore(quizId, score, maxScore, timeSpent);
     setUser(eventService.getUser());
-    setLeaderboard(eventService.getLeaderboard());
     setActivities(eventService.getActivities());
     return result;
   };
@@ -215,7 +211,6 @@ function AppContent() {
 
 
   if (loading) return null;
-  if (!authUser) return <AuthPage />;
 
   return (
     <div className="min-h-screen relative flex flex-col font-sans text-[#18131A] selection:bg-pink-200 selection:text-[#DB2777]">
@@ -309,7 +304,6 @@ function AppContent() {
                     handleOpenClaimCertificate(selectedEvent);
                   }
                 }}
-                onNavigateLeaderboard={() => handleNavigate('leaderboard')}
                 onDelete={authUser?.role === 'admin' ? async () => {
                   await adminApi.deleteAnyEvent(selectedEvent.id);
                   setEvents((prev) => prev.filter((e) => e.id !== selectedEvent.id));
@@ -345,21 +339,6 @@ function AppContent() {
             </motion.div>
           )}
 
-          {currentView === 'leaderboard' && (
-            <motion.div
-              key="leaderboard"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
-            >
-              <LeaderboardPage
-                entries={leaderboard}
-                currentUserId={user.id}
-              />
-            </motion.div>
-          )}
-
           {currentView === 'gallery' && (
             <motion.div
               key="gallery"
@@ -381,6 +360,18 @@ function AppContent() {
               transition={{ duration: 0.25 }}
             >
               <ExecomPage />
+            </motion.div>
+          )}
+
+          {currentView === 'admin' && (
+            <motion.div
+              key="admin"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+            >
+              <AdminPage />
             </motion.div>
           )}
         </AnimatePresence>

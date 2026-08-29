@@ -35,7 +35,6 @@ interface EventDetailPageProps {
   onOpenQuiz: (quizId: string) => void;
   onOpenQRScanner: () => void;
   onOpenCertificate: () => void;
-  onNavigateLeaderboard: () => void;
   quiz?: Quiz;
   onDelete?: () => void;
 }
@@ -50,7 +49,6 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
   onOpenQuiz,
   onOpenQRScanner,
   onOpenCertificate,
-  onNavigateLeaderboard,
   onDelete,
   quiz,
 }) => {
@@ -374,16 +372,6 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
                   <Trophy className="w-4 h-4 text-[#EC4899] mb-1 group-hover:scale-110 transition-transform" />
                   <span className="text-xs font-bold text-[#18131A] block">Blitz Quiz</span>
                   <span className="text-[10px] text-[#6B6470]">Live XP & Score</span>
-                </button>
-
-                {/* Leaderboard Quick Link */}
-                <button
-                  onClick={onNavigateLeaderboard}
-                  className="p-3 rounded-2xl bg-[#FFF8FC] hover:bg-[#FFF1F7] border border-[#F3DCE8] hover:border-[#A855F7] text-left transition-all cursor-pointer group"
-                >
-                  <Zap className="w-4 h-4 text-[#A855F7] mb-1 group-hover:scale-110 transition-transform" />
-                  <span className="text-xs font-bold text-[#18131A] block">Leaderboard</span>
-                  <span className="text-[10px] text-[#6B6470]">Campus Ranking</span>
                 </button>
 
                 {/* Attendance Quick Link */}

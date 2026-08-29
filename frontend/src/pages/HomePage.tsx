@@ -51,13 +51,9 @@ export const HomePage: React.FC<HomePageProps> = ({
 }) => {
   const safeEvents = Array.isArray(events) ? events : [];
   const safeQuizzes = Array.isArray(quizzes) ? quizzes : [];
-  const strictlyUpcoming = safeEvents
-    .filter((e) => e?.status === 'Upcoming')
-    .sort((a, b) => new Date(a.rawDate).getTime() - new Date(b.rawDate).getTime());
-  const mostRecentOthers = safeEvents
-    .filter((e) => e?.status !== 'Upcoming')
-    .sort((a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime());
-  const upcomingEvents = [...strictlyUpcoming, ...mostRecentOthers].slice(0, 4);
+  const upcomingEvents = [...safeEvents]
+    .sort((a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime())
+    .slice(0, 6);
   const featuredQuiz = safeQuizzes[0];
 
   // Word-by-word reveal for hero title
@@ -364,13 +360,6 @@ export const HomePage: React.FC<HomePageProps> = ({
                   >
                     Start Timed Quiz Now ⚡
                   </GradientButton>
-
-                  <button
-                    onClick={() => onNavigate('leaderboard')}
-                    className="px-5 py-2.5 text-xs font-bold text-[#18131A] hover:text-[#EC4899] bg-white border border-[#F3DCE8] rounded-xl hover:bg-pink-50 transition-all cursor-pointer"
-                  >
-                    View Campus Leaderboard 🏆
-                  </button>
                 </div>
               </div>
 

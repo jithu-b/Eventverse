@@ -8,7 +8,8 @@ import { MemberProfileModal } from '../components/execom/MemberProfileModal';
 import { ExicomFooter } from '../components/execom/ExicomFooter';
 import { MemberDataEditorDrawer } from '../components/execom/MemberDataEditorDrawer';
 import { ThemeProvider } from '../components/execom/ThemeContext';
-import { execomApi, ExicomMember } from '../api/execomApi';
+import { ExicomMember } from '../api/execomApi';
+import { STATIC_EXECOM } from '../data/staticExecom';
 import { useIsMobileOrTablet } from '../hooks/useIsMobileOrTablet';
 import { useAuth } from '../context/AuthContext';
 
@@ -21,20 +22,9 @@ function ExecomPageInner() {
   const [selectedMember, setSelectedMember] = useState<ExicomMember | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
-  const load = useCallback(() => {
-    execomApi.list().then(setMembers);
+  useEffect(() => {
+    setMembers(STATIC_EXECOM);
   }, []);
-
-  useEffect(load, [load]);
-
-  const handleSaveMembers = async (updated: ExicomMember[]) => {
-    const saved = await execomApi.saveBulk(updated);
-    setMembers(saved);
-  };
-
-  const handleResetMembers = () => {
-    load();
-  };
 
   const scrollToMembers = useCallback(() => {
     const el = document.getElementById('exicom-members');
@@ -50,17 +40,6 @@ function ExecomPageInner() {
       <main className="relative z-10">
         <ExicomHero onScrollToMembers={scrollToMembers} />
 
-        {isAdmin && (
-          <div className="flex justify-center mb-8">
-            <button
-              onClick={() => setIsEditorOpen(true)}
-              className="px-4 py-2 rounded-full bg-pink-600 text-white text-xs font-bold shadow-md hover:bg-pink-700 transition-colors"
-            >
-              Edit Execom Members
-            </button>
-          </div>
-        )}
-
         <ExicomGrid members={members} onSelectMember={(m) => setSelectedMember(m)} />
       </main>
 
@@ -73,15 +52,6 @@ function ExecomPageInner() {
         onSelectMember={(m) => setSelectedMember(m)}
       />
 
-      {isAdmin && (
-        <MemberDataEditorDrawer
-          isOpen={isEditorOpen}
-          onClose={() => setIsEditorOpen(false)}
-          members={members}
-          onSaveMembers={handleSaveMembers}
-          onResetMembers={handleResetMembers}
-        />
-      )}
     </div>
   );
 }

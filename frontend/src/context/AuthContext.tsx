@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authApi } from '../api/authApi';
+import React, { createContext, useContext, useState } from 'react';
 
 interface AuthUser {
   id: number;
@@ -11,64 +10,44 @@ interface AuthUser {
 interface AuthContextType {
   authUser: AuthUser | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<AuthUser>;
-  register: (name: string, email: string, password: string) => Promise<AuthUser>;
+  loginAsAdmin: () => void;
   logout: () => void;
 }
+
+const DEMO_ADMIN: AuthUser = {
+  id: 1,
+  name: 'Jithu Biju',
+  email: 'admin@tinkerhub.sbce',
+  role: 'admin',
+};
+
+const DEMO_VISITOR: AuthUser = {
+  id: 0,
+  name: 'Guest',
+  email: 'guest@tinkerhub.sbce',
+  role: 'participant',
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [authUser, setAuthUser] = useState<AuthUser | null>(() => {
-    const stored = localStorage.getItem('eventverse_user');
-    return stored ? JSON.parse(stored) : null;
+  const [authUser, setAuthUser] = useState<AuthUser>(() => {
+    const stored = localStorage.getItem('eventverse_demo_role');
+    return stored === 'admin' ? DEMO_ADMIN : DEMO_VISITOR;
   });
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem('eventverse_token');
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-    authApi
-      .me()
-      .then((res) => {
-        setAuthUser(res.data.user);
-        localStorage.setItem('eventverse_user', JSON.stringify(res.data.user));
-      })
-      .catch(() => {
-        localStorage.removeItem('eventverse_token');
-        localStorage.removeItem('eventverse_user');
-        setAuthUser(null);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  const login = async (email: string, password: string) => {
-    const res = await authApi.login({ email, password });
-    localStorage.setItem('eventverse_token', res.data.access_token);
-    localStorage.setItem('eventverse_user', JSON.stringify(res.data.user));
-    setAuthUser(res.data.user);
-    return res.data.user;
-  };
-
-  const register = async (name: string, email: string, password: string) => {
-    const res = await authApi.register({ name, email, password, role: 'participant' });
-    localStorage.setItem('eventverse_token', res.data.access_token);
-    localStorage.setItem('eventverse_user', JSON.stringify(res.data.user));
-    setAuthUser(res.data.user);
-    return res.data.user;
+  const loginAsAdmin = () => {
+    localStorage.setItem('eventverse_demo_role', 'admin');
+    setAuthUser(DEMO_ADMIN);
   };
 
   const logout = () => {
-    localStorage.removeItem('eventverse_token');
-    localStorage.removeItem('eventverse_user');
-    setAuthUser(null);
+    localStorage.removeItem('eventverse_demo_role');
+    setAuthUser(DEMO_VISITOR);
   };
 
   return (
-    <AuthContext.Provider value={{ authUser, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ authUser, loading: false, loginAsAdmin, logout }}>
       {children}
     </AuthContext.Provider>
   );

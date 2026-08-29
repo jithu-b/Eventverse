@@ -83,9 +83,9 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'home', label: 'Home', icon: Sparkles },
     { id: 'discover', label: 'Events', icon: Compass },
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'leaderboard', label: 'Leaderboard', icon: Trophy },
     { id: 'gallery', label: 'Gallery', icon: GalleryIcon },
     { id: 'execom', label: 'Execom', icon: Users },
+    { id: 'admin', label: 'Admin', icon: ShieldCheck },
   ];
 
   return (

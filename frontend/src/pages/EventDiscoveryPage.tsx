@@ -49,7 +49,7 @@ export const EventDiscoveryPage: React.FC<EventDiscoveryPageProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [statusFilter, setStatusFilter] = useState<'All' | 'Upcoming' | 'Completed'>('All');
-  const [sortBy, setSortBy] = useState<'Newest' | 'Popular' | 'Upcoming'>('Upcoming');
+  const [sortBy, setSortBy] = useState<'Newest' | 'Popular' | 'Upcoming'>('Newest');
   const [layoutMode, setLayoutMode] = useState<'grid' | 'list'>('grid');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
@@ -106,7 +106,7 @@ export const EventDiscoveryPage: React.FC<EventDiscoveryPageProps> = ({
     setActiveCategory('All');
     setStatusFilter('All');
     setSelectedTag(null);
-    setSortBy('Upcoming');
+    setSortBy('Newest');
   };
 
   const hasActiveFilters = searchQuery || activeCategory !== 'All' || statusFilter !== 'All' || selectedTag !== null;

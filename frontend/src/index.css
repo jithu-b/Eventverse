@@ -16,11 +16,20 @@
     --color-border-subtle: #F3DCE8;
   }
 
+  html {
+    overflow-x: hidden;
+    max-width: 100vw;
+    position: relative;
+    max-width: 100vw;
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     background-color: #FFF8FC;
     color: #18131A;
     overflow-x: hidden;
+    max-width: 100vw;
+    position: relative;
   }
 }
 

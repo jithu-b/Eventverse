@@ -4,7 +4,6 @@ registration, and per-organizer event listing.
 """
 import os
 import uuid
-import json
 from datetime import datetime
 
 from flask import Blueprint, request, jsonify, current_app
@@ -14,7 +13,6 @@ from marshmallow import ValidationError
 from app.extensions import db
 from app.models.event import Event
 from app.models.registration import Registration
-from app.models.user import User
 from app.models.game import Game, VALID_GAME_TYPES
 from app.schemas.event_schema import EventCreateSchema, EventUpdateSchema
 from app.utils.decorators import jwt_required_custom, role_required, get_current_user, get_current_user_id
@@ -29,7 +27,7 @@ update_schema = EventUpdateSchema()
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
 
 
-def _allowed_file(filename):
+def _allowed_file(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
@@ -47,6 +45,7 @@ def _save_banner(file_storage):
         return None
     if not _allowed_file(file_storage.filename):
         return None
+
     ext = file_storage.filename.rsplit(".", 1)[1].lower()
     filename = secure_filename(f"{uuid.uuid4().hex}.{ext}")
     banners_dir = os.path.join(current_app.config["UPLOAD_FOLDER"], "banners")
@@ -56,17 +55,9 @@ def _save_banner(file_storage):
     return f"/uploads/banners/{filename}"
 
 
-def _enabled_games_for_event(event):
+def _enabled_games_for_event(event: Event):
     games = Game.query.filter_by(event_id=event.id, enabled=True).all()
     return [{"slug": g.game_type, "name": g.game_type.replace("-", " ").title()} for g in games]
-
-
-def _parse_json_list(value):
-    try:
-        parsed = json.loads(value) if value else []
-        return parsed if isinstance(parsed, list) else []
-    except (ValueError, TypeError):
-        return []
 
 
 @event_bp.get("")
@@ -74,14 +65,6 @@ def list_events():
     current_user_id = get_current_user_id()
     events = Event.query.order_by(Event.start_time.desc().nullslast()).all()
     return jsonify({"events": [e.to_dict(current_user_id) for e in events]}), 200
-
-
-@event_bp.get("/stats")
-def event_stats():
-    return jsonify({
-        "active_members": User.query.count(),
-        "events_hosted": Event.query.count(),
-    }), 200
 
 
 @event_bp.get("/my-registrations")
@@ -126,24 +109,10 @@ def create_event():
     event = Event(
         organizer_id=user.id,
         title=data["title"],
-        subtitle=data.get("subtitle", ""),
         description=data.get("description", ""),
-        detailed_about=data.get("detailed_about", ""),
-        category=data.get("category", ""),
-        status=data.get("status", "upcoming"),
-        featured=data.get("featured", False),
-        location=data.get("location", ""),
-        location_details=data.get("location_details", ""),
         start_time=_parse_datetime(data.get("start_time")),
         end_time=_parse_datetime(data.get("end_time")),
         registration_limit=data.get("registration_limit", 50),
-        speakers=_parse_json_list(data.get("speakers")),
-        what_you_will_learn=_parse_json_list(data.get("what_you_will_learn")),
-        prerequisites=_parse_json_list(data.get("prerequisites")),
-        schedule=_parse_json_list(data.get("schedule")),
-        tags=_parse_json_list(data.get("tags")),
-        organizer_role=data.get("organizer_role", ""),
-        organizer_avatar=data.get("organizer_avatar", ""),
         quiz_enabled=data.get("quiz_enabled", False),
         games_enabled=data.get("games_enabled", False),
         certificate_enabled=data.get("certificate_enabled", False),
@@ -157,6 +126,7 @@ def create_event():
     db.session.add(event)
     db.session.commit()
 
+    # auto-provision all 10 games (disabled by default) if games are enabled for this event
     if event.games_enabled:
         for game_type in VALID_GAME_TYPES:
             db.session.add(Game(event_id=event.id, game_type=game_type, enabled=True))
@@ -182,19 +152,9 @@ def update_event(event_id):
     except ValidationError as err:
         return jsonify({"error": "Validation failed", "details": err.messages}), 400
 
-    simple_fields = [
-        "title", "subtitle", "description", "detailed_about", "category", "status",
-        "featured", "location", "location_details", "registration_limit",
-        "organizer_role", "organizer_avatar",
-        "quiz_enabled", "games_enabled", "certificate_enabled",
-    ]
-    for field in simple_fields:
+    for field in ["title", "description", "registration_limit", "quiz_enabled", "games_enabled", "certificate_enabled"]:
         if field in data:
             setattr(event, field, data[field])
-
-    for field in ["speakers", "what_you_will_learn", "prerequisites", "schedule", "tags"]:
-        if field in data:
-            setattr(event, field, _parse_json_list(data[field]))
 
     if "start_time" in data:
         event.start_time = _parse_datetime(data["start_time"])

@@ -26,7 +26,7 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey("events.id"), nullable=False)
 
-    game_type = db.Column(db.String(30), nullable=False)
+    game_type = db.Column(db.String(30), nullable=False)  # one of VALID_GAME_TYPES
     enabled = db.Column(db.Boolean, default=True)
 
     scores = db.relationship("GameScore", backref="game", lazy="dynamic", cascade="all, delete-orphan")
@@ -48,7 +48,7 @@ class GameScore(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     score = db.Column(db.Integer, nullable=False)
-    time_taken = db.Column(db.Integer, nullable=True)
+    time_taken = db.Column(db.Integer, nullable=True)  # seconds
 
     played_at = db.Column(db.DateTime, default=datetime.utcnow)
 

@@ -8,7 +8,6 @@ from marshmallow import ValidationError
 
 from app.extensions import db
 from app.models.event import Event
-from app.models.user import User
 from app.models.quiz import Quiz, QuizQuestion, QuizAttempt
 from app.schemas.quiz_schema import (
     QuizCreateSchema,
@@ -90,17 +89,6 @@ def delete_quiz(quiz_id):
     return jsonify({"message": "Quiz deleted"}), 200
 
 
-@quiz_bp.get("/<int:quiz_id>/questions")
-@jwt_required_custom
-@role_required("organizer", "admin")
-def list_questions(quiz_id):
-    quiz = Quiz.query.get(quiz_id)
-    if not quiz:
-        return jsonify({"error": "Quiz not found"}), 404
-    questions = [q.to_dict(include_answer=True) for q in quiz.questions]
-    return jsonify({"questions": questions}), 200
-
-
 @quiz_bp.post("/<int:quiz_id>/questions")
 @jwt_required_custom
 @role_required("organizer", "admin")
@@ -169,8 +157,6 @@ def start_attempt(quiz_id):
     questions = quiz.get_randomized_questions()
     return jsonify({
         "attempt_id": attempt.id,
-        "duration_minutes": quiz.duration_minutes,
-        "quiz_title": quiz.title,
         "questions": [q.to_dict(include_answer=False) for q in questions],
     }), 201
 
@@ -228,5 +214,8 @@ def quiz_leaderboard(quiz_id):
         return jsonify({"error": "Quiz not found"}), 404
 
     entries = get_leaderboard(quiz.event_id, "quiz")
-    leaderboard = [{"id": e.user_id, "name": e.user.name if e.user else "Unknown", "score": e.score} for e in entries]
+    leaderboard = [
+        {"id": e.user_id, "name": e.user.name, "score": e.score}
+        for e in entries
+    ]
     return jsonify({"leaderboard": leaderboard}), 200

@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify
 from app.extensions import db
 from app.models.game import Game, GameScore, VALID_GAME_TYPES
 from app.utils.decorators import jwt_required_custom, role_required, get_current_user_id
-from app.services.scoring_service import upsert_leaderboard_entry
+from app.services.scoring_service import upsert_leaderboard_entry, get_leaderboard
 
 game_bp = Blueprint("game", __name__)
 
@@ -58,6 +58,7 @@ def submit_score(game_id):
     db.session.add(game_score)
     db.session.commit()
 
+    # feed this game's best score into the event's aggregate "game" leaderboard category
     best_for_this_game = (
         GameScore.query.filter_by(game_id=game_id, user_id=user_id)
         .order_by(GameScore.score.desc())
@@ -87,6 +88,7 @@ def game_leaderboard(game_id):
     if not game:
         return jsonify({"error": "Game not found"}), 404
 
+    # best score per user for this specific game
     subquery_scores = GameScore.query.filter_by(game_id=game_id).all()
     best_per_user = {}
     for s in subquery_scores:

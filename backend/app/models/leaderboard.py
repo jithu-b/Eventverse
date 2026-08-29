@@ -1,5 +1,11 @@
 """
-LeaderboardEntry model — aggregate leaderboard table.
+LeaderboardEntry model — optional materialized aggregate table.
+
+In practice, most leaderboards (quiz/game/event) are computed on-the-fly
+via queries in leaderboard_routes.py / scoring_service.py for correctness
+and simplicity with SQLite. This table exists for the "overall" leaderboard,
+which aggregates quiz + game performance per event and benefits from being
+persisted/recomputed rather than joined live across many tables.
 """
 from datetime import datetime
 
@@ -18,7 +24,7 @@ class LeaderboardEntry(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey("events.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
-    category = db.Column(db.String(10), nullable=False)
+    category = db.Column(db.String(10), nullable=False)  # quiz | game | overall
     score = db.Column(db.Integer, default=0)
 
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

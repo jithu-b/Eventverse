@@ -128,7 +128,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-xl sm:text-2xl font-extrabold text-[#18131A] font-outfit">
-              Good morning, {user.name.split(' ')[0]} 👋
+              Welcome to the Dashboard 👋
             </span>
 
           </div>

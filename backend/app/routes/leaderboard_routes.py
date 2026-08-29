@@ -1,5 +1,7 @@
 """
 Leaderboard routes — event, quiz, game, and overall rankings.
+Most of the heavy lifting lives in scoring_service.get_leaderboard(); this
+blueprint is a thin, consistent read API over LeaderboardEntry.
 """
 from flask import Blueprint, jsonify
 
@@ -11,11 +13,12 @@ leaderboard_bp = Blueprint("leaderboard", __name__)
 
 
 def _format_entries(entries):
-    return [{"id": e.user_id, "name": e.user.name if e.user else "Unknown", "score": e.score} for e in entries]
+    return [{"id": e.user_id, "name": e.user.name, "score": e.score} for e in entries]
 
 
 @leaderboard_bp.get("/event/<int:event_id>")
 def event_leaderboard(event_id):
+    """Alias for the 'overall' category, scoped to a single event."""
     entries = get_leaderboard(event_id, "overall")
     return jsonify({"leaderboard": _format_entries(entries)}), 200
 

@@ -62,6 +62,7 @@ class QuizQuestion(db.Model):
     option_c = db.Column(db.String(300), nullable=True)
     option_d = db.Column(db.String(300), nullable=True)
 
+    # 'a' | 'b' | 'c' | 'd'
     correct_option = db.Column(db.String(1), nullable=False)
     points = db.Column(db.Integer, default=10)
 
@@ -92,6 +93,7 @@ class QuizAttempt(db.Model):
     started_at = db.Column(db.DateTime, default=datetime.utcnow)
     submitted_at = db.Column(db.DateTime, nullable=True)
 
+    # JSON-encoded { question_id: chosen_option }
     answers_json = db.Column(db.Text, default="{}")
 
     @property

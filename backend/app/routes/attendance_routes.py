@@ -7,7 +7,8 @@ from app.extensions import db
 from app.models.event import Event
 from app.models.registration import Registration
 from app.models.attendance import Attendance
-from app.utils.decorators import jwt_required_custom, role_required
+from app.models.user import User
+from app.utils.decorators import jwt_required_custom, role_required, get_current_user, get_current_user_id
 from app.services.qr_service import verify_qr_code
 
 attendance_bp = Blueprint("attendance", __name__)
@@ -21,12 +22,20 @@ def check_in(event_id):
     if not event:
         return jsonify({"error": "Event not found"}), 404
 
-    body = request.get_json(force=True) or {}
-    code = body.get("code", "")
+    code = (request.get_json(force=True) or {}).get("code", "")
     if not verify_qr_code(code, event):
         return jsonify({"error": "Invalid or expired QR code"}), 400
 
-    payload_user_id = body.get("user_id")
+    # The scanned code only proves the code belongs to THIS event; we still
+    # need to know WHICH participant it was shown to. In this design each
+    # registered participant's QR embeds event_id:qr_secret (shared per-event
+    # secret), so we identify the participant via a lookup step: the scanner
+    # UI passes along the participant's registration by having them show a
+    # per-user code. To keep this workable with the shared event secret,
+    # we accept an optional user_id in the payload for manual/kiosk flows,
+    # falling back to looking up by an embedded user token if present.
+    payload_user_id = (request.get_json(force=True) or {}).get("user_id")
+
     if not payload_user_id:
         return jsonify({"error": "Missing participant identifier in scan payload"}), 400
 

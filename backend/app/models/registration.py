@@ -16,6 +16,7 @@ class Registration(db.Model):
 
     registered_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # registered | attended | cancelled
     status = db.Column(db.String(20), default="registered")
 
     def to_dict(self) -> dict:

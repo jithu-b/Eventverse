@@ -16,6 +16,7 @@ class Attendance(db.Model):
 
     checked_in_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # qr | manual
     method = db.Column(db.String(10), default="qr")
 
     def to_dict(self) -> dict:

@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
 
             <p className="text-xs text-[#6B6470] leading-relaxed">
-              The official technology events, hackathons, live quizzes, and digital credentials platform for <strong>TinkerHub SBCE</strong> at Sri Buddha College of Engineering.
+              The official technology events, hackathons, live quizzes, and digital credentials platform for <strong>TinkerHub SBCE</strong> at Sree Buddha College of Engineering.
             </p>
 
             <div className="flex items-center gap-2.5 pt-2">
@@ -129,7 +129,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <div className="space-y-2 text-xs text-[#6B6470]">
               <p className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#EC4899] shrink-0 mt-0.5" />
-                <span>Sri Buddha College of Engineering, Ayathil, Elavumthitta - Pattoor Road, Alappuzha, Kerala 690529</span>
+                <span>Sree Buddha College of Engineering, Ayathil, Elavumthitta - Pattoor Road, Alappuzha, Kerala 690529</span>
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#EC4899] shrink-0" />

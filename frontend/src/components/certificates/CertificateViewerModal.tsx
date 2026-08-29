@@ -51,7 +51,7 @@ export const CertificateViewerModal: React.FC<CertificateViewerModalProps> = ({
               encodeURIComponent(
                 `=========================================\n` +
                 `TINKERHUB SBCE OFFICIAL CERTIFICATE\n` +
-                `Sri Buddha College of Engineering\n` +
+                `Sree Buddha College of Engineering\n` +
                 `=========================================\n` +
                 `Credential Code : ${certificate.certificateCode}\n` +
                 `Recipient Name  : ${certificate.recipientName}\n` +
@@ -115,7 +115,7 @@ export const CertificateViewerModal: React.FC<CertificateViewerModalProps> = ({
               </span>
             </div>
             <p className="text-[10px] uppercase tracking-widest text-[#6B6470]">
-              Sri Buddha College of Engineering · Kerala, India
+              Sree Buddha College of Engineering · Kerala, India
             </p>
           </div>
 

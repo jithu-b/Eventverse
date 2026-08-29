@@ -185,7 +185,7 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
               encodeURIComponent(
                 `=========================================\n` +
                 `TINKERHUB SBCE OFFICIAL CERTIFICATE\n` +
-                `Sri Buddha College of Engineering\n` +
+                `Sree Buddha College of Engineering\n` +
                 `=========================================\n` +
                 `Credential Code : ${code}\n` +
                 `Recipient Name  : ${formData.recipientName}\n` +

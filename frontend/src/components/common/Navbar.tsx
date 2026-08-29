@@ -118,11 +118,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="text-xl font-extrabold tracking-tight text-[#18131A] font-outfit">
                   Event<span className="text-gradient-pink">Verse</span>
                 </span>
-                <span className="px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-[#FFF1F7] text-[#DB2777] rounded-full border border-[#F3DCE8]">
+                <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-[#FFF1F7] text-[#DB2777] rounded-full border border-[#F3DCE8]">
                   SBCE
                 </span>
               </div>
-              <span className="text-[10px] font-medium tracking-wide text-[#6B6470]">
+              <span className="hidden sm:inline text-[10px] font-medium tracking-wide text-[#6B6470]">
                 TinkerHub Campus Chapter
               </span>
             </div>

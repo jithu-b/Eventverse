@@ -7,6 +7,9 @@ export interface StaticPhoto {
 }
 
 export const STATIC_GALLERY: StaticPhoto[] = [
+  { id: 36, event_id: 13, event_title: 'The Poster Session', photo_url: '/uploads/gallery/poster-session-1.jpeg', caption: null },
+  { id: 35, event_id: 13, event_title: 'The Poster Session', photo_url: '/uploads/gallery/poster-session-2.jpeg', caption: null },
+  { id: 34, event_id: 13, event_title: 'The Poster Session', photo_url: '/uploads/gallery/poster-session-3.jpeg', caption: null },
   { id: 33, event_id: 12, event_title: 'Study Jam', photo_url: '/uploads/gallery/8f3126806f2e45a3b0e7322363f8307e.jpeg', caption: null },
   { id: 32, event_id: 12, event_title: 'Study Jam', photo_url: '/uploads/gallery/4a9a4174ad874fa2b4b8a51841d9447b.jpeg', caption: null },
   { id: 31, event_id: 8, event_title: 'Frames of Onam', photo_url: '/uploads/gallery/ae496cce90154c8681fa01041c347781.jpeg', caption: null },

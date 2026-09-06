@@ -9,7 +9,7 @@ import { ExicomFooter } from '../components/execom/ExicomFooter';
 import { MemberDataEditorDrawer } from '../components/execom/MemberDataEditorDrawer';
 import { ThemeProvider } from '../components/execom/ThemeContext';
 import { ExicomMember } from '../api/execomApi';
-import { STATIC_EXECOM } from '../data/staticExecom';
+import { supabase } from '../lib/supabase';
 import { useIsMobileOrTablet } from '../hooks/useIsMobileOrTablet';
 import { useAuth } from '../context/AuthContext';
 
@@ -23,7 +23,33 @@ function ExecomPageInner() {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
-    setMembers(STATIC_EXECOM);
+    supabase
+      .from('execom_members')
+      .select('*')
+      .order('position', { ascending: true })
+      .then(({ data, error }) => {
+        if (error) {
+          console.error('Failed to load execom members', error);
+          return;
+        }
+        const mapped = (data || []).map((m: any) => ({
+          id: m.id,
+          number: m.number,
+          name: m.name,
+          role: m.role,
+          class: m.class_name,
+          department: m.department,
+          image: m.image,
+          hoverImage: m.hover_image,
+          hoverCaption: m.hover_caption,
+          description: m.description,
+          quote: m.quote,
+          keyInitiatives: m.key_initiatives || [],
+          skills: m.skills || [],
+          social: m.social || {},
+        }));
+        setMembers(mapped);
+      });
   }, []);
 
   const scrollToMembers = useCallback(() => {

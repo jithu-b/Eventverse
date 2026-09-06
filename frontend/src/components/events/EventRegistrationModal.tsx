@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { EventItem, UserProfile } from '../../types';
+import { useStudentAuth } from '../../context/StudentAuthContext';
 import { Modal } from '../common/Modal';
 import { GradientButton } from '../common/GradientButton';
 import { AnimatedProgressBar } from '../common/AnimatedProgressBar';
@@ -37,24 +38,39 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
   user,
   onConfirmRegistration,
 }) => {
+  const { student } = useStudentAuth();
   const [formData, setFormData] = useState({
-    name: user.name || 'Jithu Biju',
-    email: user.email || 'jithubiju0102@gmail.com',
-    dept: user.department || 'Computer Science & Engineering',
-    year: user.year || 'S5 (3rd Year)',
-    interests: 'AI & Web Development',
+    name: student?.name || '',
+    email: student?.email || '',
   });
+  const [answers, setAnswers] = useState<Record<string, any>>({});
 
   const [isRegisteredSuccess, setIsRegisteredSuccess] = useState(false);
   const [copied, setCopied] = useState(false);
 
   if (!event) return null;
 
+  const customFields = event.registrationFields || [];
+
+  const setAnswer = (fieldId: string, value: any) => {
+    setAnswers((prev) => ({ ...prev, [fieldId]: value }));
+  };
+
+  const toggleCheckbox = (fieldId: string, option: string) => {
+    setAnswers((prev) => {
+      const current: string[] = Array.isArray(prev[fieldId]) ? prev[fieldId] : [];
+      const next = current.includes(option)
+        ? current.filter((o) => o !== option)
+        : [...current, option];
+      return { ...prev, [fieldId]: next };
+    });
+  };
+
   const spotsFilledPercent = Math.min(100, Math.round((event.registeredCount / event.totalSpots) * 100));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onConfirmRegistration(event.id, formData);
+    onConfirmRegistration(event.id, { name: formData.name, email: formData.email, dept: '', year: '' }, answers);
     setIsRegisteredSuccess(true);
 
     // Fire festive campus confetti
@@ -163,36 +179,85 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-bold text-[#18131A] mb-1.5">Department</label>
-                <div className="relative">
-                  <GraduationCap className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
-                  <input
-                    type="text"
-                    required
-                    value={formData.dept}
-                    onChange={(e) => setFormData({ ...formData, dept: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
-                  />
-                </div>
-              </div>
+            {customFields.length > 0 && (
+              <div className="space-y-4 pt-2 border-t border-[#F3DCE8]">
+                {customFields.map((field) => (
+                  <div key={field.id}>
+                    <label className="block text-xs font-bold text-[#18131A] mb-1.5">
+                      {field.label}{field.required && <span className="text-[#EC4899]"> *</span>}
+                    </label>
 
-              <div>
-                <label className="block text-xs font-bold text-[#18131A] mb-1.5">Semester / Year</label>
-                <select
-                  value={formData.year}
-                  onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none cursor-pointer"
-                >
-                  <option value="S1 (1st Year)">S1 (1st Year)</option>
-                  <option value="S3 (2nd Year)">S3 (2nd Year)</option>
-                  <option value="S5 (3rd Year)">S5 (3rd Year)</option>
-                  <option value="S7 (Final Year)">S7 (Final Year)</option>
-                  <option value="Postgraduate / M.Tech">Postgraduate / M.Tech</option>
-                </select>
+                    {field.type === 'short_text' && (
+                      <input
+                        type="text"
+                        required={field.required}
+                        value={answers[field.id] || ''}
+                        onChange={(e) => setAnswer(field.id, e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                      />
+                    )}
+
+                    {field.type === 'paragraph' && (
+                      <textarea
+                        required={field.required}
+                        rows={3}
+                        value={answers[field.id] || ''}
+                        onChange={(e) => setAnswer(field.id, e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                      />
+                    )}
+
+                    {field.type === 'dropdown' && (
+                      <select
+                        required={field.required}
+                        value={answers[field.id] || ''}
+                        onChange={(e) => setAnswer(field.id, e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none cursor-pointer"
+                      >
+                        <option value="">Select an option...</option>
+                        {(field.options || []).map((opt) => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                      </select>
+                    )}
+
+                    {field.type === 'multiple_choice' && (
+                      <div className="space-y-1.5">
+                        {(field.options || []).map((opt) => (
+                          <label key={opt} className="flex items-center gap-2 text-xs sm:text-sm cursor-pointer">
+                            <input
+                              type="radio"
+                              name={field.id}
+                              required={field.required}
+                              checked={answers[field.id] === opt}
+                              onChange={() => setAnswer(field.id, opt)}
+                              className="accent-[#EC4899]"
+                            />
+                            {opt}
+                          </label>
+                        ))}
+                      </div>
+                    )}
+
+                    {field.type === 'checkboxes' && (
+                      <div className="space-y-1.5">
+                        {(field.options || []).map((opt) => (
+                          <label key={opt} className="flex items-center gap-2 text-xs sm:text-sm cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={Array.isArray(answers[field.id]) && answers[field.id].includes(opt)}
+                              onChange={() => toggleCheckbox(field.id, opt)}
+                              className="accent-[#EC4899]"
+                            />
+                            {opt}
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            </div>
+            )}
 
             <div className="pt-2 flex items-center justify-end gap-3">
               <button
@@ -278,7 +343,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
                 </div>
               </div>
               <span className="text-[10px] font-bold text-[#6B6470] bg-white px-2 py-1 rounded-lg border border-[#F3DCE8]">
-                Seat #{Math.floor(12 + Math.random() * 80)}
+                Confirmed
               </span>
             </div>
           </div>

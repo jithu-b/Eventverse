@@ -79,8 +79,13 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
     if (!file) return;
     setUploadingField(field);
     try {
-      const url = await execomApi.uploadImage(file);
-      handleFieldChange(field, url);
+      const { supabase } = await import('../../lib/supabase');
+      const ext = file.name.split('.').pop();
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: uploadError } = await supabase.storage.from('execom').upload(path, file);
+      if (uploadError) throw uploadError;
+      const { data } = supabase.storage.from('execom').getPublicUrl(path);
+      handleFieldChange(field, data.publicUrl);
     } catch (err) {
       console.error('Image upload failed', err);
     } finally {

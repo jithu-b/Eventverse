@@ -27,7 +27,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   UserProfile, 
   EventItem, 
-  Quiz, 
   Certificate, 
   ActivityItem, 
   UserRole,
@@ -41,11 +40,9 @@ import { adminApi } from '../api/adminApi.js';
 interface DashboardPageProps {
   user: UserProfile;
   events: EventItem[];
-  quizzes: Quiz[];
   activities: ActivityItem[];
   onSelectEvent: (eventId: string) => void;
   onOpenCertificate: (cert: Certificate) => void;
-  onOpenQuiz: (quizId: string) => void;
   onOpenQRScanner: (event?: EventItem) => void;
   onCreateEvent: () => void;
   onRoleChange: (role: UserRole) => void;
@@ -55,17 +52,15 @@ interface DashboardPageProps {
 export const DashboardPage: React.FC<DashboardPageProps> = ({
   user,
   events,
-  quizzes,
   activities,
   onSelectEvent,
   onOpenCertificate,
-  onOpenQuiz,
   onOpenQRScanner,
   onCreateEvent,
   onRoleChange,
   onClaimCertificate,
 }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'events' | 'calendar' | 'quizzes' | 'certificates' | 'users'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'events' | 'calendar' | 'certificates' | 'users'>('overview');
   const [eventFilterTab, setEventFilterTab] = useState<'upcoming' | 'completed' | 'all'>('upcoming');
 
   // Calendar month state
@@ -161,16 +156,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           trend={upcomingCount > 0 ? 'On the calendar' : 'Nothing scheduled'}
           id="dash-stat-2"
         />
-        <StatCard
-          label={user.role === 'admin' ? 'Total Quizzes' : 'Quizzes Completed'}
-          value={`${user.role === 'admin' && adminOverview ? adminOverview.total_quizzes : (user?.quizScores?.length || 0)}`}
-          numericTarget={user.role === 'admin' && adminOverview ? adminOverview.total_quizzes : (user?.quizScores?.length || 0)}
-          subtext={user.role === 'admin' ? 'Across all events' : 'Based on your attempts'}
-          icon={Trophy}
-          color="pink"
-          trend={quizzes.length > 0 ? `${quizzes.length} live now` : 'None yet'}
-          id="dash-stat-4"
-        />
       </div>
 
       {/* 3. Main Dashboard Body: Left content (8 cols) + Right Sidebar (4 cols) */}
@@ -198,15 +183,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               }`}
             >
               My Events ({registeredEvents.length})
-            </button>
-            <button
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
-                activeTab === 'quizzes'
-                  ? 'bg-[#FFF1F7] text-[#DB2777] border border-[#F3DCE8]'
-                  : 'text-[#6B6470] hover:text-[#18131A]'
-              }`}
-            >
-              Quizzes & XP
             </button>
             {user.role === 'admin' && (
               <button
@@ -336,47 +312,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </div>
           )}
 
-
-          {/* TAB 3: QUIZZES & XP */}
-          {activeTab === 'quizzes' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-extrabold text-[#18131A] font-outfit">
-                  Technical Quizzes & Performance
-                </h3>
-              </div>
-
-              <div className="space-y-3">
-                {quizzes.map((quiz) => (
-                  <GlassCard
-                    key={quiz.id}
-                    hoverEffect
-                    className="p-5 flex items-center justify-between gap-4"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
-                        <Trophy className="w-6 h-6" />
-                      </div>
-                      <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-[#18131A]">{quiz.title}</h4>
-                        <p className="text-xs text-[#6B6470]">
-                          {quiz.eventTitle} · {quiz.totalQuestions} Questions · {quiz.timeLimitMinutes} Mins
-                        </p>
-                      </div>
-                    </div>
-
-                    <GradientButton
-                      size="sm"
-                      onClick={() => onOpenQuiz(quiz.id)}
-                      icon={<Sparkles className="w-3.5 h-3.5" />}
-                    >
-                      Take Quiz ⚡
-                    </GradientButton>
-                  </GlassCard>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* TAB 4: USERS (FOR ADMIN) */}
           {activeTab === 'users' && user.role === 'admin' && (

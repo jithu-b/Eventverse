@@ -19,10 +19,13 @@ try {
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
+import { StudentAuthProvider } from './context/StudentAuthContext';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <StudentAuthProvider>
+      <App />
+    </StudentAuthProvider>
   </StrictMode>,
 );

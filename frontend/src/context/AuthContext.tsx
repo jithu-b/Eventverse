@@ -1,7 +1,14 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
+
+const ADMIN_EMAILS = ['jithubiju0102@gmail.com'];
+
+function roleForEmail(email: string | undefined): string {
+  return email && ADMIN_EMAILS.includes(email.toLowerCase()) ? 'admin' : 'participant';
+}
 
 interface AuthUser {
-  id: number;
+  id: string;
   name: string;
   email: string;
   role: string;
@@ -10,44 +17,61 @@ interface AuthUser {
 interface AuthContextType {
   authUser: AuthUser | null;
   loading: boolean;
-  loginAsAdmin: () => void;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
-
-const DEMO_ADMIN: AuthUser = {
-  id: 1,
-  name: 'Jithu Biju',
-  email: 'admin@tinkerhub.sbce',
-  role: 'admin',
-};
-
-const DEMO_VISITOR: AuthUser = {
-  id: 0,
-  name: 'Guest',
-  email: 'guest@tinkerhub.sbce',
-  role: 'participant',
-};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [authUser, setAuthUser] = useState<AuthUser>(() => {
-    const stored = localStorage.getItem('eventverse_demo_role');
-    return stored === 'admin' ? DEMO_ADMIN : DEMO_VISITOR;
-  });
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const loginAsAdmin = () => {
-    localStorage.setItem('eventverse_demo_role', 'admin');
-    setAuthUser(DEMO_ADMIN);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      const session = data.session;
+      if (session?.user) {
+        setAuthUser({
+          id: session.user.id,
+          name: session.user.email?.split('@')[0] || 'User',
+          email: session.user.email || '',
+          role: roleForEmail(session.user.email),
+        });
+      }
+      setLoading(false);
+    }).catch((err) => {
+      console.error('getSession failed:', err);
+      setLoading(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setAuthUser({
+          id: session.user.id,
+          name: session.user.email?.split('@')[0] || 'User',
+          email: session.user.email || '',
+          role: roleForEmail(session.user.email),
+        });
+      } else {
+        setAuthUser(null);
+      }
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
   };
 
-  const logout = () => {
-    localStorage.removeItem('eventverse_demo_role');
-    setAuthUser(DEMO_VISITOR);
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setAuthUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ authUser, loading: false, loginAsAdmin, logout }}>
+    <AuthContext.Provider value={{ authUser, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

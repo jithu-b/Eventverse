@@ -20,6 +20,7 @@ import {
   LogOut
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useStudentAuth } from '../../context/StudentAuthContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserRole, NotificationItem, UserProfile } from '../../types';
 import { GradientButton } from './GradientButton';
@@ -59,6 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const profileRef = useRef<HTMLDivElement>(null);
 
   const { logout, authUser } = useAuth();
+  const { student, logout: studentLogout } = useStudentAuth();
   const activeRole: UserRole = (authUser?.role as UserRole) || 'participant';
 
   const safeNotifications = Array.isArray(notifications) ? notifications : [];
@@ -82,6 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navLinks = [
     { id: 'home', label: 'Home', icon: Sparkles },
     { id: 'discover', label: 'Events', icon: Compass },
+    { id: 'my-events', label: 'My Events', icon: Calendar },
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'gallery', label: 'Gallery', icon: GalleryIcon },
     { id: 'execom', label: 'Execom', icon: Users },
@@ -319,7 +322,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <span className="font-bold text-[#DB2777] uppercase">{activeRole}</span>
                     </div>
                     <button
-                      onClick={() => { logout(); setProfileMenuOpen(false); }}
+                      onClick={() => { logout(); studentLogout(); setProfileMenuOpen(false); }}
                       className="w-full text-left px-3 py-2 text-xs font-medium text-[#DB2777] hover:bg-[#FFF1F7] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
                     >
                       <LogOut className="w-4 h-4" />

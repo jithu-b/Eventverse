@@ -60,6 +60,16 @@ export interface EventItem {
     contactEmail: string;
   };
   entryFee?: string; // "Free" or "₹99"
+  registerFormUrl?: string;
+  registrationFields?: RegistrationField[];
+}
+
+export interface RegistrationField {
+  id: string;
+  label: string;
+  type: 'short_text' | 'paragraph' | 'multiple_choice' | 'checkboxes' | 'dropdown';
+  required: boolean;
+  options?: string[];
 }
 
 export interface QuizQuestion {

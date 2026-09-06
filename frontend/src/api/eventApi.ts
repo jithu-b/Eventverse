@@ -1,10 +1,10 @@
-import axiosClient from './axiosClient';
+import { supabase } from '../lib/supabase';
 import { EventItem } from '../types';
 import { mediaUrl } from './photoApi';
 
 function mapEvent(e: any): EventItem {
-  const start = e.start_time ? new Date(e.start_time) : null;
-  const end = e.end_time ? new Date(e.end_time) : null;
+  const start = e.start_time && !isNaN(new Date(e.start_time).getTime()) ? new Date(e.start_time) : null;
+  const end = e.end_time && !isNaN(new Date(e.end_time).getTime()) ? new Date(e.end_time) : null;
   const rawStatus = e.status
     ? ((e.status.charAt(0).toUpperCase() + e.status.slice(1)) as EventItem['status'])
     : e.is_active ? 'Upcoming' : 'Completed';
@@ -47,34 +47,57 @@ function mapEvent(e: any): EventItem {
       contactEmail: e.organizer_email || '',
     },
     entryFee: 'Free',
+    registerFormUrl: e.register_form_url || '',
+    registrationFields: e.registration_fields || [],
   };
+}
+
+export interface EventInput {
+  title: string;
+  description?: string;
+  category?: string;
+  location?: string;
+  start_time?: string | null;
+  end_time?: string | null;
+  registration_limit?: number;
+  banner_url?: string;
+  thumbnail_url?: string;
+  is_active?: boolean;
+  register_form_url?: string;
+  registration_fields?: any[];
 }
 
 export const eventApi = {
   list: async (): Promise<EventItem[]> => {
-    const res = await axiosClient.get('/events');
-    return (res.data.events || []).map(mapEvent);
+    const { data, error } = await supabase.from('events').select('*').order('start_time', { ascending: false });
+    if (error) throw error;
+    return (data || []).map(mapEvent);
   },
   getById: async (id: string): Promise<EventItem | null> => {
-    const res = await axiosClient.get(`/events/${id}`);
-    return res.data.event ? mapEvent(res.data.event) : null;
+    const { data, error } = await supabase.from('events').select('*').eq('id', id).single();
+    if (error) return null;
+    return data ? mapEvent(data) : null;
   },
-  create: async (formData: FormData): Promise<EventItem> => {
-    const res = await axiosClient.post('/events', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return mapEvent(res.data.event);
+  create: async (input: EventInput): Promise<EventItem> => {
+    const { data, error } = await supabase.from('events').insert(input).select().single();
+    if (error) throw error;
+    return mapEvent(data);
   },
-  update: async (id: string, formData: FormData): Promise<EventItem> => {
-    const res = await axiosClient.put(`/events/${id}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return mapEvent(res.data.event);
+  update: async (id: string, input: Partial<EventInput>): Promise<EventItem> => {
+    const { data, error } = await supabase.from('events').update(input).eq('id', id).select().single();
+    if (error) throw error;
+    return mapEvent(data);
   },
   remove: async (id: string): Promise<void> => {
-    await axiosClient.delete(`/events/${id}`);
+    const { error } = await supabase.from('events').delete().eq('id', id);
+    if (error) throw error;
   },
-  register: async (id: string): Promise<void> => {
-    await axiosClient.post(`/events/${id}/register`);
+  uploadBanner: async (file: File): Promise<string> => {
+    const ext = file.name.split('.').pop();
+    const filename = `banners/${crypto.randomUUID()}.${ext}`;
+    const { error } = await supabase.storage.from('media').upload(filename, file);
+    if (error) throw error;
+    const { data } = supabase.storage.from('media').getPublicUrl(filename);
+    return data.publicUrl;
   },
 };

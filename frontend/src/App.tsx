@@ -184,15 +184,6 @@ function AppContent() {
 
   if (loading) return null;
 
-  if (!student) {
-    return (
-      <StudentLoginModal
-        isOpen={true}
-        onClose={() => {}}
-        onLoggedIn={() => {}}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen relative flex flex-col font-sans text-[#18131A] selection:bg-pink-200 selection:text-[#DB2777]">

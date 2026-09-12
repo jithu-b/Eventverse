@@ -21,6 +21,7 @@ import { EventItem, Quiz, UserRole, UserProfile } from '../types';
 import { GradientButton } from '../components/common/GradientButton';
 import { StatCard } from '../components/common/StatCard';
 import { EventCard } from '../components/events/EventCard';
+import { TinkerTalksSection } from '../components/tinkertalks/TinkerTalksSection';
 import { GlassCard } from '../components/common/GlassCard';
 import tinkerhubLogo from '../assets/tinkerhub-logo.png';
 
@@ -287,6 +288,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      <TinkerTalksSection />
       {/* 3. UPCOMING EVENTS SPOTLIGHT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">

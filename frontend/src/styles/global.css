@@ -199,3 +199,12 @@ p {
     -webkit-backdrop-filter: blur(6px) !important;
   }
 }
+
+/* Hide scrollbar for compact mobile nav row, but keep it scrollable */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

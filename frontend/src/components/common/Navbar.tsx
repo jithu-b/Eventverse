@@ -157,20 +157,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Action Icons & Profile */}
           <div className="flex items-center gap-2.5">
-            {/* Quick Search */}
-            <button
-              onClick={onOpenSearch}
-              className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-[#6B6470] hover:text-[#EC4899] bg-white/80 hover:bg-pink-50/70 border border-[#F3DCE8] rounded-xl transition-all shadow-xs cursor-pointer"
-              title="Search events (Ctrl+K)"
-              id="global-search-trigger"
-            >
-              <Search className="w-4 h-4 text-[#EC4899]" />
-              <span className="hidden sm:inline">Search...</span>
-              <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-semibold text-[#6B6470] bg-[#FFF1F7] border border-[#F3DCE8] rounded">
-                ⌘K
-              </kbd>
-            </button>
-
             {/* Create Event Button (for Organizer / Admin) */}
             {activeRole === 'admin' && (
               <button
@@ -331,9 +317,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Nav Grid - always visible below navbar, no dropdown needed */}
-      <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#F3DCE8] px-4 pt-3 pb-4 shadow-sm">
-        <div className="grid grid-cols-2 gap-2">
+      {/* Mobile Nav Row - compact, single line, horizontally scrollable */}
+      <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#F3DCE8] px-3 py-2 shadow-sm">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
           {navLinks
             .filter((link) => link.id !== 'my-events')
             .map((link) => {
@@ -343,13 +329,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={link.id}
                   onClick={() => onNavigate(link.id)}
-                  className={`flex items-center gap-2.5 px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold rounded-full transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                     isActive
                       ? 'bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white shadow-sm'
                       : 'bg-[#FFF1F7] text-[#6B6470] hover:text-[#EC4899] border border-[#F3DCE8]'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5" />
                   <span>{link.label}</span>
                 </button>
               );

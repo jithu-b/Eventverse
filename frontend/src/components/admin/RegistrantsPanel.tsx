@@ -40,7 +40,8 @@ export const RegistrantsPanel: React.FC = () => {
           const val = r.responses?.[f.id];
           return Array.isArray(val) ? val.join('; ') : (val ?? '');
         });
-        return [...base, ...custom, r.created_at].map((v) => `"${v}"`).join(',');
+        const formattedDate = new Date(r.created_at).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
+        return [...base, ...custom, formattedDate].map((v) => `"${v}"`).join(',');
       })
       .join('\n');
     const blob = new Blob([header + rows], { type: 'text/csv' });

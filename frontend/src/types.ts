@@ -62,6 +62,7 @@ export interface EventItem {
   entryFee?: string; // "Free" or "₹99"
   registerFormUrl?: string;
   registrationFields?: RegistrationField[];
+  whatsappLink?: string;
 }
 
 export interface RegistrationField {

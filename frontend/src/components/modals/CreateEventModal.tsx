@@ -45,6 +45,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [fields, setFields] = useState<RegistrationField[]>([]);
+  const [whatsappLink, setWhatsappLink] = useState('');
 
   function handleBannerChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] || null;
@@ -110,6 +111,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
         thumbnail_url: bannerUrl,
         is_active: true,
         registration_fields: fields,
+        whatsapp_link: whatsappLink || undefined,
       });
       onCreated(created);
       onClose();
@@ -234,6 +236,20 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
           {bannerPreview && (
             <img src={bannerPreview} alt="Banner preview" className="mt-2 w-full h-32 object-cover rounded-xl" />
           )}
+        </div>
+
+        <div>
+          <label className="block font-bold text-[#18131A] mb-1">WhatsApp Group Link (optional)</label>
+          <input
+            type="url"
+            placeholder="https://chat.whatsapp.com/..."
+            value={whatsappLink}
+            onChange={(e) => setWhatsappLink(e.target.value)}
+            className={inputClass}
+          />
+          <p className="text-[11px] text-[#6B6470] mt-1">
+            Shown to participants right after they complete registration.
+          </p>
         </div>
 
         <div className="pt-3 border-t border-[#F3DCE8]">

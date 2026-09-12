@@ -49,6 +49,7 @@ function mapEvent(e: any): EventItem {
     entryFee: 'Free',
     registerFormUrl: e.register_form_url || '',
     registrationFields: e.registration_fields || [],
+    whatsappLink: e.whatsapp_link || '',
   };
 }
 
@@ -65,6 +66,7 @@ export interface EventInput {
   is_active?: boolean;
   register_form_url?: string;
   registration_fields?: any[];
+  whatsapp_link?: string;
 }
 
 export const eventApi = {

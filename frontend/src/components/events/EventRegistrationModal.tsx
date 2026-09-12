@@ -42,6 +42,8 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
   const [formData, setFormData] = useState({
     name: student?.name || '',
     email: student?.email || '',
+    dept: '',
+    year: '',
   });
   const [answers, setAnswers] = useState<Record<string, any>>({});
 
@@ -70,7 +72,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onConfirmRegistration(event.id, { name: formData.name, email: formData.email, dept: '', year: '' }, answers);
+    onConfirmRegistration(event.id, { name: formData.name, email: formData.email, dept: formData.dept, year: formData.year }, answers);
     setIsRegisteredSuccess(true);
 
     // Fire festive campus confetti
@@ -166,7 +168,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#18131A] mb-1.5">College Email ID</label>
+              <label className="block text-xs font-bold text-[#18131A] mb-1.5">Email ID</label>
               <div className="relative">
                 <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
                 <input
@@ -176,6 +178,38 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
                 />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-bold text-[#18131A] mb-1.5">Department</label>
+                <div className="relative">
+                  <GraduationCap className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Computer Science"
+                    value={formData.dept}
+                    onChange={(e) => setFormData({ ...formData, dept: e.target.value })}
+                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-[#18131A] mb-1.5">Year / Class</label>
+                <select
+                  required
+                  value={formData.year}
+                  onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none cursor-pointer"
+                >
+                  <option value="">Select year...</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                </select>
               </div>
             </div>
 
@@ -347,6 +381,17 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
               </span>
             </div>
           </div>
+
+          {event.whatsappLink && (
+            <a
+              href={event.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 mx-auto max-w-md w-full px-4 py-3 text-sm font-bold bg-[#25D366] hover:bg-[#1FBE5A] text-white rounded-xl transition-all shadow-lg shadow-green-500/20"
+            >
+              Join the Event WhatsApp Group →
+            </a>
+          )}
 
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <button

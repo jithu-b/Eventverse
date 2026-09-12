@@ -51,7 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onCreateEvent = () => {},
   registeredCount,
 }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
@@ -328,54 +327,35 @@ export const Navbar: React.FC<NavbarProps> = ({
               </AnimatePresence>
             </div>
 
-            {/* Mobile Hamburger Menu Toggle */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#6B6470] hover:text-[#EC4899] bg-white/80 border border-[#F3DCE8] rounded-xl lg:hidden cursor-pointer"
-              aria-label="Toggle menu"
-              id="mobile-hamburger-btn"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#F3DCE8] px-4 pt-2 pb-6 space-y-3 shadow-lg"
-          >
-            <div className="grid grid-cols-2 gap-2">
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                const isActive = currentView === link.id;
-                return (
-                  <button
-                    key={link.id}
-                    onClick={() => {
-                      onNavigate(link.id);
-                      setMobileMenuOpen(false);
-                    }}
-                    className={`flex items-center gap-2.5 px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white shadow-sm'
-                        : 'bg-[#FFF1F7] text-[#6B6470] hover:text-[#EC4899] border border-[#F3DCE8]'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span>{link.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile Nav Grid - always visible below navbar, no dropdown needed */}
+      <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#F3DCE8] px-4 pt-3 pb-4 shadow-sm">
+        <div className="grid grid-cols-2 gap-2">
+          {navLinks
+            .filter((link) => link.id !== 'my-events')
+            .map((link) => {
+              const Icon = link.icon;
+              const isActive = currentView === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => onNavigate(link.id)}
+                  className={`flex items-center gap-2.5 px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white shadow-sm'
+                      : 'bg-[#FFF1F7] text-[#6B6470] hover:text-[#EC4899] border border-[#F3DCE8]'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{link.label}</span>
+                </button>
+              );
+            })}
+        </div>
+      </div>
     </header>
   );
 };

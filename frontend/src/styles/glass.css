@@ -78,3 +78,23 @@
 .glass-accent:hover::before {
   opacity: 1;
 }
+/* ==========================================================
+   Mobile performance: backdrop-filter blur is expensive to
+   recompute on phone GPUs, especially during scroll. Reduce
+   blur radius significantly on small screens; visual difference
+   is minor but performance impact is large.
+   ========================================================== */
+@media (max-width: 640px) {
+  .glass,
+  .glass-card,
+  .glass-panel {
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+  }
+
+  .glass-strong,
+  .glass-nav {
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+  }
+}

@@ -25,7 +25,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { UserRole, NotificationItem, UserProfile } from '../../types';
 import { GradientButton } from './GradientButton';
 import tinkerhubLogo from '../../assets/tinkerhub-logo.png';
-import { AnimatedGuideMan } from '../character/AnimatedGuideMan';
 
 interface NavbarProps {
   currentView: string;
@@ -85,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'home', label: 'Home', icon: Sparkles },
     { id: 'discover', label: 'Events', icon: Compass },
     { id: 'my-events', label: 'My Events', icon: Calendar },
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'calendar', label: 'Calendar', icon: LayoutDashboard },
     { id: 'gallery', label: 'Gallery', icon: GalleryIcon },
     { id: 'execom', label: 'Execom', icon: Users },
     { id: 'admin', label: 'Admin', icon: ShieldCheck },
@@ -110,10 +109,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="w-6 h-6 object-contain relative z-10 drop-shadow-[0_0_6px_rgba(255,255,255,0.8)]"
                 />
               </div>
-            </div>
-
-            <div className="w-12 h-12 hidden sm:block">
-              <AnimatedGuideMan minimal characterName="Jithu" />
             </div>
 
             <div className="flex flex-col">
@@ -279,18 +274,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                     <button
                       onClick={() => {
-                        onNavigate('dashboard');
+                        onNavigate('calendar');
                         setProfileMenuOpen(false);
                       }}
                       className="w-full text-left px-3 py-2 text-xs font-medium text-[#18131A] hover:bg-[#FFF1F7] hover:text-[#DB2777] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
                     >
                       <LayoutDashboard className="w-4 h-4 text-[#EC4899]" />
-                      <span>My Dashboard</span>
+                      <span>Calendar</span>
                     </button>
 
                     <button
                       onClick={() => {
-                        onNavigate('dashboard');
+                        onNavigate('my-events');
                         setProfileMenuOpen(false);
                       }}
                       className="w-full text-left px-3 py-2 text-xs font-medium text-[#18131A] hover:bg-[#FFF1F7] hover:text-[#DB2777] rounded-xl flex items-center justify-between cursor-pointer transition-colors"
@@ -306,7 +301,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                     <button
                       onClick={() => {
-                        onNavigate('dashboard');
+                        onNavigate('calendar');
                         setProfileMenuOpen(false);
                       }}
                       className="w-full text-left px-3 py-2 text-xs font-medium text-[#18131A] hover:bg-[#FFF1F7] hover:text-[#DB2777] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"

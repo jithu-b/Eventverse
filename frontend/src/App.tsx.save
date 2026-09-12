@@ -1,3 +1,4 @@
+nano frontend/src/App.tsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -10,7 +11,6 @@ import { eventApi } from './api/eventApi';
 import { registrationApi } from './api/registrationApi';
 import { useStudentAuth } from './context/StudentAuthContext';
 import { StudentLoginModal } from './components/modals/StudentLoginModal';
-import { WelcomeEventPopup } from './components/modals/WelcomeEventPopup';
 import { adminApi } from './api/adminApi.js';
 import { LivingBackground } from './components/common/LivingBackground';
 import { ScrollProgressBar } from './components/execom/ScrollProgressBar';
@@ -21,7 +21,7 @@ import { Footer } from './components/common/Footer';
 import { HomePage } from './pages/HomePage';
 import { EventDiscoveryPage } from './pages/EventDiscoveryPage';
 import { EventDetailPage } from './pages/EventDetailPage';
-import { CalendarPage } from './pages/CalendarPage';
+import { DashboardPage } from './pages/DashboardPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { ExecomPage } from './pages/ExecomPage';
 import { EventRegistrationModal } from './components/events/EventRegistrationModal';
@@ -35,11 +35,11 @@ import { STATIC_EVENTS } from './data/staticEvents';
 
 function AppContent() {
   // Navigation View State
-  type ViewType = 'home' | 'discover' | 'event-detail' | 'calendar' | 'gallery' | 'execom' | 'admin' | 'my-events';
+  type ViewType = 'home' | 'discover' | 'event-detail' | 'dashboard' | 'gallery' | 'execom' | 'admin' | 'my-events';
 
   const parseLocation = (): { view: ViewType; eventId: string | null } => {
     const segments = window.location.pathname.split('/').filter(Boolean);
-    const validViews: ViewType[] = ['home', 'discover', 'event-detail', 'calendar', 'gallery', 'execom', 'admin', 'my-events'];
+    const validViews: ViewType[] = ['home', 'discover', 'event-detail', 'dashboard', 'gallery', 'execom', 'admin', 'my-events'];
     const view = (segments[0] as ViewType) || 'home';
     if (validViews.includes(view)) {
       return { view, eventId: segments[1] || null };
@@ -120,7 +120,13 @@ function AppContent() {
   // Event Registration Flow
   const handleOpenRegistration = (eventId: string) => {
     const evt = events.find((e) => e.id === eventId);
-    if (evt) setActiveRegEvent(evt);
+    if (!evt) return;
+    if (!student) {
+      setPendingRegEvent(evt);
+      setShowStudentLogin(true);
+      return;
+    }
+    setActiveRegEvent(evt);
   };
 
   const handleConfirmRegistration = async (
@@ -179,6 +185,15 @@ function AppContent() {
 
   if (loading) return null;
 
+  if (!student) {
+    return (
+      <StudentLoginModal
+        isOpen={true}
+        onClose={() => {}}
+        onLoggedIn={() => {}}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen relative flex flex-col font-sans text-[#18131A] selection:bg-pink-200 selection:text-[#DB2777]">
@@ -271,17 +286,24 @@ function AppContent() {
             </motion.div>
           )}
 
-          {currentView === 'calendar' && (
+          {currentView === 'dashboard' && (
             <motion.div
-              key="calendar"
+              key="dashboard"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <CalendarPage
+              <DashboardPage
+                user={user}
                 events={events}
+                activities={activities}
                 onSelectEvent={(id) => handleNavigate('event-detail', id)}
+                onOpenQRScanner={handleOpenQRScanner}
+
+
+                onCreateEvent={() => { if (authUser?.role === 'admin') setIsCreateEventOpen(true); else showToast('Only admins can create events. Please log in as admin.'); }}
+                onRoleChange={handleRoleChange}
               />
             </motion.div>
           )}
@@ -363,7 +385,6 @@ function AppContent() {
           }
         }}
       />
-      <WelcomeEventPopup onRegister={handleOpenRegistration} />
 
       {/* Live QR Scanner Modal */}
       <QRScannerModal

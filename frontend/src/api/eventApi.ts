@@ -101,3 +101,14 @@ export const eventApi = {
     return data.publicUrl;
   },
 };
+
+export async function getLatestEvent(): Promise<EventItem | null> {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error || !data) return null;
+  return mapEvent(data);
+}

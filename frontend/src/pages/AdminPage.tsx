@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import { Mail, Lock, Sparkles, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { GradientButton } from '../components/common/GradientButton';
-import { AnimatedGuideMan } from '../components/character/AnimatedGuideMan';
 import { RegistrantsPanel } from '../components/admin/RegistrantsPanel';
 
 const inputClass =
@@ -48,12 +47,6 @@ export function AdminPage() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 gap-8 flex-wrap py-10">
-      <div className="hidden lg:block w-72">
-        <AnimatedGuideMan
-          characterName="Jithu"
-          currentFocus={focusField === 'none' ? undefined : focusField}
-        />
-      </div>
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}

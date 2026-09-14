@@ -48,6 +48,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
   const [answers, setAnswers] = useState<Record<string, any>>({});
 
   const [isRegisteredSuccess, setIsRegisteredSuccess] = useState(false);
+  const [showWhatsappStep, setShowWhatsappStep] = useState(false);
   const [copied, setCopied] = useState(false);
 
   if (!event) return null;
@@ -73,7 +74,11 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onConfirmRegistration(event.id, { name: formData.name, email: formData.email, dept: formData.dept, year: formData.year }, answers);
-    setIsRegisteredSuccess(true);
+    if (event.whatsappLink) {
+      setShowWhatsappStep(true);
+    } else {
+      setIsRegisteredSuccess(true);
+    }
 
     // Fire festive campus confetti
     try {
@@ -101,12 +106,21 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
       isOpen={isOpen}
       onClose={() => {
         setIsRegisteredSuccess(false);
+        setShowWhatsappStep(false);
         onClose();
       }}
       maxWidth={isRegisteredSuccess ? 'xl' : 'lg'}
       id="event-registration-modal"
     >
-      {!isRegisteredSuccess ? (
+      {showWhatsappStep ? (
+        <WhatsappJoinStep
+          whatsappLink={event.whatsappLink!}
+          onContinue={() => {
+            setShowWhatsappStep(false);
+            setIsRegisteredSuccess(true);
+          }}
+        />
+      ) : !isRegisteredSuccess ? (
         <div className="space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-[#F3DCE8]">
             <div className="w-12 h-12 rounded-2xl bg-pink-100/90 text-[#EC4899] flex items-center justify-center font-bold">
@@ -382,17 +396,6 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
             </div>
           </div>
 
-          {event.whatsappLink && (
-            <a
-              href={event.whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 mx-auto max-w-md w-full px-4 py-3 text-sm font-bold bg-[#25D366] hover:bg-[#1FBE5A] text-white rounded-xl transition-all shadow-lg shadow-green-500/20"
-            >
-              Join the Event WhatsApp Group →
-            </a>
-          )}
-
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <button
               onClick={handleShare}
@@ -418,3 +421,39 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
   );
 };
 
+function WhatsappJoinStep({ whatsappLink, onContinue }: { whatsappLink: string; onContinue: () => void }) {
+  return (
+    <div className="space-y-6 text-center py-4">
+      <div className="inline-flex p-4 rounded-full bg-green-100 text-green-600">
+        <svg viewBox="0 0 24 24" className="w-9 h-9" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.2c-.22.62-1.28 1.18-1.77 1.24-.45.06-1.02.09-1.65-.1-.38-.12-.87-.28-1.5-.55-2.64-1.14-4.36-3.8-4.5-3.98-.13-.18-1.08-1.44-1.08-2.74s.68-1.94.92-2.2c.24-.26.53-.33.7-.33h.5c.16 0 .38-.06.6.46.22.52.75 1.8.82 1.93.07.13.11.28.02.46-.09.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.27.27-.12.53.16.26.7 1.15 1.5 1.87 1.04.93 1.9 1.22 2.16 1.36.26.13.42.11.57-.07.16-.18.66-.77.84-1.03.18-.26.35-.22.6-.13.24.09 1.53.72 1.79.85.26.13.44.2.5.31.07.1.07.6-.15 1.22z"/>
+        </svg>
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-extrabold text-[#18131A] font-outfit">
+          One Last Step
+        </h3>
+        <p className="text-sm text-[#6B6470] mt-2 max-w-sm mx-auto">
+          Join the official event WhatsApp group to get updates, reminders, and important announcements.
+        </p>
+      </div>
+
+      <a
+        href={whatsappLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 mx-auto max-w-md w-full px-5 py-4 text-base font-bold bg-[#25D366] hover:bg-[#1FBE5A] text-white rounded-2xl transition-all shadow-lg shadow-green-500/25"
+      >
+        Join the Event WhatsApp Group
+      </a>
+
+      <button
+        onClick={onContinue}
+        className="text-xs font-bold text-[#6B6470] hover:text-[#18131A] cursor-pointer"
+      >
+        Continue to my ticket
+      </button>
+    </div>
+  );
+}

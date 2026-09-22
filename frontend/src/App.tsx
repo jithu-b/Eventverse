@@ -27,6 +27,7 @@ import { ExecomPage } from './pages/ExecomPage';
 import { EventRegistrationModal } from './components/events/EventRegistrationModal';
 import { QRScannerModal } from './components/events/QRScannerModal';
 import { CreateEventModal } from './components/modals/CreateEventModal';
+import { EditEventModal } from './components/modals/EditEventModal';
 import { GlobalSearchModal } from './components/modals/GlobalSearchModal';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AdminPage } from './pages/AdminPage';
@@ -65,6 +66,8 @@ function AppContent() {
   const { student } = useStudentAuth();
   const [activeQREvent, setActiveQREvent] = useState<EventItem | null>(null);
   const [isCreateEventOpen, setIsCreateEventOpen] = useState(false);
+  const [isEditEventOpen, setIsEditEventOpen] = useState(false);
+  const [eventToEdit, setEventToEdit] = useState<EventItem | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   // Toast Notification
@@ -170,6 +173,16 @@ function AppContent() {
   // Create Event
   const handleCreateEvent = (created: EventItem) => {
     setEvents((prev) => [created, ...prev]);
+    const newNotif: NotificationItem = {
+      id: crypto.randomUUID(),
+      title: `New Event Published 🚀`,
+      message: `"${created.title}" is now live!`,
+      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+      read: false,
+      type: 'event',
+      link: `/event-detail/${created.id}`
+    };
+    setNotifications((prev) => [newNotif, ...prev]);
     showToast(`Event "${created.title}" published successfully! 🚀`);
     handleNavigate('event-detail', created.id);
   };
@@ -266,6 +279,10 @@ function AppContent() {
                   setEvents((prev) => prev.filter((e) => e.id !== selectedEvent.id));
                   showToast('Event deleted');
                   handleNavigate('discover');
+                } : undefined}
+                onEdit={authUser?.role === 'admin' ? (event) => {
+                  setEventToEdit(event);
+                  setIsEditEventOpen(true);
                 } : undefined}
               />
             </motion.div>
@@ -380,7 +397,35 @@ function AppContent() {
         onCreated={handleCreateEvent}
       />
 
-      {/* Global Spotlight Search Modal */}
+      
+
+      {/* Edit Event Modal */}
+      <EditEventModal
+        isOpen={isEditEventOpen}
+        onClose={() => {
+          setIsEditEventOpen(false);
+          setEventToEdit(null);
+        }}
+        event={eventToEdit}
+        onUpdated={(updated) => {
+          setEvents((prev) =>
+            prev.map((e) => (e.id === updated.id ? updated : e))
+          );
+          const newNotif: NotificationItem = {
+            id: crypto.randomUUID(),
+            title: `Event Updated ✏️`,
+            message: `"${updated.title}" has been updated.`,
+            time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+            read: false,
+            type: 'event',
+            link: `/event-detail/${updated.id}`
+          };
+          setNotifications((prev) => [newNotif, ...prev]);
+          showToast(`Event "${updated.title}" updated successfully! ✅`);
+          setIsEditEventOpen(false);
+          setEventToEdit(null);
+        }}
+      />{/* Global Spotlight Search Modal */}
       <GlobalSearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}

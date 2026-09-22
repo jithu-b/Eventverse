@@ -250,43 +250,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 2. STATS COUNTER ROW */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          <StatCard
-            label="Events Hosted"
-            value={`${safeEvents.length}`}
-            numericTarget={safeEvents.length}
-            subtext="Workshops & hackathons"
-            icon={Calendar}
-            color="pink"
-            trend="Growing every semester"
-            id="stat-events-hosted"
-          />
-          <StatCard
-            label="Participants"
-            value="2.4K+"
-            numericTarget={2400}
-            suffix="+"
-            subtext="Active student builders"
-            icon={Users}
-            color="purple"
-            trend="Across 6 departments"
-            id="stat-participants"
-          />
-          <StatCard
-            label="Community Events"
-            value="35+"
-            numericTarget={35}
-            suffix="+"
-            subtext="Meetups & open talks"
-            icon={Trophy}
-            color="pink"
-            trend="Weekly campus meetups"
-            id="stat-community-events"
-          />
-        </div>
-      </section>
 
       <TinkerTalksSection />
       {/* 3. UPCOMING EVENTS SPOTLIGHT */}

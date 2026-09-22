@@ -3,7 +3,7 @@ import { PlusCircle, ImagePlus, Trash2, Plus } from 'lucide-react';
 import { EventItem, RegistrationField } from '../../types';
 import { Modal } from '../common/Modal';
 import { GradientButton } from '../common/GradientButton';
-import { eventApi } from '../../api/eventApi';
+import { eventApi, toUTCISOString } from '../../api/eventApi';
 
 interface CreateEventModalProps {
   isOpen: boolean;
@@ -104,8 +104,8 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
         description,
         category,
         location,
-        start_time: startTime || null,
-        end_time: endTime || null,
+        start_time: toUTCISOString(startTime),
+        end_time: toUTCISOString(endTime),
         registration_limit: totalSpots,
         banner_url: bannerUrl,
         thumbnail_url: bannerUrl,

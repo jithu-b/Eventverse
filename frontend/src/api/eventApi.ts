@@ -1,6 +1,13 @@
 import { supabase } from '../lib/supabase';
 import { EventItem } from '../types';
 import { mediaUrl } from './photoApi';
+export function toUTCISOString(localDateTimeStr: string | null | undefined): string | null {
+  if (!localDateTimeStr) return null;
+  const localDate = new Date(localDateTimeStr);
+  if (isNaN(localDate.getTime())) return null;
+  return localDate.toISOString();
+}
+
 
 function mapEvent(e: any): EventItem {
   const start = e.start_time && !isNaN(new Date(e.start_time).getTime()) ? new Date(e.start_time) : null;

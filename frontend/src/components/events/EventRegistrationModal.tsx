@@ -111,6 +111,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
       }}
       maxWidth={isRegisteredSuccess ? 'xl' : 'lg'}
       id="event-registration-modal"
+      closeOnBackdropClick={!showWhatsappStep}
     >
       {showWhatsappStep ? (
         <WhatsappJoinStep

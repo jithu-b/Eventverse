@@ -59,4 +59,22 @@ export const registrationApi = {
     if (error) throw error;
     return data || [];
   },
+
+  remove: async (registrationId: string, eventId: string): Promise<void> => {
+    const { error } = await supabase
+      .from('registrations')
+      .delete()
+      .eq('id', registrationId);
+    if (error) throw error;
+
+    const { count } = await supabase
+      .from('registrations')
+      .select('*', { count: 'exact', head: true })
+      .eq('event_id', Number(eventId));
+
+    await supabase
+      .from('events')
+      .update({ registration_count: count || 0 })
+      .eq('id', Number(eventId));
+  },
 };

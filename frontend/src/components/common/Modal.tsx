@@ -10,6 +10,7 @@ interface ModalProps {
   children: React.ReactNode;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   id?: string;
+  closeOnBackdropClick?: boolean;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -20,6 +21,7 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   maxWidth = 'lg',
   id,
+  closeOnBackdropClick = true,
 }) => {
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -61,7 +63,7 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={onClose}
+            onClick={closeOnBackdropClick ? onClose : undefined}
             className="fixed inset-0 bg-[#18131A]/30 backdrop-blur-sm"
           />
 

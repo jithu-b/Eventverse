@@ -1,4 +1,5 @@
 import axiosClient from './axiosClient';
+import { toWebP } from '../utils/imageConversion';
 
 export type LayoutViewMode = 'editorial' | 'grid';
 
@@ -37,8 +38,9 @@ export const execomApi = {
     await axiosClient.delete(`/execom/${id}`);
   },
   uploadImage: async (file: File): Promise<string> => {
+    const webpFile = await toWebP(file);
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('image', webpFile);
     const res = await axiosClient.post('/execom/upload-image', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });

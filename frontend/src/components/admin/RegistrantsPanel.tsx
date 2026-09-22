@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Download, Users, ChevronLeft } from 'lucide-react';
+import { Download, Users, ChevronLeft, Trash2 } from 'lucide-react';
 import { EventItem } from '../../types';
 import { eventApi } from '../../api/eventApi';
 import { registrationApi, Registrant } from '../../api/registrationApi';
@@ -10,6 +10,7 @@ export const RegistrantsPanel: React.FC = () => {
   const [registrants, setRegistrants] = useState<Registrant[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingRegs, setLoadingRegs] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     eventApi.list().then((evs) => {
@@ -25,6 +26,21 @@ export const RegistrantsPanel: React.FC = () => {
       setRegistrants(regs);
       setLoadingRegs(false);
     });
+  }
+
+  async function handleDelete(reg: Registrant) {
+    if (!selected) return;
+    const ok = window.confirm(`Remove ${reg.name}'s registration? This cannot be undone.`);
+    if (!ok) return;
+    setDeletingId(reg.id);
+    try {
+      await registrationApi.remove(reg.id, selected.id);
+      setRegistrants((prev) => prev.filter((r) => r.id !== reg.id));
+    } catch (err) {
+      alert('Failed to delete registration. Please try again.');
+    } finally {
+      setDeletingId(null);
+    }
   }
 
   function exportCsv() {
@@ -91,6 +107,7 @@ export const RegistrantsPanel: React.FC = () => {
                     <th key={f.id} className="px-4 py-2.5 font-bold text-[#18131A]">{f.label}</th>
                   ))}
                   <th className="px-4 py-2.5 font-bold text-[#18131A]">Registered</th>
+                  <th className="px-4 py-2.5 font-bold text-[#18131A]"></th>
                 </tr>
               </thead>
               <tbody>
@@ -106,6 +123,16 @@ export const RegistrantsPanel: React.FC = () => {
                       return <td key={f.id} className="px-4 py-2.5">{display}</td>;
                     })}
                     <td className="px-4 py-2.5 text-[#6B6470]">{new Date(r.created_at).toLocaleString()}</td>
+                    <td className="px-4 py-2.5">
+                      <button
+                        onClick={() => handleDelete(r)}
+                        disabled={deletingId === r.id}
+                        className="flex items-center gap-1 text-xs font-bold text-red-600 hover:text-red-700 disabled:opacity-40 cursor-pointer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        {deletingId === r.id ? 'Removing...' : 'Remove'}
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

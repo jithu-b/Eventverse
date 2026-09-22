@@ -1,9 +1,11 @@
 import { supabase } from '../lib/supabase';
+import { toWebP } from '../utils/imageConversion';
 
 async function uploadBannerFile(file: File): Promise<string> {
-  const ext = file.name.split('.').pop();
+  const webpFile = await toWebP(file);
+  const ext = webpFile.name.split('.').pop();
   const filename = `banners/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from('media').upload(filename, file);
+  const { error } = await supabase.storage.from('media').upload(filename, webpFile);
   if (error) throw error;
   const { data } = supabase.storage.from('media').getPublicUrl(filename);
   return data.publicUrl;

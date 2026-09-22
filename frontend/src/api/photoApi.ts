@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import { toWebP } from '../utils/imageConversion';
 
 const API_ORIGIN = '';
 export const mediaUrl = (path: string) => (path?.startsWith('http') ? path : `${API_ORIGIN}${path}`);
@@ -24,9 +25,10 @@ function mapPhoto(row: any): Photo {
 }
 
 async function uploadFile(file: File): Promise<string> {
-  const ext = file.name.split('.').pop();
+  const webpFile = await toWebP(file);
+  const ext = webpFile.name.split('.').pop();
   const filename = `gallery/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from('media').upload(filename, file);
+  const { error } = await supabase.storage.from('media').upload(filename, webpFile);
   if (error) throw error;
   const { data } = supabase.storage.from('media').getPublicUrl(filename);
   return data.publicUrl;

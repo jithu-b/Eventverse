@@ -61,11 +61,15 @@ export const registrationApi = {
   },
 
   remove: async (registrationId: string, eventId: string): Promise<void> => {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('registrations')
       .delete()
-      .eq('id', registrationId);
+      .eq('id', registrationId)
+      .select('id');
     if (error) throw error;
+    if (!data || data.length === 0) {
+      throw new Error('Delete blocked (likely a Supabase RLS policy) — no row was actually removed.');
+    }
 
     const { count } = await supabase
       .from('registrations')

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Download, Users, ChevronLeft, Trash2 } from 'lucide-react';
+import { Download, Users, ChevronLeft, Trash2, Calendar, ChevronRight } from 'lucide-react';
 import { EventItem } from '../../types';
 import { eventApi } from '../../api/eventApi';
 import { registrationApi, Registrant } from '../../api/registrationApi';
@@ -95,8 +95,8 @@ export const RegistrantsPanel: React.FC = () => {
         ) : registrants.length === 0 ? (
           <p className="text-sm text-[#6B6470]">No one has registered for this event yet.</p>
         ) : (
-          <div className="overflow-x-auto border border-[#F3DCE8] rounded-2xl">
-            <table className="w-full text-xs sm:text-sm">
+          <div className="overflow-x-auto border border-[#F3DCE8] rounded-2xl bg-white shadow-sm">
+            <table className="w-full text-xs sm:text-sm bg-white">
               <thead>
                 <tr className="bg-[#FFF1F7] text-left">
                   <th className="px-4 py-2.5 font-bold text-[#18131A]">Name</th>
@@ -112,7 +112,7 @@ export const RegistrantsPanel: React.FC = () => {
               </thead>
               <tbody>
                 {registrants.map((r) => (
-                  <tr key={r.id} className="border-t border-[#F3DCE8]">
+                  <tr key={r.id} className="border-t border-[#F3DCE8] bg-white">
                     <td className="px-4 py-2.5">{r.name}</td>
                     <td className="px-4 py-2.5">{r.email}</td>
                     <td className="px-4 py-2.5">{r.dept || '—'}</td>
@@ -144,22 +144,42 @@ export const RegistrantsPanel: React.FC = () => {
   }
 
   return (
-    <div className="w-full max-w-2xl">
-      <h2 className="text-lg font-bold text-[#18131A] mb-4">Select an Event</h2>
-      <div className="space-y-2">
+    <div className="w-full max-w-3xl">
+      <div className="mb-5">
+        <h2 className="text-lg font-bold text-[#18131A]">Select an Event</h2>
+        <p className="text-xs text-[#6B6470] mt-0.5">Choose an event to view and manage its registrants.</p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {events.map((evt) => (
           <button
             key={evt.id}
             onClick={() => openEvent(evt)}
-            className="w-full flex items-center justify-between text-left px-4 py-3 border border-[#F3DCE8] rounded-xl hover:border-[#EC4899] transition-colors"
+            className={`group relative text-left p-4 rounded-2xl border hover:shadow-lg transition-all overflow-hidden ${
+              evt.status === 'Upcoming'
+                ? 'border-[#BBEBC9] bg-[#F2FBF4] hover:border-[#4ADE80] hover:shadow-[#4ADE80]/10'
+                : 'border-[#F3DCE8] bg-white hover:border-transparent hover:shadow-[#EC4899]/10'
+            }`}
           >
-            <div>
-              <p className="font-bold text-sm text-[#18131A]">{evt.title}</p>
-              <p className="text-xs text-[#6B6470]">{evt.date}</p>
+            {evt.status === 'Upcoming' && (
+              <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#DCFCE7] text-[#16A34A]">
+                Live
+              </span>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FFF1F7] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="font-bold text-sm text-[#18131A] truncate">{evt.title}</p>
+                <p className="flex items-center gap-1 text-xs text-[#6B6470] mt-1">
+                  <Calendar className="w-3 h-3" /> {evt.date}
+                </p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-[#D9C3D1] group-hover:text-[#EC4899] transition-colors shrink-0 mt-0.5" />
             </div>
-            <span className="flex items-center gap-1.5 text-xs font-bold text-[#EC4899]">
-              <Users className="w-3.5 h-3.5" /> {evt.registeredCount} registered
-            </span>
+            <div className="relative mt-3 flex items-center gap-1.5">
+              <span className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-[#FFF1F7] text-[#EC4899]">
+                <Users className="w-3 h-3" /> {evt.registeredCount} registered
+              </span>
+            </div>
           </button>
         ))}
       </div>

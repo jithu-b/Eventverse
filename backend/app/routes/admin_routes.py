@@ -225,3 +225,21 @@ def export_report():
         mimetype="text/csv",
         headers={"Content-Disposition": f"attachment; filename=eventverse-{report_type}-report.csv"},
     )
+
+@admin_bp.patch("/events/<int:event_id>/spots")
+@jwt_required_custom
+@role_required("admin")
+def update_event_spots(event_id):
+    event = Event.query.get(event_id)
+    if not event:
+        return jsonify({"error": "Event not found"}), 404
+
+    new_limit = (request.get_json(force=True) or {}).get("registration_limit")
+    if not isinstance(new_limit, int) or new_limit < 1:
+        return jsonify({"error": "registration_limit must be a positive integer"}), 400
+    if new_limit < event.registration_count:
+        return jsonify({"error": f"Cannot go below current registrations ({event.registration_count})"}), 400
+
+    event.registration_limit = new_limit
+    db.session.commit()
+    return jsonify({"event": event.to_dict()}), 200

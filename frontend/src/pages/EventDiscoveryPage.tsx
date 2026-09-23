@@ -96,8 +96,15 @@ export const EventDiscoveryPage: React.FC<EventDiscoveryPageProps> = ({
         if (sortBy === 'Newest') {
           return new Date(b?.rawDate || '').getTime() - new Date(a?.rawDate || '').getTime();
         }
-        // Default Upcoming
-        return new Date(a?.rawDate || '').getTime() - new Date(b?.rawDate || '').getTime();
+        // Default Upcoming: future events soonest-first, past events pushed to the end
+        const now = Date.now();
+        const aTime = new Date(a?.rawDate || '').getTime();
+        const bTime = new Date(b?.rawDate || '').getTime();
+        const aFuture = aTime >= now;
+        const bFuture = bTime >= now;
+        if (aFuture && !bFuture) return -1;
+        if (!aFuture && bFuture) return 1;
+        return aFuture ? aTime - bTime : bTime - aTime;
       });
   }, [safeEvents, activeCategory, statusFilter, selectedTag, searchQuery, sortBy]);
 

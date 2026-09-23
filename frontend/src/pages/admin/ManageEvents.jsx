@@ -23,6 +23,17 @@ export default function ManageEvents() {
       .finally(() => setLoading(false));
   };
 
+  const handleSpotsSave = async (eventId, value) => {
+    const newLimit = parseInt(value, 10);
+    if (!newLimit || newLimit < 1) return;
+    try {
+      const res = await adminApi.updateEventSpots(eventId, newLimit);
+      setEvents((prev) => prev.map((e) => (e.id === eventId ? res.data.event : e)));
+    } catch {
+      /* ignore */
+    }
+  };
+
   const handleDelete = async (eventId) => {
     if (!window.confirm("Permanently delete this event and all its data?")) return;
     try {
@@ -67,7 +78,18 @@ export default function ManageEvents() {
                     </td>
                     <td className="text-secondary">{ev.organizer_name}</td>
                     <td>
-                      {ev.registration_count}/{ev.registration_limit}
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span>{ev.registration_count}/</span>
+                        <input
+                          type="number"
+                          min={1}
+                          defaultValue={ev.registration_limit}
+                          key={ev.registration_limit}
+                          onBlur={(e) => handleSpotsSave(ev.id, e.target.value)}
+                          onKeyDown={(e) => e.key === "Enter" && e.target.blur()}
+                          style={{ width: "60px" }}
+                        />
+                      </div>
                     </td>
                     <td>
                       <Badge variant={ev.is_active ? "success" : "default"}>

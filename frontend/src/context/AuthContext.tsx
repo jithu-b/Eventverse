@@ -1,7 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
-const ADMIN_EMAILS = ['jithubiju0102@gmail.com'];
+const ADMIN_EMAILS = [
+  'jithubiju0102@gmail.com',
+  'parthiv99100@gmail.com',
+  'pmmadhav03@gmail.com',
+  'anjalispillai321@gmail.com',
+  'pcssk2004@gmail.com',
+];
 
 function roleForEmail(email: string | undefined): string {
   return email && ADMIN_EMAILS.includes(email.toLowerCase()) ? 'admin' : 'participant';

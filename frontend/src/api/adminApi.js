@@ -12,6 +12,7 @@ export const adminApi = {
   // Events
   listAllEvents: (params = {}) => axiosClient.get("/admin/events", { params }),
   deleteAnyEvent: (eventId) => axiosClient.delete(`/admin/events/${eventId}`),
+  updateEventSpots: (eventId, registration_limit) => axiosClient.patch(`/admin/events/${eventId}/spots`, { registration_limit }),
 
   // Quizzes
   listAllQuizzes: () => axiosClient.get("/admin/quizzes"),

@@ -121,3 +121,16 @@ export async function getLatestEvent(): Promise<EventItem | null> {
   if (error || !data) return null;
   return mapEvent(data);
 }
+
+export async function getNextUpcomingEvent(): Promise<EventItem | null> {
+  const now = new Date().toISOString();
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .gt('start_time', now)
+    .order('start_time', { ascending: true })
+    .limit(1)
+    .maybeSingle();
+  if (error || !data) return null;
+  return mapEvent(data);
+}

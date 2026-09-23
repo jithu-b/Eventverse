@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { X, Sparkles } from 'lucide-react';
 import { EventItem } from '../../types';
-import { getLatestEvent } from '../../api/eventApi';
+import { getLatestEvent, getNextUpcomingEvent } from '../../api/eventApi';
 import { GradientButton } from '../common/GradientButton';
 
 const SESSION_KEY = 'eventverse_welcome_shown';
@@ -16,7 +16,7 @@ export const WelcomeEventPopup: React.FC<Props> = ({ onRegister }) => {
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const latest = await getLatestEvent();
+      const latest = await getNextUpcomingEvent();
       if (latest) {
         setEvent(latest);
         setVisible(true);

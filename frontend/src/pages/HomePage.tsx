@@ -280,7 +280,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         {/* Event Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-2xl lg:max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-2xl lg:max-w-7xl mx-auto">
           {upcomingEvents.map((evt) => (
             <EventCard
               key={evt.id}

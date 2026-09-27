@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Trash2, Edit2, MapPin, Clock, Users, Share2, Bookmark, MessageCircle, QrCode, CheckCircle2, Trophy } from 'lucide-react';
 import { motion } from 'motion/react';
 import { EventItem } from '../types';
@@ -21,6 +21,7 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
   event, onBack, onRegister, isRegistered, isBookmarked, onToggleBookmark, onOpenQRScanner, onDelete, onEdit
 }) => {
   const bookmarkClasses = isBookmarked ? 'bg-[#EC4899] text-white shadow-lg' : 'bg-white/80 text-[#18131A] hover:bg-white';
+  const [report, setReport] = useState<any>(null);
   useEffect(() => {
     const fetchReport = async () => {
       try {

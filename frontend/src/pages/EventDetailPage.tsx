@@ -24,7 +24,20 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
   const capacityPercent = (event.registeredCount / event.totalSpots) * 100;
   const eventDate = new Date(event.rawDate);
   const today = new Date();
-  const hasEventPassed = eventDate < today;
+  
+  // Parse end time from "HH:MM AM/PM - HH:MM AM/PM" format
+  const timeRange = event.time.split(' - ');
+  const endTimeStr = timeRange[1]; // e.g., "09:30 PM"
+  const [time, period] = endTimeStr.trim().split(' ');
+  const [hours, minutes] = time.split(':');
+  let hour = parseInt(hours);
+  if (period === 'PM' && hour !== 12) hour += 12;
+  if (period === 'AM' && hour === 12) hour = 0;
+  
+  const eventEndTime = new Date(event.rawDate);
+  eventEndTime.setHours(hour, parseInt(minutes), 0, 0);
+  
+  const hasEventPassed = eventEndTime < today;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">

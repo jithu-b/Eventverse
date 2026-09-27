@@ -62,7 +62,6 @@ export default function ManageEvents() {
               <thead>
                 <tr>
                   <th>Title</th>
-                  <th>Organizer</th>
                   <th>Registrations</th>
                   <th>Status</th>
                   <th></th>
@@ -76,7 +75,6 @@ export default function ManageEvents() {
                         {ev.title}
                       </Link>
                     </td>
-                    <td className="text-secondary">{ev.organizer_name}</td>
                     <td>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         <span>{ev.registration_count}/</span>

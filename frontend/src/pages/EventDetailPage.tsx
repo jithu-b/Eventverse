@@ -22,6 +22,7 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
 }) => {
   const bookmarkClasses = isBookmarked ? 'bg-[#EC4899] text-white shadow-lg' : 'bg-white/80 text-[#18131A] hover:bg-white';
   const [report, setReport] = useState<any>(null);
+  const [photos, setPhotos] = useState<any[]>([]);
   useEffect(() => {
     const fetchReport = async () => {
       try {
@@ -34,9 +35,21 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
         console.error('Error fetching report:', err);
       }
     };
+    const fetchPhotos = async () => {
+      try {
+        const res = await fetch(`/api/photos?event_id=${event.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setPhotos(data.photos || []);
+        }
+      } catch (err) {
+        console.error('Error fetching photos:', err);
+      }
+    };
     if (event.status === 'Completed') {
       fetchReport();
     }
+    fetchPhotos();
   }, [event.id, event.status]);
 
   const capacityPercent = (event.registeredCount / event.totalSpots) * 100;
@@ -112,13 +125,6 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
             <p className="text-sm sm:text-base text-[#6B6470] leading-relaxed">{event.description}</p>
           </motion.div>
 
-          {event.organizer && <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-4 sm:p-6 bg-[#FFF1F7] border border-[#F3DCE8] rounded-2xl space-y-3">
-            <h3 className="font-bold text-[#18131A]">Organized By</h3>
-            <div className="flex items-center gap-3">
-              {event.organizer.avatar && <img src={event.organizer.avatar} alt={event.organizer.name} className="w-12 h-12 rounded-full object-cover" />}
-              <div><p className="font-bold text-[#18131A]">{event.organizer.name}</p><p className="text-xs sm:text-sm text-[#6B6470]">{event.organizer.role}</p></div>
-            </div>
-          </motion.div>}
         </div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="lg:col-span-1 space-y-4">
@@ -201,6 +207,26 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
             <h2 className="text-2xl font-bold text-[#18131A]">📋 Event Report</h2>
             <div className="bg-gradient-to-br from-[#FFF8FC] to-white rounded-3xl border border-[#F3DCE8] p-6">
               <p className="text-[#6B6470]">Report coming soon...</p>
+            </div>
+          </motion.div>
+        )}
+
+        {photos.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+            <h2 className="text-2xl font-bold text-[#18131A]">📸 Gallery</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {photos.map((photo: any) => (
+                <div key={photo.id} className="rounded-2xl overflow-hidden bg-gray-200">
+                  <img
+                    src={photo.photo_url}
+                    alt={photo.caption || ''}
+                    className="w-full h-40 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  {photo.caption && (
+                    <p className="text-xs text-[#6B6470] p-2">{photo.caption}</p>
+                  )}
+                </div>
+              ))}
             </div>
           </motion.div>
         )}

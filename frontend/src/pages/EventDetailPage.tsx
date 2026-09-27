@@ -92,7 +92,8 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="lg:col-span-1 space-y-4">
           <div className="space-y-2.5">
-            {!isRegistered && !hasEventPassed && event.registrationOpen && <GradientButton size="lg" onClick={() => onRegister(event.id)} className="w-full">Register Now</GradientButton>}
+            {!isRegistered && !hasEventPassed && event.registrationOpen && event.registeredCount < event.totalSpots && <GradientButton size="lg" onClick={() => onRegister(event.id)} className="w-full">Register Now</GradientButton>}
+            {!isRegistered && !hasEventPassed && event.registrationOpen && event.registeredCount >= event.totalSpots && <div className="w-full px-4 py-3 bg-red-100 border border-red-300 text-red-700 text-center font-bold rounded-2xl flex items-center justify-center gap-2"><XCircle className="w-5 h-5" />Event Full - No Spots Available</div>}
             {hasEventPassed && <div className="w-full px-4 py-3 bg-gray-100 border border-gray-300 text-gray-700 text-center font-bold rounded-2xl flex items-center justify-center gap-2"><CheckCircle2 className="w-5 h-5" />Completed</div>}
             {isRegistered && !hasEventPassed && <div className="w-full px-4 py-3 bg-green-100 border border-green-300 text-green-700 text-center font-bold rounded-2xl flex items-center justify-center gap-2"><CheckCircle2 className="w-5 h-5" />Registered ✓</div>}
             {event.hasAttendance && !hasEventPassed && <button onClick={onOpenQRScanner} className="w-full px-4 py-3 text-sm font-bold text-white bg-gradient-to-r from-[#EC4899] to-[#A855F7] hover:shadow-lg rounded-2xl transition-all cursor-pointer flex items-center justify-center gap-2"><QrCode className="w-5 h-5" />Check-in with QR</button>}

@@ -51,6 +51,11 @@ export const GalleryPage: React.FC = () => {
     return Array.from(map.values());
   }, [photos, events]);
 
+  const eventsWithoutPhotos = useMemo(() => {
+    const coveredIds = new Set(decks.map((d) => d.eventId));
+    return events.filter((ev) => !coveredIds.has(String(ev.id)));
+  }, [events, decks]);
+
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!uploadEventId || uploadFiles.length === 0) return;
@@ -87,10 +92,20 @@ export const GalleryPage: React.FC = () => {
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#18131A] font-outfit">Event Gallery</h1>
         <p className="text-xs sm:text-sm text-[#6B6470]">Real photos from TinkerHub SBCE events, organized by event.</p>
-        {decks.length > 0 && (
+        {events.length > 0 && (
           <p className="text-xs font-semibold text-[#DB2777]">
-            {decks.length} event{decks.length === 1 ? '' : 's'} with photos uploaded
+            {decks.length} of {events.length} event{events.length === 1 ? '' : 's'} have photos uploaded
           </p>
+        )}
+        {isAdmin && eventsWithoutPhotos.length > 0 && (
+          <div className="text-left max-w-md mx-auto bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800">
+            <p className="font-bold mb-1">Missing photos for {eventsWithoutPhotos.length} event{eventsWithoutPhotos.length === 1 ? '' : 's'}:</p>
+            <ul className="list-disc list-inside space-y-0.5">
+              {eventsWithoutPhotos.map((ev) => (
+                <li key={ev.id}>{ev.title}</li>
+              ))}
+            </ul>
+          </div>
         )}
         {isAdmin && (
           <button

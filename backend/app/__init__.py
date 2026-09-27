@@ -5,16 +5,43 @@ import os
 from flask import Flask, send_from_directory
 from config import Config
 from app.extensions import db, jwt, bcrypt, cors
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
+
+
+def add_security_headers(app):
+    """Add security headers to all responses"""
+    @app.after_request
+    def set_security_headers(response):
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
+        response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+        response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
+        return response
+    return app
 
 def create_app(config_class=Config):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_class)
+    
+    # Initialize rate limiter
+    limiter = Limiter(
+        app=app,
+        key_func=get_remote_address,
+        default_limits=["200 per day", "50 per hour"]
+    )
 
     # ---- init extensions ----
     db.init_app(app)
     jwt.init_app(app)
     bcrypt.init_app(app)
+    # Apply security headers
+    add_security_headers(app)
+    
     cors.init_app(app, resources={r"/api/*": {"origins": app.config["CORS_ORIGINS"]}})
 
     # ---- import models so db.create_all() registers every table ----
@@ -37,7 +64,9 @@ def create_app(config_class=Config):
     app.register_blueprint(leaderboard_bp, url_prefix="/api/leaderboard")
     app.register_blueprint(attendance_bp, url_prefix="/api/attendance")
     app.register_blueprint(certificate_bp, url_prefix="/api/certificates")
+    # Register admin blueprint with rate limiting
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
+    limiter.limit("10 per minute")(admin_bp)
 
     from app.routes.photo_routes import photo_bp
     app.register_blueprint(photo_bp, url_prefix="/api/photos")

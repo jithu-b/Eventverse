@@ -134,3 +134,7 @@ export async function getNextUpcomingEvent(): Promise<EventItem | null> {
   if (error || !data) return null;
   return mapEvent(data);
 }
+
+export async function refetchEvents(): Promise<EventItem[]> {
+  return eventApi.list();
+}

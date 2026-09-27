@@ -118,6 +118,21 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
           </div>}
         </motion.div>
       </div>
-    </div>
+    
+        {/* Event Report Section */}
+        {event.status === 'Completed' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            <h2 className="text-2xl font-bold text-[#18131A]">📋 Event Report</h2>
+            <div className="bg-gradient-to-br from-[#FFF8FC] to-white rounded-3xl border border-[#F3DCE8] p-6 space-y-4">
+              <p className="text-[#6B6470]">Event report and gallery images coming soon...</p>
+            </div>
+          </motion.div>
+        )}
+
+        </div>
   );
 };

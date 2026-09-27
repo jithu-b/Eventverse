@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { EventItem } from '../types';
 import { GradientButton } from '../components/common/GradientButton';
 import { GlassCard } from '../components/common/GlassCard';
+import { supabase } from '../lib/supabase';
 
 interface EventDetailPageProps {
   event: EventItem;
@@ -26,10 +27,18 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const res = await fetch(`/api/reports/events/${event.id}`);
-        if (res.ok) {
-          const data = await res.json();
-          setReport(data);
+        const { data: reportRow } = await supabase
+          .from('reports')
+          .select('*')
+          .eq('event_id', event.id)
+          .maybeSingle();
+        if (reportRow) {
+          const { data: images } = await supabase
+            .from('report_images')
+            .select('*')
+            .eq('report_id', reportRow.id)
+            .order('order', { ascending: true });
+          setReport({ ...reportRow, gallery_images: images || [] });
         }
       } catch (err) {
         console.error('Error fetching report:', err);
@@ -37,11 +46,12 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
     };
     const fetchPhotos = async () => {
       try {
-        const res = await fetch(`/api/photos?event_id=${event.id}`);
-        if (res.ok) {
-          const data = await res.json();
-          setPhotos(data.photos || []);
-        }
+        const { data } = await supabase
+          .from('photos')
+          .select('*')
+          .eq('event_id', event.id)
+          .order('uploaded_at', { ascending: false });
+        setPhotos(data || []);
       } catch (err) {
         console.error('Error fetching photos:', err);
       }

@@ -83,7 +83,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navLinks = [
     { id: 'home', label: 'Home', icon: Sparkles },
     { id: 'discover', label: 'Events', icon: Compass },
-    { id: 'my-events', label: 'My Events', icon: Calendar },
     { id: 'calendar', label: 'Calendar', icon: LayoutDashboard },
     { id: 'reports', label: 'Reports', icon: FileText },
     { id: 'gallery', label: 'Gallery', icon: GalleryIcon },

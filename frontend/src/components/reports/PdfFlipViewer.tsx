@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { PageFlip } from "page-flip";
-import { X, Download } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X, Download, ChevronLeft, ChevronRight } from "lucide-react";
 import * as pdfjsLib from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
@@ -18,10 +17,10 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
   const [pages, setPages] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const bookHostRef = useRef<HTMLDivElement>(null);
-  const pageFlipRef = useRef<PageFlip | null>(null);
-
+  // Render each PDF page to a high-resolution image (boosted for Retina
+  // screens, exported as lossless PNG) so it displays sharp at full size.
   useEffect(() => {
     let cancelled = false;
 
@@ -38,10 +37,11 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
 
         const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
         const renderedPages: string[] = [];
+        const pixelRatio = window.devicePixelRatio || 1;
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
           const page = await pdf.getPage(pageNum);
-          const viewport = page.getViewport({ scale: 1.5 });
+          const viewport = page.getViewport({ scale: 2.5 * pixelRatio });
 
           const canvas = document.createElement("canvas");
           canvas.width = viewport.width;
@@ -49,11 +49,12 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
           const ctx = canvas.getContext("2d")!;
 
           await page.render({ canvasContext: ctx, viewport, canvas }).promise;
-          renderedPages.push(canvas.toDataURL());
+          renderedPages.push(canvas.toDataURL("image/png"));
         }
 
         if (!cancelled) {
           setPages(renderedPages);
+          setCurrentPage(0);
           setLoading(false);
         }
       } catch (err: any) {
@@ -71,63 +72,16 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
     };
   }, [pdfUrl]);
 
+  // Keyboard navigation + close on Escape
   useEffect(() => {
-    if (loading || pages.length === 0 || !bookHostRef.current) return;
-
-    if (pageFlipRef.current) {
-      try {
-        pageFlipRef.current.destroy();
-      } catch {
-        // ignore
-      }
-      pageFlipRef.current = null;
-    }
-    bookHostRef.current.innerHTML = "";
-
-    const mountEl = document.createElement("div");
-    bookHostRef.current.appendChild(mountEl);
-
-    const flip = new PageFlip(mountEl, {
-      width: 550,
-      height: 733,
-      size: "stretch",
-      minWidth: 315,
-      maxWidth: 1000,
-      minHeight: 420,
-      maxHeight: 1350,
-      showCover: true,
-      drawShadow: true,
-      maxShadowOpacity: 0.7,
-      flippingTime: 700,
-      useMouseEvents: true,
-      showPageCorners: true,
-      mobileScrollSupport: true,
-    });
-
-    pageFlipRef.current = flip;
-    flip.loadFromImages(pages);
-
-    return () => {
-      if (pageFlipRef.current) {
-        try {
-          pageFlipRef.current.destroy();
-        } catch {
-          // ignore
-        }
-        pageFlipRef.current = null;
-      }
-    };
-  }, [pages, loading]);
-
-  // Close on Escape key
-  useEffect(() => {
-    if (!onClose) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape" && onClose) onClose();
+      if (e.key === "ArrowRight") setCurrentPage((p) => Math.min(p + 1, pages.length - 1));
+      if (e.key === "ArrowLeft") setCurrentPage((p) => Math.max(p - 1, 0));
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [onClose]);
+  }, [onClose, pages.length]);
 
   return (
     <div
@@ -160,7 +114,10 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
         </div>
       </div>
 
-      <div onClick={(e) => e.stopPropagation()} className="flex items-center justify-center max-w-full max-h-full">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative flex items-center justify-center max-w-full max-h-[80vh]"
+      >
         {loading && <div className="text-white">Loading report…</div>}
 
         {error && !loading && (
@@ -172,8 +129,40 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
           </div>
         )}
 
-        {!loading && !error && <div ref={bookHostRef} aria-label={`${displayTitle} report`} />}
+        {!loading && !error && pages.length > 0 && (
+          <>
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
+              disabled={currentPage === 0}
+              className="absolute left-2 z-10 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white disabled:opacity-20 transition-colors"
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            <img
+              src={pages[currentPage]}
+              alt={`${displayTitle} — page ${currentPage + 1}`}
+              className="max-w-full max-h-[80vh] rounded-lg shadow-2xl bg-white"
+            />
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, pages.length - 1))}
+              disabled={currentPage === pages.length - 1}
+              className="absolute right-2 z-10 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white disabled:opacity-20 transition-colors"
+              aria-label="Next page"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </>
+        )}
       </div>
+
+      {!loading && !error && pages.length > 0 && (
+        <div className="mt-3 text-white text-sm font-mono">
+          {currentPage + 1} / {pages.length}
+        </div>
+      )}
     </div>
   );
 }

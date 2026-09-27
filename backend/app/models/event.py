@@ -72,4 +72,7 @@ class Event(db.Model):
         return data
 
     def __repr__(self) -> str:
+    # One-to-one relationship with EventReport
+    # report = db.relationship('EventReport', backref='event', uselist=False, cascade='all, delete-orphan')
+
         return f"<Event {self.title}>"

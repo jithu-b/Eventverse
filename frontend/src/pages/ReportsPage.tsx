@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import { FileText, Upload, X, Trash2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -33,6 +33,21 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
     fetchReports();
   }, []);
 
+  const sortedReports = useMemo(() => {
+    return [...reports].sort((a, b) => {
+      const eventA = events.find((e) => String(e.id) === String(a.event_id));
+      const eventB = events.find((e) => String(e.id) === String(b.event_id));
+      const dateA = eventA?.date ? new Date(eventA.date).getTime() : 0;
+      const dateB = eventB?.date ? new Date(eventB.date).getTime() : 0;
+      return dateB - dateA;
+    });
+  }, [reports, events]);
+
+  const eventsWithoutReports = useMemo(() => {
+    const reportedIds = new Set(reports.map((r) => String(r.event_id)));
+    return events.filter((ev) => !reportedIds.has(String(ev.id)));
+  }, [events, reports]);
+
   if (loading) {
     return (
       <div className="min-h-[50vh] flex items-center justify-center">
@@ -46,7 +61,22 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 sm:mb-10 text-center px-2">
         <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#18131A] mb-2 sm:mb-4">Event Reports</h1>
         <p className="text-sm sm:text-lg text-[#6B6470] max-w-2xl mx-auto">Flip through detailed reports from our events</p>
+        {isAdmin && events.length > 0 && (
+          <p className="text-xs font-semibold text-[#DB2777] mt-2">
+            {reports.length} of {events.length} event{events.length === 1 ? '' : 's'} have reports uploaded
+          </p>
+        )}
       </motion.div>
+      {isAdmin && eventsWithoutReports.length > 0 && (
+        <div className="mb-8 max-w-md mx-auto bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800 text-left">
+          <p className="font-bold mb-1">Missing reports for {eventsWithoutReports.length} event{eventsWithoutReports.length === 1 ? '' : 's'}:</p>
+          <ul className="list-disc list-inside space-y-0.5">
+            {eventsWithoutReports.map((ev) => (
+              <li key={ev.id}>{ev.title}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {isAdmin && (
         <div className="mb-8 flex justify-center">
@@ -66,7 +96,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:gap-6 px-2 sm:px-0">
-          {reports.map((report, idx) => (
+          {sortedReports.map((report, idx) => (
             <motion.div
               key={report.id}
               initial={{ opacity: 0, y: 20 }}

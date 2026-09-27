@@ -20,6 +20,10 @@ class User(db.Model):
 
     reset_token = db.Column(db.String(64), nullable=True)
     reset_token_expiry = db.Column(db.DateTime, nullable=True)
+    
+    email_verified = db.Column(db.Boolean, default=False, nullable=False)
+    email_verification_token = db.Column(db.String(64), nullable=True)
+    email_verification_expiry = db.Column(db.DateTime, nullable=True)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -70,6 +74,23 @@ class User(db.Model):
             "role": self.role,
             "created_at": self.created_at.isoformat() if self.created_at else None,
         }
+    def generate_email_verification_token(self, expires_in_hours: int = 24) -> str:
+        self.email_verification_token = uuid.uuid4().hex
+        self.email_verification_expiry = datetime.utcnow() + timedelta(hours=expires_in_hours)
+        return self.email_verification_token
+
+    def is_email_verification_token_valid(self, token: str) -> bool:
+        return (
+            self.email_verification_token is not None
+            and self.email_verification_token == token
+            and self.email_verification_expiry is not None
+            and datetime.utcnow() < self.email_verification_expiry
+        )
+
+    def verify_email(self) -> None:
+        self.email_verified = True
+        self.email_verification_token = None
+        self.email_verification_expiry = None
 
     def __repr__(self) -> str:
         return f"<User {self.email} ({self.role})>"

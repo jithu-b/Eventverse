@@ -16,7 +16,7 @@ from app.schemas.user_schema import (
     ResetPasswordSchema,
 )
 from app.utils.decorators import jwt_required_custom, get_current_user
-from app.services.email_service import send_password_reset_email
+from app.services.email_service import send_password_reset_email, send_email
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -63,6 +63,9 @@ def login():
     user = User.query.filter_by(email=data["email"].lower()).first()
     if not user or not user.check_password(data["password"]):
         return jsonify({"error": "Invalid email or password"}), 401
+    
+    if not user.email_verified:
+        return jsonify({"error": "Please verify your email first."}), 403
 
     token = _issue_token(user)
     return jsonify({"access_token": token, "user": user.to_dict()}), 200

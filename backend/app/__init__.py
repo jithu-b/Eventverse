@@ -56,6 +56,7 @@ def create_app(config_class=Config):
     from app.routes.attendance_routes import attendance_bp
     from app.routes.certificate_routes import certificate_bp
     from app.routes.admin_routes import admin_bp
+    from app.routes.email_verification_routes import verify_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(event_bp, url_prefix="/api/events")
@@ -66,6 +67,7 @@ def create_app(config_class=Config):
     app.register_blueprint(certificate_bp, url_prefix="/api/certificates")
     # Register admin blueprint with rate limiting
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
+    app.register_blueprint(verify_bp, url_prefix="/api/verify")
     limiter.limit("10 per minute")(admin_bp)
 
     from app.routes.photo_routes import photo_bp

@@ -87,6 +87,11 @@ export const GalleryPage: React.FC = () => {
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#18131A] font-outfit">Event Gallery</h1>
         <p className="text-xs sm:text-sm text-[#6B6470]">Real photos from TinkerHub SBCE events, organized by event.</p>
+        {decks.length > 0 && (
+          <p className="text-xs font-semibold text-[#DB2777]">
+            {decks.length} event{decks.length === 1 ? '' : 's'} with photos uploaded
+          </p>
+        )}
         {isAdmin && (
           <button
             onClick={() => setShowUpload((v) => !v)}

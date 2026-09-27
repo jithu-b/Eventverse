@@ -273,7 +273,7 @@ export const EventDiscoveryPage: React.FC<EventDiscoveryPageProps> = ({
       {/* 4. Events Grid / List */}
       <div className="max-w-7xl mx-auto">
         {filteredEvents.length > 0 ? (
-          <div className={layoutMode === 'grid' ? 'grid grid-cols-1 gap-6 sm:gap-8 max-w-2xl mx-auto' : 'space-y-4'}>
+          <div className={layoutMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-2xl lg:max-w-5xl mx-auto' : 'space-y-4'}>
             {filteredEvents.map((evt) => (
               <EventCard
                 key={evt.id}

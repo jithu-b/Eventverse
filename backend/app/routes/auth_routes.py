@@ -16,7 +16,7 @@ from app.schemas.user_schema import (
     ResetPasswordSchema,
 )
 from app.utils.decorators import jwt_required_custom, get_current_user
-from app.services.email_service import send_password_reset_email, send_email
+from app.services.email_service import send_password_reset_email
 
 auth_bp = Blueprint("auth", __name__)
 

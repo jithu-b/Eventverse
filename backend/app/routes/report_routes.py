@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify, current_app
 from app.extensions import db
 from app.models.report import EventReport, ReportImage
 from app.models.event import Event
-from app.utils.decorators import jwt_required_custom, admin_only
+from app.utils.decorators import jwt_required_custom, role_required
 from app.schemas.report_schema import ReportCreateSchema, ReportUpdateSchema
 
 report_bp = Blueprint("reports", __name__)
@@ -45,7 +45,7 @@ def list_all_reports():
 
 @report_bp.post("/events/<int:event_id>")
 @jwt_required_custom
-@admin_only
+@role_required("organizer", "admin")
 def create_report(event_id):
     """Create a report for an event (Admin only)"""
     event = Event.query.get(event_id)
@@ -78,7 +78,7 @@ def create_report(event_id):
 
 @report_bp.put("/events/<int:event_id>")
 @jwt_required_custom
-@admin_only
+@role_required("organizer", "admin")
 def update_report(event_id):
     """Update an event report (Admin only)"""
     report = EventReport.query.filter_by(event_id=event_id).first()
@@ -101,7 +101,7 @@ def update_report(event_id):
 
 @report_bp.post("/events/<int:event_id>/images")
 @jwt_required_custom
-@admin_only
+@role_required("organizer", "admin")
 def add_report_image(event_id):
     """Add image to event report"""
     report = EventReport.query.filter_by(event_id=event_id).first()
@@ -123,7 +123,7 @@ def add_report_image(event_id):
 
 @report_bp.delete("/events/<int:event_id>/images/<int:image_id>")
 @jwt_required_custom
-@admin_only
+@role_required("organizer", "admin")
 def delete_report_image(event_id, image_id):
     """Delete image from report"""
     image = ReportImage.query.get(image_id)
@@ -137,7 +137,7 @@ def delete_report_image(event_id, image_id):
 
 @report_bp.delete("/events/<int:event_id>")
 @jwt_required_custom
-@admin_only
+@role_required("organizer", "admin")
 def delete_report(event_id):
     """Delete event report (Admin only)"""
     report = EventReport.query.filter_by(event_id=event_id).first()

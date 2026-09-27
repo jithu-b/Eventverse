@@ -6,7 +6,7 @@ import { GradientButton } from '../components/common/GradientButton';
 import { GlassCard } from '../components/common/GlassCard';
 import { supabase } from '../lib/supabase';
 import { reportApi, EventReport } from '../api/reportApi';
-import { PdfFlipViewer } from '../components/reports/PdfFlipViewer';
+import PdfFlipViewer from '../components/reports/PdfFlipViewer';
 
 interface EventDetailPageProps {
   event: EventItem;

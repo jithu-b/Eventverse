@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { FileText, Upload, X, Trash2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { reportApi, EventReport } from '../api/reportApi';
-import { PdfFlipViewer } from '../components/reports/PdfFlipViewer';
+import PdfFlipViewer from '../components/reports/PdfFlipViewer';
 import { EventItem } from '../types';
 
 interface ReportsPageProps {

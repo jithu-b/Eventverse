@@ -21,6 +21,23 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
   event, onBack, onRegister, isRegistered, isBookmarked, onToggleBookmark, onOpenQRScanner, onDelete, onEdit
 }) => {
   const bookmarkClasses = isBookmarked ? 'bg-[#EC4899] text-white shadow-lg' : 'bg-white/80 text-[#18131A] hover:bg-white';
+  useEffect(() => {
+    const fetchReport = async () => {
+      try {
+        const res = await fetch(`/api/reports/events/${event.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setReport(data);
+        }
+      } catch (err) {
+        console.error('Error fetching report:', err);
+      }
+    };
+    if (event.status === 'Completed') {
+      fetchReport();
+    }
+  }, [event.id, event.status]);
+
   const capacityPercent = (event.registeredCount / event.totalSpots) * 100;
   const eventDate = new Date(event.rawDate);
   const today = new Date();
@@ -120,15 +137,69 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
       </div>
     
         {/* Event Report Section */}
-        {event.status === 'Completed' && (
+        {event.status === 'Completed' && report && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-bold text-[#18131A]">📋 {report.title}</h2>
+            <div className="bg-gradient-to-br from-[#FFF8FC] to-white rounded-3xl border border-[#F3DCE8] p-6 space-y-6">
+              <p className="text-[#6B6470] leading-relaxed">{report.summary}</p>
+              
+              {Object.keys(report.stats).length > 0 && (
+                <div>
+                  <h3 className="font-bold text-[#18131A] mb-4">Event Stats</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {Object.entries(report.stats).map(([key, value]: any) => (
+                      <div key={key} className="bg-[#FFF1F7] rounded-2xl p-3 text-center">
+                        <p className="text-xs text-[#6B6470] capitalize mb-1">{key}</p>
+                        <p className="text-lg font-bold text-[#EC4899]">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {report.highlights.length > 0 && (
+                <div>
+                  <h3 className="font-bold text-[#18131A] mb-3">✨ Highlights</h3>
+                  <ul className="space-y-2">
+                    {report.highlights.map((h: string, i: number) => (
+                      <li key={i} className="flex items-start gap-2 text-[#6B6470] text-sm">
+                        <span className="text-[#EC4899] font-bold">▸</span>
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {report.gallery_images && report.gallery_images.length > 0 && (
+                <div>
+                  <h3 className="font-bold text-[#18131A] mb-4">📸 Gallery</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {report.gallery_images.map((img: any) => (
+                      <div key={img.id} className="rounded-2xl overflow-hidden bg-gray-200">
+                        <img src={img.image_url} alt={img.caption} className="w-full h-32 sm:h-40 object-cover hover:scale-105 transition-transform" />
+                        {img.caption && <p className="text-xs text-[#6B6470] p-2 line-clamp-1">{img.caption}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+        {event.status === 'Completed' && !report && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-4"
           >
             <h2 className="text-2xl font-bold text-[#18131A]">📋 Event Report</h2>
-            <div className="bg-gradient-to-br from-[#FFF8FC] to-white rounded-3xl border border-[#F3DCE8] p-6 space-y-4">
-              <p className="text-[#6B6470]">Event report and gallery images coming soon...</p>
+            <div className="bg-gradient-to-br from-[#FFF8FC] to-white rounded-3xl border border-[#F3DCE8] p-6">
+              <p className="text-[#6B6470]">Report coming soon...</p>
             </div>
           </motion.div>
         )}

@@ -59,6 +59,32 @@ export const tinkerTalksApi = {
     if (error) throw error;
     return mapTalk(data);
   },
+  update: async (
+    id: number,
+    title: string,
+    description?: string,
+    file?: File,
+    thumbnailFile?: File
+  ): Promise<TinkerTalk> => {
+    const updates: Record<string, any> = {
+      title,
+      description: description || null,
+    };
+    if (file) {
+      updates.video_url = await uploadMediaFile(file, 'tinkertalks');
+    }
+    if (thumbnailFile) {
+      updates.thumbnail_url = await uploadMediaFile(thumbnailFile, 'tinkertalks-thumbs');
+    }
+    const { data, error } = await supabase
+      .from('tinker_talks')
+      .update(updates)
+      .eq('id', id)
+      .select('*')
+      .single();
+    if (error) throw error;
+    return mapTalk(data);
+  },
   remove: async (id: number): Promise<void> => {
     const { error } = await supabase.from('tinker_talks').delete().eq('id', id);
     if (error) throw error;

@@ -14,6 +14,7 @@ export function TinkerTalksSection() {
   const [loading, setLoading] = useState(true);
   const [activeVideo, setActiveVideo] = useState<TinkerTalk | null>(null);
   const [showUpload, setShowUpload] = useState(false);
+  const [editingTalk, setEditingTalk] = useState<TinkerTalk | null>(null);
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
   const [bannerUploading, setBannerUploading] = useState(false);
   const [showAll, setShowAll] = useState(false);
@@ -149,12 +150,20 @@ export function TinkerTalksSection() {
                   </div>
                 </div>
                 {isAdmin && (
-                  <button
-                    onClick={(e) => handleDelete(talk.id, e)}
-                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 hover:bg-red-500 flex items-center justify-center text-white transition-colors opacity-0 group-hover:opacity-100"
-                  >
-                    <Trash2 size={14} />
-                  </button>
+                  <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setEditingTalk(talk); }}
+                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-pink-500 flex items-center justify-center text-white transition-colors"
+                    >
+                      <Pencil size={14} />
+                    </button>
+                    <button
+                      onClick={(e) => handleDelete(talk.id, e)}
+                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-red-500 flex items-center justify-center text-white transition-colors"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 )}
               </div>
               <div className="p-4">
@@ -188,6 +197,13 @@ export function TinkerTalksSection() {
           <AddTinkerTalkModal
             onClose={() => setShowUpload(false)}
             onUploaded={() => { setShowUpload(false); refresh(); }}
+          />
+        )}
+        {editingTalk && (
+          <AddTinkerTalkModal
+            talk={editingTalk}
+            onClose={() => setEditingTalk(null)}
+            onUploaded={() => { setEditingTalk(null); refresh(); }}
           />
         )}
       </AnimatePresence>
@@ -232,28 +248,39 @@ function VideoPlayerModal({ talk, onClose }: { talk: TinkerTalk; onClose: () => 
   );
 }
 
-function AddTinkerTalkModal({ onClose, onUploaded }: { onClose: () => void; onUploaded: () => void }) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+function AddTinkerTalkModal({ talk, onClose, onUploaded }: { talk?: TinkerTalk; onClose: () => void; onUploaded: () => void }) {
+  const isEditing = !!talk;
+  const [title, setTitle] = useState(talk?.title || '');
+  const [description, setDescription] = useState(talk?.description || '');
   const [file, setFile] = useState<File | null>(null);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
-    if (!title.trim() || !file) {
+    if (!title.trim() || (!isEditing && !file)) {
       setError('Title and video file are required.');
       return;
     }
     setUploading(true);
     setError('');
     try {
-      await tinkerTalksApi.upload(
-        file,
-        title.trim(),
-        description.trim() || undefined,
-        thumbnailFile || undefined
-      );
+      if (isEditing && talk) {
+        await tinkerTalksApi.update(
+          talk.id,
+          title.trim(),
+          description.trim() || undefined,
+          file || undefined,
+          thumbnailFile || undefined
+        );
+      } else {
+        await tinkerTalksApi.upload(
+          file as File,
+          title.trim(),
+          description.trim() || undefined,
+          thumbnailFile || undefined
+        );
+      }
       onUploaded();
     } catch (err: any) {
       setError(err.message || 'Upload failed. Try again.');
@@ -278,7 +305,7 @@ function AddTinkerTalkModal({ onClose, onUploaded }: { onClose: () => void; onUp
         className="w-full max-w-md bg-white rounded-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto"
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-extrabold text-[#18131A] font-outfit">Add TinkerTalk</h3>
+          <h3 className="text-lg font-extrabold text-[#18131A] font-outfit">{isEditing ? 'Edit TinkerTalk' : 'Add TinkerTalk'}</h3>
           <button onClick={onClose} className="text-[#6B6470] hover:text-[#18131A]">
             <X size={20} />
           </button>
@@ -305,11 +332,13 @@ function AddTinkerTalkModal({ onClose, onUploaded }: { onClose: () => void; onUp
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-[#6B6470] mb-1 block">Video file</label>
+            <label className="text-xs font-semibold text-[#6B6470] mb-1 block">
+              Video file {isEditing && <span className="font-normal">(leave blank to keep current)</span>}
+            </label>
             <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[#F3DCE8] rounded-xl py-6 cursor-pointer hover:border-pink-300 transition-colors">
               <UploadCloud size={22} className="text-[#DB2777]" />
               <span className="text-xs text-[#6B6470] text-center px-4">
-                {file ? file.name : 'Tap to choose from gallery or files'}
+                {file ? file.name : isEditing ? 'Tap to replace the current video' : 'Tap to choose from gallery or files'}
               </span>
               <input
                 type="file"
@@ -344,7 +373,7 @@ function AddTinkerTalkModal({ onClose, onUploaded }: { onClose: () => void; onUp
           disabled={uploading}
           className="w-full py-3 rounded-xl bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white text-sm font-semibold shadow-lg shadow-pink-500/20 disabled:opacity-60"
         >
-          {uploading ? 'Uploading...' : 'Upload TinkerTalk'}
+          {uploading ? (isEditing ? 'Saving...' : 'Uploading...') : (isEditing ? 'Save Changes' : 'Upload TinkerTalk')}
         </button>
       </motion.div>
     </motion.div>

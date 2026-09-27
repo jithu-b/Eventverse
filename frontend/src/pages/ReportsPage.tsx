@@ -43,16 +43,16 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold text-[#18131A] mb-4">Event Reports</h1>
-        <p className="text-lg text-[#6B6470] max-w-2xl mx-auto">Flip through detailed reports from our events</p>
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 sm:mb-10 text-center px-2">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#18131A] mb-2 sm:mb-4">Event Reports</h1>
+        <p className="text-sm sm:text-lg text-[#6B6470] max-w-2xl mx-auto">Flip through detailed reports from our events</p>
       </motion.div>
 
       {isAdmin && (
         <div className="mb-8 flex justify-center">
           <button
             onClick={() => setShowUpload(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white rounded-xl font-bold hover:shadow-lg transition-all"
+            className="flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white rounded-xl font-bold hover:shadow-lg transition-all"
           >
             <Upload className="w-4 h-4" /> Upload Report
           </button>
@@ -65,7 +65,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
           <p className="text-lg text-[#6B6470]">No reports yet</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-0">
           {reports.map((report, idx) => (
             <motion.div
               key={report.id}
@@ -77,7 +77,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
               <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1">
                 <div
                   onClick={() => setViewing(report)}
-                  className="relative h-48 bg-gradient-to-br from-[#EC4899] to-[#A855F7] overflow-hidden cursor-pointer"
+                  className="relative h-36 sm:h-48 bg-gradient-to-br from-[#EC4899] to-[#A855F7] overflow-hidden cursor-pointer"
                 >
                   {report.event_thumbnail ? (
                     <img
@@ -91,8 +91,8 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
                     </div>
                   )}
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#18131A] mb-1 line-clamp-2">
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-base sm:text-xl font-bold text-[#18131A] mb-1 line-clamp-2">
                     {report.title || report.event_title}
                   </h3>
                   <p className="text-xs text-[#6B6470] mb-4">

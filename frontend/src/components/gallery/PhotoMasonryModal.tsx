@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Calendar, MapPin, Layers, ArrowLeft, ArrowRight, Trash2, Maximize2 } from 'lucide-react';
+import { X, Calendar, MapPin, Layers, ArrowLeft, ArrowRight, Trash2, Maximize2, Download } from 'lucide-react';
 import { mediaUrl, Photo } from '../../api/photoApi';
 import { EventDeck } from './EventDeckCard';
 
@@ -12,6 +12,24 @@ interface PhotoMasonryModalProps {
   onClose: () => void;
   onSelectDeck: (deck: EventDeck) => void;
   onDeletePhoto: (photoId: number) => void;
+}
+
+async function downloadImage(url: string, filename: string) {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (err) {
+    console.error('Download failed:', err);
+    window.open(url, '_blank');
+  }
 }
 
 export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
@@ -146,7 +164,17 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
                   className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute top-3 right-3 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      downloadImage(mediaUrl(photo.photo_url), `${deck.title}-${photo.id}.jpg`);
+                    }}
+                    className="p-1.5 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md text-white cursor-pointer"
+                    aria-label="Download photo"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                  </button>
                   <span className="p-1.5 rounded-full bg-black/50 backdrop-blur-md text-white">
                     <Maximize2 className="w-3.5 h-3.5" />
                   </span>
@@ -194,6 +222,13 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
 
         {lightboxPhoto && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+            <button
+              onClick={() => downloadImage(mediaUrl(lightboxPhoto.photo_url), `${deck.title}-${lightboxPhoto.id}.jpg`)}
+              className="absolute top-5 right-16 z-10 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full cursor-pointer"
+              aria-label="Download photo"
+            >
+              <Download className="w-5 h-5" />
+            </button>
             <button
               onClick={() => setLightboxIndex(null)}
               className="absolute top-5 right-5 z-10 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full cursor-pointer"

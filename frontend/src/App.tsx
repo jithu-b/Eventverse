@@ -23,6 +23,7 @@ import { EventDiscoveryPage } from './pages/EventDiscoveryPage';
 import { EventDetailPage } from './pages/EventDetailPage';
 import { CalendarPage } from './pages/CalendarPage';
 import { GalleryPage } from './pages/GalleryPage';
+import { ReportsPage } from './pages/ReportsPage';
 import { ExecomPage } from './pages/ExecomPage';
 import { EventRegistrationModal } from './components/events/EventRegistrationModal';
 import { QRScannerModal } from './components/events/QRScannerModal';
@@ -40,7 +41,7 @@ function AppContent() {
 
   const parseLocation = (): { view: ViewType; eventId: string | null } => {
     const segments = window.location.pathname.split('/').filter(Boolean);
-    const validViews: ViewType[] = ['home', 'discover', 'event-detail', 'calendar', 'gallery', 'execom', 'admin', 'my-events'];
+    const validViews: ViewType[] = ['home', 'discover', 'event-detail', 'calendar', 'gallery', 'execom', 'admin', 'my-events', 'reports'];
     const view = (segments[0] as ViewType) || 'home';
     if (validViews.includes(view)) {
       return { view, eventId: segments[1] || null };
@@ -312,6 +313,18 @@ function AppContent() {
               transition={{ duration: 0.25 }}
             >
               <GalleryPage />
+            </motion.div>
+          )}
+
+          {currentView === 'reports' && (
+            <motion.div
+              key="reports"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+            >
+              <ReportsPage events={events} />
             </motion.div>
           )}
 

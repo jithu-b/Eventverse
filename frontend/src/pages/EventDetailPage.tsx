@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Trash2, Edit2, MapPin, Clock, Users, Share2, Bookmark, MessageCircle, QrCode, CheckCircle2, Trophy } from 'lucide-react';
+import { Trash2, Edit2, MapPin, Clock, Users, Share2, Bookmark, MessageCircle, QrCode, CheckCircle2, Trophy, XCircle, FileText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { EventItem } from '../types';
 import { GradientButton } from '../components/common/GradientButton';
 import { GlassCard } from '../components/common/GlassCard';
 import { supabase } from '../lib/supabase';
+import { reportApi, EventReport } from '../api/reportApi';
+import { PdfFlipViewer } from '../components/reports/PdfFlipViewer';
 
 interface EventDetailPageProps {
   event: EventItem;
@@ -22,24 +24,14 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
   event, onBack, onRegister, isRegistered, isBookmarked, onToggleBookmark, onOpenQRScanner, onDelete, onEdit
 }) => {
   const bookmarkClasses = isBookmarked ? 'bg-[#EC4899] text-white shadow-lg' : 'bg-white/80 text-[#18131A] hover:bg-white';
-  const [report, setReport] = useState<any>(null);
+  const [report, setReport] = useState<EventReport | null>(null);
   const [photos, setPhotos] = useState<any[]>([]);
+  const [viewingReport, setViewingReport] = useState(false);
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const { data: reportRow } = await supabase
-          .from('reports')
-          .select('*')
-          .eq('event_id', event.id)
-          .maybeSingle();
-        if (reportRow) {
-          const { data: images } = await supabase
-            .from('report_images')
-            .select('*')
-            .eq('report_id', reportRow.id)
-            .order('order', { ascending: true });
-          setReport({ ...reportRow, gallery_images: images || [] });
-        }
+        const data = await reportApi.getByEventId(event.id);
+        setReport(data);
       } catch (err) {
         console.error('Error fetching report:', err);
       }
@@ -56,11 +48,9 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
         console.error('Error fetching photos:', err);
       }
     };
-    if (event.status === 'Completed') {
-      fetchReport();
-    }
+    fetchReport();
     fetchPhotos();
-  }, [event.id, event.status]);
+  }, [event.id]);
 
   const capacityPercent = (event.registeredCount / event.totalSpots) * 100;
   const eventDate = new Date(event.rawDate);
@@ -154,61 +144,31 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
       </div>
     
         {/* Event Report Section */}
-        {event.status === 'Completed' && report && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
-            <h2 className="text-2xl font-bold text-[#18131A]">📋 {report.title}</h2>
-            <div className="bg-gradient-to-br from-[#FFF8FC] to-white rounded-3xl border border-[#F3DCE8] p-6 space-y-6">
-              <p className="text-[#6B6470] leading-relaxed">{report.summary}</p>
-              
-              {Object.keys(report.stats).length > 0 && (
-                <div>
-                  <h3 className="font-bold text-[#18131A] mb-4">Event Stats</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {Object.entries(report.stats).map(([key, value]: any) => (
-                      <div key={key} className="bg-[#FFF1F7] rounded-2xl p-3 text-center">
-                        <p className="text-xs text-[#6B6470] capitalize mb-1">{key}</p>
-                        <p className="text-lg font-bold text-[#EC4899]">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {report.highlights.length > 0 && (
-                <div>
-                  <h3 className="font-bold text-[#18131A] mb-3">✨ Highlights</h3>
-                  <ul className="space-y-2">
-                    {report.highlights.map((h: string, i: number) => (
-                      <li key={i} className="flex items-start gap-2 text-[#6B6470] text-sm">
-                        <span className="text-[#EC4899] font-bold">▸</span>
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {report.gallery_images && report.gallery_images.length > 0 && (
-                <div>
-                  <h3 className="font-bold text-[#18131A] mb-4">📸 Gallery</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {report.gallery_images.map((img: any) => (
-                      <div key={img.id} className="rounded-2xl overflow-hidden bg-gray-200">
-                        <img src={img.image_url} alt={img.caption} className="w-full h-32 sm:h-40 object-cover hover:scale-105 transition-transform" />
-                        {img.caption && <p className="text-xs text-[#6B6470] p-2 line-clamp-1">{img.caption}</p>}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+        {report && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+            <h2 className="text-2xl font-bold text-[#18131A]">📋 Event Report</h2>
+            <div className="bg-gradient-to-br from-[#FFF8FC] to-white rounded-3xl border border-[#F3DCE8] p-6 flex flex-col sm:flex-row items-center gap-6">
+              <div className="w-full sm:w-40 h-40 rounded-2xl overflow-hidden bg-gradient-to-br from-[#EC4899] to-[#A855F7] shrink-0 flex items-center justify-center">
+                {report.event_thumbnail ? (
+                  <img src={report.event_thumbnail} alt={report.title || report.event_title} className="w-full h-full object-cover" />
+                ) : (
+                  <FileText className="w-12 h-12 text-white opacity-70" />
+                )}
+              </div>
+              <div className="flex-1 text-center sm:text-left space-y-2">
+                <h3 className="text-lg font-bold text-[#18131A]">{report.title || `${event.title} Report`}</h3>
+                <p className="text-sm text-[#6B6470]">Uploaded {new Date(report.uploaded_at).toLocaleDateString()}</p>
+                <button
+                  onClick={() => setViewingReport(true)}
+                  className="mt-2 px-6 py-2.5 bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                >
+                  Read Report
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
-        {event.status === 'Completed' && !report && (
+        {!report && event.status === 'Completed' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -239,6 +199,14 @@ export const EventDetailPage: React.FC<EventDetailPageProps> = ({
               ))}
             </div>
           </motion.div>
+        )}
+
+        {viewingReport && report && (
+          <PdfFlipViewer
+            pdfUrl={report.pdf_url}
+            title={report.title || `${event.title} Report`}
+            onClose={() => setViewingReport(false)}
+          />
         )}
 
         </div>

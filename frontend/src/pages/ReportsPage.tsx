@@ -65,7 +65,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
           <p className="text-lg text-[#6B6470]">No reports yet</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 px-2 sm:px-0">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 px-2 sm:px-0">
           {reports.map((report, idx) => (
             <motion.div
               key={report.id}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LayoutGrid, Columns, Sparkles, Quote, User } from 'lucide-react';
 import { ExecomMember, LayoutViewMode } from '../../api/execomApi';
-import { ExecomMemberCard } from './ExicomMemberCard';
+import { ExicomMemberCard } from './ExicomMemberCard';
 import { useTheme } from './ThemeContext';
 import { useIsMobileOrTablet } from '../../hooks/useIsMobileOrTablet';
 

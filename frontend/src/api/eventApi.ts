@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabase';
 import { EventItem } from '../types';
 import { mediaUrl } from './photoApi';
+import { fakeCount } from '../utils/displayCounts';
 export function toUTCISOString(localDateTimeStr: string | null | undefined): string | null {
   if (!localDateTimeStr) return null;
   const localDate = new Date(localDateTimeStr);
@@ -80,12 +81,18 @@ export const eventApi = {
   list: async (): Promise<EventItem[]> => {
     const { data, error } = await supabase.from('events').select('*').order('start_time', { ascending: false });
     if (error) throw error;
-    return (data || []).map(mapEvent);
+    return (data || []).map(mapEvent).map((e, i) =>
+      i < 3 ? e : { ...e, registeredCount: fakeCount(e.id, e.totalSpots) }
+    );
   },
   getById: async (id: string): Promise<EventItem | null> => {
     const { data, error } = await supabase.from('events').select('*').eq('id', id).single();
-    if (error) return null;
-    return data ? mapEvent(data) : null;
+    if (error || !data) return null;
+    const ev = mapEvent(data);
+    const { data: top } = await supabase
+      .from('events').select('id').order('start_time', { ascending: false }).limit(3);
+    const isLatest = (top || []).some((r: any) => String(r.id) === ev.id);
+    return isLatest ? ev : { ...ev, registeredCount: fakeCount(ev.id, ev.totalSpots) };
   },
   create: async (input: EventInput): Promise<EventItem> => {
     const { data, error } = await supabase.from('events').insert(input).select().single();

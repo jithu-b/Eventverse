@@ -182,7 +182,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </a>
 
               <a
-                href="#"
+                href="https://www.linkedin.com/in/jithu-biju-66a247234/"
                 target="_blank"
                 rel="noreferrer"
                 className="text-[#6B6470] hover:text-[#EC4899] transition-colors"

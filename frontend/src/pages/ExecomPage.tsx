@@ -2,13 +2,13 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { PinkMeshBackground } from '../components/execom/PinkMeshBackground';
 import { FloatingSparkles } from '../components/execom/FloatingSparkles';
 import { ScrollProgressBar } from '../components/execom/ScrollProgressBar';
-import { ExicomHero } from '../components/execom/ExicomHero';
-import { ExicomGrid } from '../components/execom/ExicomGrid';
+import { ExecomHero } from '../components/execom/ExicomHero';
+import { ExecomGrid } from '../components/execom/ExicomGrid';
 import { MemberProfileModal } from '../components/execom/MemberProfileModal';
-import { ExicomFooter } from '../components/execom/ExicomFooter';
+import { ExecomFooter } from '../components/execom/ExicomFooter';
 import { MemberDataEditorDrawer } from '../components/execom/MemberDataEditorDrawer';
 import { ThemeProvider } from '../components/execom/ThemeContext';
-import { ExicomMember } from '../api/execomApi';
+import { ExecomMember } from '../api/execomApi';
 import { supabase } from '../lib/supabase';
 import { useIsMobileOrTablet } from '../hooks/useIsMobileOrTablet';
 import { useAuth } from '../context/AuthContext';
@@ -56,7 +56,7 @@ function ExecomPageInner() {
     loadMembers();
   }, [loadMembers]);
 
-  const handleSaveMembers = async (updated: ExicomMember[]) => {
+  const handleSaveMembers = async (updated: ExecomMember[]) => {
     const rows = updated.map((m, idx) => ({
       id: m.id && m.id > 0 && members.some((existing) => existing.id === m.id) ? m.id : undefined,
       number: m.number,

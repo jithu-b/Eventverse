@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Sparkles, ArrowDown, Users, Award } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 
-interface ExicomHeroProps {
+interface ExecomHeroProps {
   onScrollToMembers: () => void;
 }
 
@@ -37,7 +37,8 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
       {/* Main Massive EXICOM Heading with Staggered Letter Mask Reveal */}
       <div className="overflow-hidden mb-3">
         <motion.h1
-          className={`font-display text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-extrabold tracking-tight leading-none text-transparent bg-clip-text select-none transition-all duration-500 ${
+          style={{ fontSize: 'clamp(2.5rem, 13vw, 10.5rem)' }}
+          className={`font-display whitespace-nowrap font-extrabold tracking-tight leading-none text-transparent bg-clip-text select-none transition-all duration-500 ${
             isBlush
               ? 'bg-gradient-to-b from-[#2e1220] via-[#5c1c3c] to-[#9d174d]'
               : 'bg-gradient-to-b from-[#090d16] via-[#1e293b] to-[#475569]'

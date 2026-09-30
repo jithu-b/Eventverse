@@ -1,13 +1,13 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, useSpring, useMotionValue, useTransform } from 'motion/react';
 import { ArrowUpRight, Sparkles, Image as ImageIcon, Camera, Eye } from 'lucide-react';
-import { ExicomMember } from '../../api/execomApi';
+import { ExecomMember } from '../../api/execomApi';
 import { SocialLinks } from './SocialLinks';
 import { useTheme } from './ThemeContext';
 import { useIsMobileOrTablet } from '../../hooks/useIsMobileOrTablet';
 import { mediaUrl } from '../../api/photoApi';
 
-interface ExicomMemberCardProps {
+interface ExecomMemberCardProps {
   member: ExicomMember;
   onSelectMember: (member: ExicomMember) => void;
   index: number;

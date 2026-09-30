@@ -1,6 +1,6 @@
 import { ExicomMember } from '../types';
 
-export const initialExicomMembers: ExicomMember[] = [
+export const initialExecomMembers: ExicomMember[] = [
   {
     id: 1,
     number: '01',

@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Sparkles, Heart, ArrowUp, Send } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 
-interface ExicomFooterProps {
+interface ExecomFooterProps {
   onScrollToTop: () => void;
 }
 
@@ -89,7 +89,7 @@ export const ExicomFooter: React.FC<ExicomFooterProps> = ({ onScrollToTop }) => 
             }`}
           >
             <Send className="w-4 h-4" />
-            <span>Connect with Exicom</span>
+            <span>Connect with Execom</span>
           </a>
 
           <button

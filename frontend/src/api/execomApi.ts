@@ -13,7 +13,7 @@ export interface MemberSocial {
   email?: string;
 }
 
-export interface ExicomMember {
+export interface ExecomMember {
   id: number;
   number: string;
   name: string;
@@ -32,7 +32,7 @@ export interface ExicomMember {
 
 export const execomApi = {
   list: async (): Promise<ExicomMember[]> => (await axiosClient.get('/execom')).data.members || [],
-  saveBulk: async (members: ExicomMember[]): Promise<ExicomMember[]> =>
+  saveBulk: async (members: ExecomMember[]): Promise<ExicomMember[]> =>
     (await axiosClient.put('/execom/bulk', { members })).data.members || [],
   remove: async (id: number): Promise<void> => {
     await axiosClient.delete(`/execom/${id}`);

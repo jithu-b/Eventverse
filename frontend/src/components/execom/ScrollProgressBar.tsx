@@ -19,7 +19,7 @@ export const ScrollProgressBar: React.FC<ScrollProgressBarProps> = ({
     }
   }, [targetId]);
 
-  // Track scroll progress through the Exicom section if available, otherwise entire document
+  // Track scroll progress through the Execom section if available, otherwise entire document
   const { scrollYProgress } = useScroll(
     targetElement
       ? {

@@ -106,7 +106,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onOpenEditor, onScrollTo
             title="Edit member data / Swap pictures"
           >
             <SlidersHorizontal className={`w-3.5 h-3.5 ${isBlush ? 'text-pink-600' : 'text-slate-700'}`} />
-            <span className="hidden lg:inline">Customize Exicom</span>
+            <span className="hidden lg:inline">Customize Execom</span>
           </button>
 
           <a
@@ -164,7 +164,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onOpenEditor, onScrollTo
                 isBlush ? 'text-pink-600 bg-pink-50' : 'text-slate-900 bg-slate-100'
               }`}
             >
-              Exicom Members (6)
+              Execom Members (6)
             </button>
             <button
               onClick={() => {

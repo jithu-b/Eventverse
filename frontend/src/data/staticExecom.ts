@@ -1,6 +1,6 @@
 import { ExicomMember } from '../api/execomApi';
 
-export const STATIC_EXECOM: ExicomMember[] = [
+export const STATIC_EXECOM: ExecomMember[] = [
   {
     id: 1,
     number: "01",

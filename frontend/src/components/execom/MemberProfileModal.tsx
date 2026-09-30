@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronRight, Sparkles, Quote, CheckCircle2, Copy, Check, Camera, User } from 'lucide-react';
-import { ExicomMember } from '../../api/execomApi';
+import { ExecomMember } from '../../api/execomApi';
 import { SocialLinks } from './SocialLinks';
 import { useTheme } from './ThemeContext';
 import { mediaUrl } from '../../api/photoApi';
 
 interface MemberProfileModalProps {
-  member: ExicomMember | null;
+  member: ExecomMember | null;
   allMembers: ExicomMember[];
   onClose: () => void;
   onSelectMember: (member: ExicomMember) => void;

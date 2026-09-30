@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Save, RotateCcw, Image, Sparkles, User, Link2, Check, AlertCircle } from 'lucide-react';
 import tinkerhubLogo from '../../assets/tinkerhub-logo.png';
-import { ExicomMember } from './types';
+import { ExecomMember } from './types';
 import { execomApi } from '../../api/execomApi';
 import { mediaUrl } from '../../api/photoApi';
 
 interface MemberDataEditorDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  members: ExicomMember[];
+  members: ExecomMember[];
   onSaveMembers: (updated: ExicomMember[]) => void;
   onResetMembers: () => void;
 }
@@ -30,7 +30,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
     setEditableMembers(members);
   }, [members]);
 
-  const emptyMember: ExicomMember = {
+  const emptyMember: ExecomMember = {
     id: 0,
     number: '',
     name: '',
@@ -49,7 +49,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
   const currentMember =
     editableMembers.find((m) => m.id === selectedMemberId) || editableMembers[0] || emptyMember;
 
-  const handleFieldChange = (field: keyof ExicomMember, value: any) => {
+  const handleFieldChange = (field: keyof ExecomMember, value: any) => {
     setEditableMembers((prev) => {
       const exists = prev.some((m) => m.id === selectedMemberId);
       if (!exists) {
@@ -190,7 +190,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
               <button
                 onClick={() => {
                   const newId = Math.max(0, ...editableMembers.map((m) => m.id)) + 1;
-                  const newMember: ExicomMember = {
+                  const newMember: ExecomMember = {
                     id: newId,
                     number: String(editableMembers.length + 1).padStart(2, '0'),
                     name: 'New Member',

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LayoutGrid, Columns, Sparkles, Quote, User } from 'lucide-react';
-import { ExicomMember, LayoutViewMode } from '../../api/execomApi';
-import { ExicomMemberCard } from './ExicomMemberCard';
+import { ExecomMember, LayoutViewMode } from '../../api/execomApi';
+import { ExecomMemberCard } from './ExicomMemberCard';
 import { useTheme } from './ThemeContext';
 import { useIsMobileOrTablet } from '../../hooks/useIsMobileOrTablet';
 
-interface ExicomGridProps {
+interface ExecomGridProps {
   members: ExicomMember[];
   onSelectMember: (member: ExicomMember) => void;
 }
@@ -22,7 +22,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
   const activeFormattedIndex = currentActiveMember?.number || String(activeMemberIndex + 1).padStart(2, '0');
   const totalFormattedCount = String(members.length).padStart(2, '0');
 
-  const scrollToMember = (member: ExicomMember, index: number) => {
+  const scrollToMember = (member: ExecomMember, index: number) => {
     setActiveMemberIndex(index);
     const element = document.getElementById(`member-card-${member.id}`);
     if (element) {

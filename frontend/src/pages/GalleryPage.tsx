@@ -90,19 +90,19 @@ export const GalleryPage: React.FC = () => {
   return (
     <div className="space-y-10 max-w-7xl mx-auto" id="gallery-page-container">
       <div className="text-center max-w-2xl mx-auto space-y-3 pt-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider bg-pink-100 text-[#DB2777] rounded-full border border-pink-200">
-          <ImageIcon className="w-3.5 h-3.5 text-[#EC4899]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider bg-red-500/15 text-[#E04848] rounded-full border border-red-500/30">
+          <ImageIcon className="w-3.5 h-3.5 text-[#E04848]" />
           <span>CAMPUS MOMENTS & ARCHIVES</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#18131A] font-outfit">Event Gallery</h1>
-        <p className="text-xs sm:text-sm text-[#6B6470]">Real photos from TinkerHub SBCE events, organized by event.</p>
+        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white font-outfit">Event Gallery</h1>
+        <p className="text-xs sm:text-sm text-[#B3ABAB]">Real photos from TinkerHub SBCE events, organized by event.</p>
         {events.length > 0 && (
-          <p className="text-xs font-semibold text-[#DB2777]">
+          <p className="text-xs font-semibold text-[#E04848]">
             {decks.length} of {events.length} event{events.length === 1 ? '' : 's'} have photos uploaded
           </p>
         )}
         {isAdmin && eventsWithoutPhotos.length > 0 && (
-          <div className="text-left max-w-md mx-auto bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800">
+          <div className="text-left max-w-md mx-auto bg-amber-500/15 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-300">
             <p className="font-bold mb-1">Missing photos for {eventsWithoutPhotos.length} event{eventsWithoutPhotos.length === 1 ? '' : 's'}:</p>
             <ul className="list-disc list-inside space-y-0.5">
               {eventsWithoutPhotos.map((ev) => (
@@ -114,7 +114,7 @@ export const GalleryPage: React.FC = () => {
         {isAdmin && (
           <button
             onClick={() => setShowUpload((v) => !v)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-pink-600 text-white text-xs font-bold shadow-md hover:bg-pink-700 transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-red-700 text-white text-xs font-bold shadow-md hover:bg-red-800 transition-colors"
           >
             {showUpload ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
             {showUpload ? 'Cancel' : 'Add Photos'}
@@ -123,12 +123,12 @@ export const GalleryPage: React.FC = () => {
       </div>
 
       {isAdmin && showUpload && (
-        <form onSubmit={handleUpload} className="max-w-md mx-auto bg-white border border-[#F3DCE8] rounded-2xl p-5 space-y-3">
+        <form onSubmit={handleUpload} className="max-w-md mx-auto bg-[#141012] border border-[#B3282D] rounded-2xl p-5 space-y-3">
           <select
             value={uploadEventId}
             onChange={(e) => setUploadEventId(e.target.value)}
             required
-            className="w-full px-3 py-2 border border-[#F3DCE8] rounded-xl text-xs"
+            className="w-full px-3 py-2 border border-[#B3282D] rounded-xl text-xs"
           >
             <option value="">Select an event...</option>
             {events.map((ev) => (
@@ -147,13 +147,13 @@ export const GalleryPage: React.FC = () => {
             placeholder="Caption (optional, applies to all)"
             value={uploadCaption}
             onChange={(e) => setUploadCaption(e.target.value)}
-            className="w-full px-3 py-2 border border-[#F3DCE8] rounded-xl text-xs"
+            className="w-full px-3 py-2 border border-[#B3282D] rounded-xl text-xs"
           />
-          {uploadProgress && <p className="text-xs text-[#DB2777] font-semibold">{uploadProgress}</p>}
+          {uploadProgress && <p className="text-xs text-[#E04848] font-semibold">{uploadProgress}</p>}
           <button
             type="submit"
             disabled={uploading || !uploadEventId || uploadFiles.length === 0}
-            className="w-full py-2.5 rounded-xl bg-pink-600 text-white text-xs font-bold disabled:opacity-50"
+            className="w-full py-2.5 rounded-xl bg-red-700 text-white text-xs font-bold disabled:opacity-50"
           >
             {uploading ? 'Uploading...' : `Upload ${uploadFiles.length || ''} Photo${uploadFiles.length === 1 ? '' : 's'}`}
           </button>
@@ -161,7 +161,7 @@ export const GalleryPage: React.FC = () => {
       )}
 
       {decks.length === 0 ? (
-        <p className="text-center text-xs text-[#6B6470] py-16">No photos yet.</p>
+        <p className="text-center text-xs text-[#B3ABAB] py-16">No photos yet.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 pb-10">
           {decks.map((deck, index) => (

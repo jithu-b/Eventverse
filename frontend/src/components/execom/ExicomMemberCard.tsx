@@ -109,7 +109,7 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
         magneticY.set(pullY);
 
         if (cardGlowRef.current) {
-          const glowColor = isBlush ? 'rgba(244, 114, 182, 0.22)' : 'rgba(100, 116, 139, 0.2)';
+          const glowColor = isBlush ? 'rgba(244,114,120,0.22)' : 'rgba(100,116,139,0.2)';
           cardGlowRef.current.style.background = `radial-gradient(400px circle at ${(xPercent * 100).toFixed(1)}% ${(yPercent * 100).toFixed(1)}%, ${glowColor}, transparent 60%)`;
         }
       }
@@ -216,10 +216,10 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
         className={`relative w-full rounded-[32px] sm:rounded-[36px] glass-card glass-card-hover p-4 sm:p-5 transition-all duration-300 cursor-pointer overflow-visible backdrop-blur-xl ${
           is3DActive
             ? isBlush
-              ? 'shadow-2xl shadow-pink-400/30 ring-1 ring-pink-400/60'
+              ? 'shadow-2xl shadow-red-400/30 ring-1 ring-red-400/60'
               : 'shadow-2xl shadow-slate-400/30 ring-1 ring-slate-400/60'
             : isBlush
-            ? 'shadow-lg shadow-pink-200/20'
+            ? 'shadow-lg shadow-red-200/20'
             : 'shadow-lg shadow-slate-200/40'
         }`}
         tabIndex={0}
@@ -248,17 +248,17 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
           <div className="flex items-center gap-2.5">
             <span
               className={`font-editorial text-xl sm:text-2xl font-bold tracking-tight transition-colors duration-300 ${
-                isBlush ? 'text-pink-900/80' : 'text-slate-800'
+                isBlush ? 'text-white950/80' : 'text-gray-200'
               }`}
             >
               {member.number}
             </span>
-            <span className={`h-3.5 w-[1px] ${isBlush ? 'bg-pink-200' : 'bg-slate-200'}`} />
+            <span className={`h-3.5 w-[1px] ${isBlush ? 'bg-red-500/15' : 'bg-white/10'}`} />
             <span
               className={`text-[11px] sm:text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full transition-colors duration-300 ${
                 isBlush
-                  ? 'text-pink-600 bg-pink-50/90 border border-pink-200/60'
-                  : 'text-slate-700 bg-slate-100 border border-slate-200'
+                  ? 'text-white300 bg-red-500/15 border border-red-500/30'
+                  : 'text-gray-200 bg-white/5 border border-white/10'
               }`}
             >
               {member.role}
@@ -270,10 +270,10 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             className={`flex items-center gap-1 text-xs font-semibold tracking-wide transition-all duration-300 ${
               is3DActive
                 ? isBlush
-                  ? 'text-pink-600 translate-x-0 opacity-100'
-                  : 'text-slate-900 translate-x-0 opacity-100'
+                  ? 'text-white300 translate-x-0 opacity-100'
+                  : 'text-gray-200 translate-x-0 opacity-100'
                 : isBlush
-                ? 'text-pink-400/60 -translate-x-1 opacity-80'
+                ? 'text-white400/60 -translate-x-1 opacity-80'
                 : 'text-slate-400 -translate-x-1 opacity-80'
             }`}
           >
@@ -281,8 +281,8 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             <div
               className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors duration-300 ${
                 isBlush
-                  ? 'bg-pink-50 border-pink-200 text-pink-600 group-hover:bg-pink-500 group-hover:text-white'
-                  : 'bg-slate-100 border-slate-200 text-slate-700 group-hover:bg-slate-900 group-hover:text-white'
+                  ? 'bg-red-500/15 border-red-500/30 text-white300 group-hover:bg-red-600 group-hover:text-white'
+                  : 'bg-white/5 border-white/10 text-gray-200 group-hover:bg-slate-900 group-hover:text-white'
               }`}
             >
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -300,11 +300,11 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             <div
               className={`absolute inset-0 rounded-[22px] flex items-center justify-center animate-pulse z-10 ${
                 isBlush
-                  ? 'bg-gradient-to-tr from-pink-50 via-rose-50 to-pink-100'
+                  ? 'bg-gradient-to-tr from-red-50 via-red-50 to-red-100'
                   : 'bg-gradient-to-tr from-slate-50 via-slate-100 to-slate-200'
               }`}
             >
-              <Sparkles className={`w-8 h-8 ${isBlush ? 'text-pink-300' : 'text-slate-400'}`} />
+              <Sparkles className={`w-8 h-8 ${isBlush ? 'text-white300' : 'text-slate-400'}`} />
             </div>
           )}
 
@@ -325,7 +325,7 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
               willChange: 'transform, opacity, filter',
             }}
             className={`absolute inset-0 w-full h-full rounded-[22px] overflow-hidden border-2 shadow-inner z-10 ${
-              isBlush ? 'bg-pink-100/50 border-pink-200/80' : 'bg-slate-100 border-slate-200'
+              isBlush ? 'bg-red-500/15 border-red-500/30' : 'bg-white/5 border-white/10'
             }`}
           >
             <img
@@ -338,7 +338,7 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             <div
               className={`absolute inset-0 pointer-events-none ${
                 isBlush
-                  ? 'bg-gradient-to-t from-pink-950/30 via-transparent to-transparent'
+                  ? 'bg-gradient-to-t from-red-950/30 via-transparent to-transparent'
                   : 'bg-gradient-to-t from-slate-950/30 via-transparent to-transparent'
               }`}
             />
@@ -347,7 +347,7 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             {is3DActive && (
               <div
                 className={`absolute inset-0 backdrop-blur-[0.5px] transition-opacity duration-300 pointer-events-none ${
-                  isBlush ? 'bg-pink-950/20' : 'bg-slate-950/20'
+                  isBlush ? 'bg-red-950/20' : 'bg-slate-950/20'
                 }`}
               />
             )}
@@ -379,8 +379,8 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             className={`absolute inset-0 w-full h-full rounded-[20px] overflow-hidden pointer-events-none transition-shadow duration-300 ${
               is3DActive
                 ? isBlush
-                  ? 'shadow-[0_28px_45px_-12px_rgba(219,39,119,0.5),0_18px_30px_-8px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.8)] border-2 border-white'
-                  : 'shadow-[0_28px_45px_-12px_rgba(15,23,42,0.35),0_18px_30px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.8)] border-2 border-white'
+                  ? 'shadow-[0_28px_45px_-12px_rgba(219,39,48,0.5),0_18px_30px_-8px_rgba(0,0,0,0.3),0_0_0_1px_rgba(20,16,18,0.8)] border-2 border-white/10'
+                  : 'shadow-[0_28px_45px_-12px_rgba(15,23,42,0.35),0_18px_30px_-8px_rgba(0,0,0,0.25),0_0_0_1px_rgba(20,16,18,0.8)] border-2 border-white/10'
                 : 'shadow-none border-transparent'
             }`}
           >
@@ -397,14 +397,14 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             <div
               className={`absolute inset-0 pointer-events-none ${
                 isBlush
-                  ? 'bg-gradient-to-tr from-pink-900/35 via-transparent to-white/25'
-                  : 'bg-gradient-to-tr from-slate-900/35 via-transparent to-white/25'
+                  ? 'bg-gradient-to-tr from-red-950/35 via-transparent to-[#141012]/25'
+                  : 'bg-gradient-to-tr from-slate-900/35 via-transparent to-[#141012]/25'
               }`}
             />
             <div className="absolute inset-0 shine-effect opacity-40 pointer-events-none" />
 
             {/* 3D Depth Specular Edge Highlight */}
-            <div className="absolute inset-0 border border-white/50 rounded-[18px] pointer-events-none" />
+            <div className="absolute inset-0 border border-white/10 rounded-[18px] pointer-events-none" />
 
             {/* Floating 3D Badge (Elevated further along Z-axis) */}
             <motion.div
@@ -415,11 +415,11 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
               transition={{ duration: 0.35, delay: 0.08 }}
               className={`absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur-md border text-[10px] font-bold tracking-wider uppercase shadow-md pointer-events-none ${
                 isBlush
-                  ? 'bg-white/95 border-pink-300 text-pink-900'
-                  : 'bg-white/95 border-slate-300 text-slate-900'
+                  ? 'bg-white/5 border-red-500/30 text-white950'
+                  : 'bg-white/5 border-white/10 text-gray-200'
               }`}
             >
-              <Sparkles className={`w-3 h-3 ${isBlush ? 'text-pink-500' : 'text-slate-700'}`} />
+              <Sparkles className={`w-3 h-3 ${isBlush ? 'text-white300' : 'text-gray-200'}`} />
               <span>3D Live View</span>
             </motion.div>
 
@@ -432,15 +432,15 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
               transition={{ duration: 0.35, delay: 0.1 }}
               className={`absolute bottom-3 left-3 right-3 flex items-center justify-between px-3 py-1.5 rounded-xl backdrop-blur-md border text-[11px] font-medium text-white shadow-lg pointer-events-none ${
                 isBlush
-                  ? 'bg-pink-950/85 border-pink-400/50'
+                  ? 'bg-red-950/85 border-red-400/50'
                   : 'bg-slate-950/85 border-slate-500/50'
               }`}
             >
               <div className="flex items-center gap-1.5 truncate">
-                <Camera className={`w-3 h-3 ${isBlush ? 'text-pink-300' : 'text-slate-300'} shrink-0`} />
+                <Camera className={`w-3 h-3 ${isBlush ? 'text-white300' : 'text-slate-300'} shrink-0`} />
                 <span className="truncate">{member.hoverCaption || 'Behind the scenes in action'}</span>
               </div>
-              <Eye className={`w-3 h-3 ${isBlush ? 'text-pink-300' : 'text-slate-300'} shrink-0 ml-1`} />
+              <Eye className={`w-3 h-3 ${isBlush ? 'text-white300' : 'text-slate-300'} shrink-0 ml-1`} />
             </motion.div>
           </motion.div>
 
@@ -448,11 +448,11 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
           <div
             className={`pointer-events-none absolute bottom-3 right-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full backdrop-blur-md border text-[10px] font-semibold shadow-xs transition-opacity duration-300 ${
               isBlush
-                ? 'bg-white/90 border-pink-200/80 text-pink-900'
-                : 'bg-white/90 border-slate-200 text-slate-800'
+                ? 'bg-white/5 border-red-500/30 text-white950'
+                : 'bg-white/5 border-white/10 text-gray-200'
             } ${!is3DActive && !isTouchDevice ? 'opacity-90' : 'opacity-0'}`}
           >
-            <Sparkles className={`w-2.5 h-2.5 ${isBlush ? 'text-pink-500' : 'text-slate-600'}`} />
+            <Sparkles className={`w-2.5 h-2.5 ${isBlush ? 'text-white300' : 'text-gray-400'}`} />
             <span>Hover for 3D</span>
           </div>
 
@@ -462,11 +462,11 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
               onClick={handlePhotoTap}
               className={`absolute top-3 right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold shadow-sm active:scale-95 cursor-pointer ${
                 isBlush
-                  ? 'bg-white/95 border-pink-300 text-pink-700'
-                  : 'bg-white/95 border-slate-300 text-slate-700'
+                  ? 'bg-white/5 border-red-500/30 text-white300'
+                  : 'bg-white/5 border-white/10 text-gray-200'
               }`}
             >
-              <ImageIcon className={`w-3.5 h-3.5 ${isBlush ? 'text-pink-500' : 'text-slate-600'}`} />
+              <ImageIcon className={`w-3.5 h-3.5 ${isBlush ? 'text-white300' : 'text-gray-400'}`} />
               <span>{mobileShow3D ? 'Portrait View' : '✦ 3D Action'}</span>
             </button>
           )}
@@ -478,17 +478,17 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
             <div>
               <h3
                 className={`font-display text-lg sm:text-xl font-bold tracking-tight transition-colors duration-200 ${
-                  isBlush ? 'text-pink-950 group-hover:text-pink-600' : 'text-slate-950 group-hover:text-slate-700'
+                  isBlush ? 'text-white950 group-hover:text-white300' : 'text-gray-200 group-hover:text-gray-200'
                 }`}
               >
                 {member.name}
               </h3>
               <p
                 className={`text-xs font-semibold tracking-wide mt-0.5 ${
-                  isBlush ? 'text-pink-800/70' : 'text-slate-600'
+                  isBlush ? 'text-white300/70' : 'text-gray-400'
                 }`}
               >
-                {member.class} <span className={isBlush ? 'text-pink-300' : 'text-slate-300'}>•</span> {member.department}
+                {member.class} <span className={isBlush ? 'text-white300' : 'text-slate-300'}>•</span> {member.department}
               </p>
             </div>
           </div>
@@ -496,7 +496,7 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
           {/* Short Bio */}
           <p
             className={`text-xs sm:text-sm line-clamp-2 mt-2 leading-relaxed font-normal ${
-              isBlush ? 'text-pink-950/75' : 'text-slate-600'
+              isBlush ? 'text-white950/75' : 'text-gray-400'
             }`}
           >
             {member.description}
@@ -505,14 +505,14 @@ export const ExicomMemberCard: React.FC<ExicomMemberCardProps> = ({
           {/* Card Footer: Social Links & Quick View Trigger */}
           <div
             className={`mt-4 pt-3 border-t flex items-center justify-between gap-2 ${
-              isBlush ? 'border-pink-100/80' : 'border-slate-100'
+              isBlush ? 'border-red-100/80' : 'border-white/10'
             }`}
           >
             <SocialLinks social={member.social} size="sm" />
 
             <span
               className={`text-[11px] font-bold uppercase tracking-wider group-hover:underline flex items-center gap-0.5 ${
-                isBlush ? 'text-pink-600' : 'text-slate-900'
+                isBlush ? 'text-white300' : 'text-gray-200'
               }`}
             >
               Profile

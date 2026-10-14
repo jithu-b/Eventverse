@@ -110,7 +110,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-pink-950/30 backdrop-blur-xs"
+          className="fixed inset-0 bg-red-950/30 backdrop-blur-xs"
         />
 
         <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
@@ -119,19 +119,19 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 260 }}
-            className="w-screen max-w-xl bg-white shadow-2xl border-l border-pink-200 flex flex-col"
+            className="w-screen max-w-xl bg-[#141012] shadow-2xl border-l border-red-500/30 flex flex-col"
           >
             {/* Drawer Header */}
-            <div className="p-6 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-pink-50/70 to-rose-50/70">
+            <div className="p-6 border-b border-red-100 flex items-center justify-between bg-gradient-to-r from-red-50/70 to-red-50/70">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-pink-500 flex items-center justify-center shadow-xs overflow-hidden">
+                <div className="w-8 h-8 rounded-xl bg-red-600 flex items-center justify-center shadow-xs overflow-hidden">
                   <img src={tinkerhubLogo} alt="TinkerHub" className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <h2 className="font-display text-lg font-bold text-pink-950">
+                  <h2 className="font-display text-lg font-bold text-white950">
                     Customize Execom Data
                   </h2>
-                  <p className="text-xs text-pink-700">
+                  <p className="text-xs text-white300">
                     Edit portraits, names, roles & socials in real-time
                   </p>
                 </div>
@@ -139,22 +139,22 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
 
               <button
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-pink-100 text-pink-700 transition-colors"
+                className="p-2 rounded-full hover:bg-[#3A1A1C] text-[#E04848] transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Member Selector Tabs */}
-            <div className="flex overflow-x-auto p-3 gap-2 border-b border-pink-100 bg-pink-50/40">
+            <div className="flex overflow-x-auto p-3 gap-2 border-b border-red-100 bg-red-500/15">
               {editableMembers.map((m, idx) => (
                 <div key={m.id} className="flex items-center gap-0.5">
                   <button
                     onClick={() => setSelectedMemberId(m.id)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                       m.id === selectedMemberId
-                        ? 'bg-pink-600 text-white shadow-xs'
-                        : 'bg-white text-pink-900/80 hover:bg-pink-100 border border-pink-200/70'
+                        ? 'bg-red-700 text-white shadow-xs'
+                        : 'bg-[#141012] text-white950/80 hover:bg-red-500/15 border border-red-500/30'
                     }`}
                   >
                     {m.number} • {m.role}
@@ -167,7 +167,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                         [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
                         setEditableMembers(arr.map((mm, i) => ({ ...mm, number: String(i + 1).padStart(2, '0') })));
                       }}
-                      className="p-0.5 rounded hover:bg-pink-100 text-pink-700 disabled:opacity-20 disabled:cursor-not-allowed"
+                      className="p-0.5 rounded hover:bg-[#3A1A1C] text-[#E04848] disabled:opacity-20 disabled:cursor-not-allowed"
                       title="Move up"
                     >
                       ▲
@@ -179,7 +179,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                         [arr[idx + 1], arr[idx]] = [arr[idx], arr[idx + 1]];
                         setEditableMembers(arr.map((mm, i) => ({ ...mm, number: String(i + 1).padStart(2, '0') })));
                       }}
-                      className="p-0.5 rounded hover:bg-pink-100 text-pink-700 disabled:opacity-20 disabled:cursor-not-allowed"
+                      className="p-0.5 rounded hover:bg-[#3A1A1C] text-[#E04848] disabled:opacity-20 disabled:cursor-not-allowed"
                       title="Move down"
                     >
                       ▼
@@ -209,7 +209,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                   setEditableMembers((prev) => [...prev, newMember]);
                   setSelectedMemberId(newId);
                 }}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-white text-pink-600 border border-dashed border-pink-300 hover:bg-pink-50 transition-all"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-[#141012] text-white300 border border-dashed border-red-500/30 hover:bg-red-500/15 transition-all"
               >
                 + Add Member
               </button>
@@ -220,26 +220,26 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
               {/* Name & Role Row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                     Member Name
                   </label>
                   <input
                     type="text"
                     value={currentMember.name}
                     onChange={(e) => handleFieldChange('name', e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-pink-50/30 text-pink-950 font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-red-500/30 focus:outline-none focus:ring-2 focus:ring-red-400 bg-red-500/15 text-white950 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                     Role Title
                   </label>
                   <input
                     type="text"
                     value={currentMember.role}
                     onChange={(e) => handleFieldChange('role', e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-pink-50/30 text-pink-950 font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-red-500/30 focus:outline-none focus:ring-2 focus:ring-red-400 bg-red-500/15 text-white950 font-medium"
                   />
                 </div>
               </div>
@@ -247,7 +247,7 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
               {/* Class & Department */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                     Class / Year
                   </label>
                   <input
@@ -255,33 +255,33 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                     value={currentMember.class}
                     onChange={(e) => handleFieldChange('class', e.target.value)}
                     placeholder="e.g. S5 CSE"
-                    className="w-full px-3 py-2 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-pink-50/30 text-pink-950 font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-red-500/30 focus:outline-none focus:ring-2 focus:ring-red-400 bg-red-500/15 text-white950 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                     Department
                   </label>
                   <input
                     type="text"
                     value={currentMember.department}
                     onChange={(e) => handleFieldChange('department', e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-pink-50/30 text-pink-950 font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-red-500/30 focus:outline-none focus:ring-2 focus:ring-red-400 bg-red-500/15 text-white950 font-medium"
                   />
                 </div>
               </div>
 
               {/* Image 1: Main Portrait */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                   Primary Portrait
                 </label>
                 {currentMember.image && (
                   <img
                     src={mediaUrl(currentMember.image)}
                     alt="Preview"
-                    className="w-full max-h-72 object-cover rounded-xl border border-pink-200 mb-2 bg-pink-50"
+                    className="w-full max-h-72 object-cover rounded-xl border border-red-500/30 mb-2 bg-red-500/15"
                   />
                 )}
                 <div className="flex gap-2 items-center">
@@ -289,22 +289,22 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                     type="file"
                     accept="image/*"
                     onChange={(e) => handleFileUpload('image', e.target.files?.[0] || null)}
-                    className="flex-1 text-xs file:mr-2 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:bg-pink-100 file:text-pink-700 file:font-bold"
+                    className="flex-1 text-xs file:mr-2 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:bg-red-500/15 file:text-white300 file:font-bold"
                   />
-                  {uploadingField === 'image' && <span className="text-[10px] text-pink-600 font-bold">Uploading...</span>}
+                  {uploadingField === 'image' && <span className="text-[10px] text-white300 font-bold">Uploading...</span>}
                 </div>
               </div>
 
               {/* Image 2: Secondary / Hover Image */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                   Hover / Candid Action Photo
                 </label>
                 {currentMember.hoverImage && (
                   <img
                     src={mediaUrl(currentMember.hoverImage)}
                     alt="Preview"
-                    className="w-full max-h-72 object-cover rounded-xl border border-pink-200 mb-2 bg-pink-50"
+                    className="w-full max-h-72 object-cover rounded-xl border border-red-500/30 mb-2 bg-red-500/15"
                   />
                 )}
                 <div className="flex gap-2 items-center">
@@ -312,28 +312,28 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                     type="file"
                     accept="image/*"
                     onChange={(e) => handleFileUpload('hoverImage', e.target.files?.[0] || null)}
-                    className="flex-1 text-xs file:mr-2 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:bg-pink-100 file:text-pink-700 file:font-bold"
+                    className="flex-1 text-xs file:mr-2 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:bg-red-500/15 file:text-white300 file:font-bold"
                   />
-                  {uploadingField === 'hoverImage' && <span className="text-[10px] text-pink-600 font-bold">Uploading...</span>}
+                  {uploadingField === 'hoverImage' && <span className="text-[10px] text-white300 font-bold">Uploading...</span>}
                 </div>
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                   Short Description
                 </label>
                 <textarea
                   rows={2}
                   value={currentMember.description}
                   onChange={(e) => handleFieldChange('description', e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-pink-50/30 text-pink-950 font-normal"
+                  className="w-full px-3 py-2 rounded-xl border border-red-500/30 focus:outline-none focus:ring-2 focus:ring-red-400 bg-red-500/15 text-white950 font-normal"
                 />
               </div>
 
               {/* Quote */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-1">
                   Personal Quote
                 </label>
                 <input
@@ -341,41 +341,41 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
                   value={currentMember.quote || ''}
                   onChange={(e) => handleFieldChange('quote', e.target.value)}
                   placeholder="Inspiring quote..."
-                  className="w-full px-3 py-2 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-pink-50/30 text-pink-950 font-normal"
+                  className="w-full px-3 py-2 rounded-xl border border-red-500/30 focus:outline-none focus:ring-2 focus:ring-red-400 bg-red-500/15 text-white950 font-normal"
                 />
               </div>
 
               {/* Social Links */}
-              <div className="pt-2 border-t border-pink-100">
-                <label className="block text-xs font-bold uppercase tracking-wider text-pink-900 mb-2">
+              <div className="pt-2 border-t border-red-100">
+                <label className="block text-xs font-bold uppercase tracking-wider text-white950 mb-2">
                   Social Links
                 </label>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-20 text-xs font-semibold text-pink-800">Instagram</span>
+                    <span className="w-20 text-xs font-semibold text-white300">Instagram</span>
                     <input
                       type="text"
                       value={currentMember.social.instagram}
                       onChange={(e) => handleSocialChange('instagram', e.target.value)}
-                      className="flex-1 px-3 py-1.5 rounded-lg border border-pink-200 text-xs font-mono"
+                      className="flex-1 px-3 py-1.5 rounded-lg border border-red-500/30 text-xs font-mono"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-20 text-xs font-semibold text-pink-800">GitHub</span>
+                    <span className="w-20 text-xs font-semibold text-white300">GitHub</span>
                     <input
                       type="text"
                       value={currentMember.social.github}
                       onChange={(e) => handleSocialChange('github', e.target.value)}
-                      className="flex-1 px-3 py-1.5 rounded-lg border border-pink-200 text-xs font-mono"
+                      className="flex-1 px-3 py-1.5 rounded-lg border border-red-500/30 text-xs font-mono"
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-20 text-xs font-semibold text-pink-800">LinkedIn</span>
+                    <span className="w-20 text-xs font-semibold text-white300">LinkedIn</span>
                     <input
                       type="text"
                       value={currentMember.social.linkedin}
                       onChange={(e) => handleSocialChange('linkedin', e.target.value)}
-                      className="flex-1 px-3 py-1.5 rounded-lg border border-pink-200 text-xs font-mono"
+                      className="flex-1 px-3 py-1.5 rounded-lg border border-red-500/30 text-xs font-mono"
                     />
                   </div>
                 </div>
@@ -383,13 +383,13 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
             </div>
 
             {/* Footer Buttons */}
-            <div className="p-4 border-t border-pink-100 bg-pink-50/50 flex items-center justify-between gap-3">
+            <div className="p-4 border-t border-red-100 bg-red-500/15 flex items-center justify-between gap-3">
               <button
                 onClick={() => {
                   onResetMembers();
                   setEditableMembers(members);
                 }}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-pink-800 hover:bg-pink-100 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-white300 hover:bg-red-500/15 transition-colors"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Reset Defaults</span>
@@ -398,13 +398,13 @@ export const MemberDataEditorDrawer: React.FC<MemberDataEditorDrawerProps> = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-pink-900 hover:bg-pink-100"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-white950 hover:bg-red-500/15"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSave}
-                  className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold shadow-md shadow-pink-300 transition-all active:scale-95"
+                  className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white text-xs font-bold shadow-md shadow-red-300 transition-all active:scale-95"
                 >
                   {saveToast ? (
                     <>

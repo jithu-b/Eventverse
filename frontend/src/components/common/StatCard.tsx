@@ -53,19 +53,19 @@ export const StatCard: React.FC<StatCardProps> = ({
     switch (color) {
       case 'purple':
         return {
-          iconBg: 'bg-purple-100/70 text-purple-600 border border-purple-200/60',
-          accent: 'text-purple-600',
+          iconBg: 'bg-[#3A1A1C] text-[#E04848] border border-red-500/30',
+          accent: 'text-red-300',
         };
       case 'cyan':
         return {
-          iconBg: 'bg-cyan-100/70 text-cyan-600 border border-cyan-200/60',
-          accent: 'text-cyan-600',
+          iconBg: 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30',
+          accent: 'text-cyan-300',
         };
       case 'pink':
       default:
         return {
-          iconBg: 'bg-pink-100/80 text-pink-600 border border-pink-200/70',
-          accent: 'text-[#EC4899]',
+          iconBg: 'bg-[#3A1A1C] text-[#E04848] border border-red-500/30',
+          accent: 'text-[#E04848]',
         };
     }
   };
@@ -76,17 +76,17 @@ export const StatCard: React.FC<StatCardProps> = ({
     <GlassCard id={id} hoverEffect className="p-6 transition-all duration-300">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#6B6470]">{label}</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#B3ABAB]">{label}</p>
           <div className="mt-2 flex items-baseline gap-1">
             <motion.h3
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-3xl font-extrabold tracking-tight text-[#18131A]"
+              className="text-3xl font-extrabold tracking-tight text-white"
             >
               {numericTarget !== undefined ? `${count}${suffix}` : value}
             </motion.h3>
           </div>
-          {subtext && <p className="mt-1 text-xs text-[#6B6470]">{subtext}</p>}
+          {subtext && <p className="mt-1 text-xs text-[#B3ABAB]">{subtext}</p>}
         </div>
         <div className={`p-3 rounded-2xl ${colors.iconBg} shadow-sm shrink-0`}>
           <Icon className="w-5 h-5" />
@@ -94,7 +94,7 @@ export const StatCard: React.FC<StatCardProps> = ({
       </div>
 
       {trend && (
-        <div className="mt-4 pt-3 border-t border-[#F3DCE8]/60 flex items-center gap-1.5 text-xs text-[#DB2777] font-medium">
+        <div className="mt-4 pt-3 border-t border-[#3B3535] flex items-center gap-1.5 text-xs text-[#E04848] font-medium">
           <TrendingUp className="w-3.5 h-3.5" />
           <span>{trend}</span>
         </div>

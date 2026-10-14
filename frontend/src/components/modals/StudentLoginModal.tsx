@@ -36,28 +36,28 @@ export const StudentLoginModal: React.FC<Props> = ({ isOpen, onClose, onLoggedIn
     <Modal isOpen={isOpen} onClose={onClose} title="Sign In" subtitle="Just your name and email — no password needed" maxWidth="sm" id="student-login-modal">
       <form onSubmit={handleSubmit} className="space-y-4 text-sm">
         {error && (
-          <div className="px-3 py-2 rounded-xl bg-[#FFF1F7] border border-[#F3DCE8] text-[#DB2777] text-xs font-semibold">
+          <div className="px-3 py-2 rounded-xl bg-[#141012] border border-[#B3282D] text-[#E04848] text-xs font-semibold">
             {error}
           </div>
         )}
         <div className="relative">
-          <User className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+          <User className="absolute left-3.5 top-3.5 w-4 h-4 text-[#B3ABAB]" />
           <input
             type="text"
             placeholder="Your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none text-sm"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none text-sm"
           />
         </div>
         <div className="relative">
-          <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+          <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#B3ABAB]" />
           <input
             type="email"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none text-sm"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none text-sm"
           />
         </div>
         <GradientButton type="submit" size="md" className="w-full justify-center">

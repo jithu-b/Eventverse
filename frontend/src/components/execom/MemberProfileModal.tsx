@@ -75,7 +75,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
           transition={{ duration: 0.3 }}
           onClick={onClose}
           className={`fixed inset-0 backdrop-blur-md transition-colors duration-300 ${
-            isBlush ? 'bg-pink-950/40' : 'bg-slate-950/50'
+            isBlush ? 'bg-red-950/40' : 'bg-slate-950/50'
           }`}
         />
 
@@ -86,13 +86,13 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 28, stiffness: 300 }}
           className={`relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[32px] sm:rounded-[36px] glass-card z-10 my-auto text-left backdrop-blur-2xl transition-all duration-300 ${
-            isBlush ? 'shadow-2xl shadow-pink-950/20' : 'shadow-2xl shadow-slate-950/20'
+            isBlush ? 'shadow-2xl shadow-red-950/20' : 'shadow-2xl shadow-slate-950/20'
           }`}
         >
           {/* Top Bar Controls */}
           <div
-            className={`sticky top-0 z-30 flex items-center justify-between px-6 sm:px-8 py-4 bg-white/80 backdrop-blur-md border-b transition-colors duration-300 ${
-              isBlush ? 'border-pink-200/60' : 'border-slate-200'
+            className={`sticky top-0 z-30 flex items-center justify-between px-6 sm:px-8 py-4 bg-[#1F1C1C] border-b transition-colors duration-300 ${
+              isBlush ? 'border-red-500/30' : 'border-white/10'
             }`}
           >
             {/* Quick Prev / Next member switcher */}
@@ -101,23 +101,23 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 onClick={() => onSelectMember(prevMember)}
                 className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors duration-200 cursor-pointer shadow-xs ${
                   isBlush
-                    ? 'text-pink-800 bg-pink-50/80 hover:bg-pink-100/90 border-pink-200/80'
-                    : 'text-slate-800 bg-slate-100 hover:bg-slate-200 border-slate-300'
+                    ? 'text-white300 bg-red-500/15 hover:bg-red-500/15 border-red-500/30'
+                    : 'text-gray-200 bg-white/5 hover:bg-white/10 border-white/10'
                 }`}
                 title={`Previous: ${prevMember.name}`}
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Prev ({prevMember.number})</span>
               </button>
-              <span className={`text-xs font-bold ${isBlush ? 'text-pink-400' : 'text-slate-400'}`}>
+              <span className={`text-xs font-bold ${isBlush ? 'text-white400' : 'text-slate-400'}`}>
                 {currentIndex + 1} / {allMembers.length}
               </span>
               <button
                 onClick={() => onSelectMember(nextMember)}
                 className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors duration-200 cursor-pointer shadow-xs ${
                   isBlush
-                    ? 'text-pink-800 bg-pink-50/80 hover:bg-pink-100/90 border-pink-200/80'
-                    : 'text-slate-800 bg-slate-100 hover:bg-slate-200 border-slate-300'
+                    ? 'text-white300 bg-red-500/15 hover:bg-red-500/15 border-red-500/30'
+                    : 'text-gray-200 bg-white/5 hover:bg-white/10 border-white/10'
                 }`}
                 title={`Next: ${nextMember.name}`}
               >
@@ -131,8 +131,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               onClick={onClose}
               className={`p-2 rounded-full border transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 ${
                 isBlush
-                  ? 'bg-pink-50/90 hover:bg-pink-100 text-pink-700 hover:text-pink-900 border-pink-200 focus:ring-pink-400'
-                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border-slate-300 focus:ring-slate-400'
+                  ? 'bg-red-500/15 hover:bg-[#3A1A1C] text-[#E04848] hover:text-white950 border-red-500/30 focus:ring-red-400'
+                  : 'bg-white/5 hover:bg-white/10 text-gray-200 hover:text-gray-200 border-white/10 focus:ring-slate-400'
               }`}
               aria-label="Close profile modal"
             >
@@ -147,8 +147,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               <div
                 className={`relative w-full aspect-[3/4] rounded-[24px] overflow-hidden shadow-xl border ${
                   isBlush
-                    ? 'shadow-pink-200/50 border-pink-200/70 bg-pink-50'
-                    : 'shadow-slate-200/70 border-slate-200 bg-slate-50'
+                    ? 'shadow-red-200/50 border-red-500/30 bg-red-500/15'
+                    : 'shadow-slate-200/70 border-white/10 bg-white/5'
                 }`}
               >
                 {/* Photo Render */}
@@ -165,7 +165,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 {/* Photo Badge */}
                 <div
                   className={`absolute top-3 left-3 px-3 py-1 rounded-full glass-card text-[11px] font-bold shadow-xs ${
-                    isBlush ? 'text-pink-900' : 'text-slate-900'
+                    isBlush ? 'text-white950' : 'text-gray-200'
                   }`}
                 >
                   {activePhoto === 'primary' ? 'Official Portrait' : 'Field Action View'}
@@ -175,7 +175,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               {/* Dual Photo Switcher Tabs */}
               <div
                 className={`mt-4 flex items-center justify-center p-1 rounded-2xl border w-full max-w-xs shadow-xs transition-colors duration-300 ${
-                  isBlush ? 'bg-pink-50/90 border-pink-200/80' : 'bg-slate-100 border-slate-200'
+                  isBlush ? 'bg-red-500/15 border-red-500/30' : 'bg-white/5 border-white/10'
                 }`}
               >
                 <button
@@ -183,11 +183,11 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                   className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
                     activePhoto === 'primary'
                       ? isBlush
-                        ? 'bg-white text-pink-700 shadow-xs'
-                        : 'bg-white text-slate-900 shadow-xs'
+                        ? 'bg-[#141012] text-white300 shadow-xs'
+                        : 'bg-[#141012] text-gray-200 shadow-xs'
                       : isBlush
-                      ? 'text-pink-900/70 hover:text-pink-900'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'text-white950/70 hover:text-white950'
+                      : 'text-gray-400 hover:text-gray-200'
                   }`}
                 >
                   <User className="w-3.5 h-3.5" />
@@ -198,11 +198,11 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                   className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
                     activePhoto === 'hover'
                       ? isBlush
-                        ? 'bg-white text-pink-700 shadow-xs'
-                        : 'bg-white text-slate-900 shadow-xs'
+                        ? 'bg-[#141012] text-white300 shadow-xs'
+                        : 'bg-[#141012] text-gray-200 shadow-xs'
                       : isBlush
-                      ? 'text-pink-900/70 hover:text-pink-900'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'text-white950/70 hover:text-white950'
+                      : 'text-gray-400 hover:text-gray-200'
                   }`}
                 >
                   <Camera className="w-3.5 h-3.5" />
@@ -214,7 +214,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               <div className="mt-6 w-full p-4 rounded-[22px] glass-card flex flex-col items-center text-center shadow-xs">
                 <span
                   className={`text-xs font-bold uppercase tracking-wider mb-3 ${
-                    isBlush ? 'text-pink-900/80' : 'text-slate-700'
+                    isBlush ? 'text-white950/80' : 'text-gray-200'
                   }`}
                 >
                   Connect with {member.name.split(' ')[0]}
@@ -225,13 +225,13 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                   <button
                     onClick={handleCopyEmail}
                     className={`mt-3 flex items-center gap-1.5 text-xs font-medium hover:underline cursor-pointer ${
-                      isBlush ? 'text-pink-700 hover:text-pink-900' : 'text-slate-700 hover:text-slate-950'
+                      isBlush ? 'text-white300 hover:text-white950' : 'text-gray-200 hover:text-gray-200'
                     }`}
                   >
                     {copiedEmail ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                        <span className="text-emerald-700 font-semibold">Email copied!</span>
+                        <Check className="w-3.5 h-3.5 text-emerald-300" />
+                        <span className="text-emerald-300 font-semibold">Email copied!</span>
                       </>
                     ) : (
                       <>
@@ -250,7 +250,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               <div className="flex items-center gap-3 mb-2">
                 <span
                   className={`font-editorial text-2xl font-bold ${
-                    isBlush ? 'text-pink-900' : 'text-slate-900'
+                    isBlush ? 'text-white950' : 'text-gray-200'
                   }`}
                 >
                   {member.number}
@@ -258,8 +258,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 <span
                   className={`px-3 py-1 rounded-full border text-xs font-bold tracking-wider uppercase ${
                     isBlush
-                      ? 'bg-pink-100 border-pink-200 text-pink-700'
-                      : 'bg-slate-100 border-slate-200 text-slate-700'
+                      ? 'bg-red-500/15 border-red-500/30 text-white300'
+                      : 'bg-white/5 border-white/10 text-gray-200'
                   }`}
                 >
                   {member.role}
@@ -269,15 +269,15 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               {/* Name */}
               <h2
                 className={`font-display text-3xl sm:text-4xl font-extrabold tracking-tight ${
-                  isBlush ? 'text-pink-950' : 'text-slate-900'
+                  isBlush ? 'text-white950' : 'text-gray-200'
                 }`}
               >
                 {member.name}
               </h2>
 
               {/* Class & Department */}
-              <p className={`text-sm font-semibold mt-1 ${isBlush ? 'text-pink-700' : 'text-slate-600'}`}>
-                {member.class} <span className={`mx-1 ${isBlush ? 'text-pink-300' : 'text-slate-300'}`}>•</span> {member.department}
+              <p className={`text-sm font-semibold mt-1 ${isBlush ? 'text-white300' : 'text-gray-400'}`}>
+                {member.class} <span className={`mx-1 ${isBlush ? 'text-white300' : 'text-slate-300'}`}>•</span> {member.department}
               </p>
 
               {/* Quote Banner */}
@@ -285,15 +285,15 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 <div
                   className={`mt-5 p-4 rounded-2xl border-l-4 shadow-xs ${
                     isBlush
-                      ? 'bg-gradient-to-r from-pink-50 via-rose-50 to-pink-50 border-pink-500 text-pink-950'
-                      : 'bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 border-slate-700 text-slate-900'
+                      ? 'bg-gradient-to-r from-red-50 via-red-50 to-red-50 border-red-600 text-white950'
+                      : 'bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 border-slate-700 text-gray-200'
                   }`}
                 >
                   <div className="flex items-start gap-2">
-                    <Quote className={`w-4 h-4 shrink-0 mt-0.5 ${isBlush ? 'text-pink-400' : 'text-slate-500'}`} />
+                    <Quote className={`w-4 h-4 shrink-0 mt-0.5 ${isBlush ? 'text-white400' : 'text-gray-400'}`} />
                     <p
                       className={`font-editorial text-sm sm:text-base italic leading-relaxed ${
-                        isBlush ? 'text-pink-900' : 'text-slate-800'
+                        isBlush ? 'text-white950' : 'text-gray-200'
                       }`}
                     >
                       "{member.quote}"
@@ -306,14 +306,14 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               <div className="mt-6">
                 <h3
                   className={`text-xs font-bold uppercase tracking-wider mb-2 ${
-                    isBlush ? 'text-pink-900' : 'text-slate-800'
+                    isBlush ? 'text-white950' : 'text-gray-200'
                   }`}
                 >
                   Role & Core Mission
                 </h3>
                 <p
                   className={`text-sm sm:text-base leading-relaxed ${
-                    isBlush ? 'text-pink-950/80' : 'text-slate-700'
+                    isBlush ? 'text-white950/80' : 'text-gray-200'
                   }`}
                 >
                   {member.description}
@@ -325,10 +325,10 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 <div className="mt-6">
                   <h3
                     className={`text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-1.5 ${
-                      isBlush ? 'text-pink-900' : 'text-slate-800'
+                      isBlush ? 'text-white950' : 'text-gray-200'
                     }`}
                   >
-                    <Sparkles className={`w-3.5 h-3.5 ${isBlush ? 'text-pink-500' : 'text-slate-700'}`} />
+                    <Sparkles className={`w-3.5 h-3.5 ${isBlush ? 'text-white300' : 'text-gray-200'}`} />
                     Key Initiatives & Milestones
                   </h3>
                   <ul className="space-y-2.5">
@@ -336,12 +336,12 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                       <li
                         key={idx}
                         className={`flex items-start gap-2.5 text-xs sm:text-sm ${
-                          isBlush ? 'text-pink-950/80' : 'text-slate-700'
+                          isBlush ? 'text-white950/80' : 'text-gray-200'
                         }`}
                       >
                         <CheckCircle2
                           className={`w-4 h-4 shrink-0 mt-0.5 ${
-                            isBlush ? 'text-pink-500' : 'text-slate-800'
+                            isBlush ? 'text-white300' : 'text-gray-200'
                           }`}
                         />
                         <span>{item}</span>
@@ -356,7 +356,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 <div className="mt-6">
                   <h3
                     className={`text-xs font-bold uppercase tracking-wider mb-2.5 ${
-                      isBlush ? 'text-pink-900' : 'text-slate-800'
+                      isBlush ? 'text-white950' : 'text-gray-200'
                     }`}
                   >
                     Domains of Expertise
@@ -365,8 +365,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                     {member.skills.map((skill, idx) => (
                       <span
                         key={idx}
-                        className={`px-3 py-1 rounded-xl bg-white border text-xs font-medium shadow-xs ${
-                          isBlush ? 'border-pink-200 text-pink-900' : 'border-slate-300 text-slate-900'
+                        className={`px-3 py-1 rounded-xl bg-[#141012] border text-xs font-medium shadow-xs ${
+                          isBlush ? 'border-red-500/30 text-white950' : 'border-white/10 text-gray-200'
                         }`}
                       >
                         {skill}

@@ -12,7 +12,7 @@ interface CreateEventModalProps {
 }
 
 const inputClass =
-  'w-full px-3.5 py-2.5 bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none text-xs sm:text-sm';
+  'w-full px-3.5 py-2.5 bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none text-xs sm:text-sm';
 
 const FIELD_TYPES: { value: RegistrationField['type']; label: string }[] = [
   { value: 'short_text', label: 'Short answer' },
@@ -129,7 +129,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
       onClose={onClose}
       title={
         <div className="flex items-center gap-2">
-          <PlusCircle className="w-5 h-5 text-[#EC4899]" />
+          <PlusCircle className="w-5 h-5 text-[#E04848]" />
           <span>Create New Campus Event</span>
         </div>
       }
@@ -139,13 +139,13 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
     >
       <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
         {error && (
-          <div className="px-3 py-2 rounded-xl bg-[#FFF1F7] border border-[#F3DCE8] text-[#DB2777] text-xs font-semibold">
+          <div className="px-3 py-2 rounded-xl bg-[#141012] border border-[#B3282D] text-[#E04848] text-xs font-semibold">
             {error}
           </div>
         )}
 
         <div>
-          <label className="block font-bold text-[#18131A] mb-1">Event Title *</label>
+          <label className="block font-bold text-white mb-1">Event Title *</label>
           <input
             type="text"
             required
@@ -158,7 +158,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block font-bold text-[#18131A] mb-1">Category *</label>
+            <label className="block font-bold text-white mb-1">Category *</label>
             <select value={category} onChange={(e) => setCategory(e.target.value as any)} className={inputClass}>
               <option value="Workshops">Workshops</option>
               <option value="Hackathons">Hackathons</option>
@@ -168,7 +168,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
             </select>
           </div>
           <div>
-            <label className="block font-bold text-[#18131A] mb-1">Total Spots *</label>
+            <label className="block font-bold text-white mb-1">Total Spots *</label>
             <input
               type="number"
               required
@@ -182,7 +182,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block font-bold text-[#18131A] mb-1">Start Date & Time *</label>
+            <label className="block font-bold text-white mb-1">Start Date & Time *</label>
             <input
               type="datetime-local"
               required
@@ -192,7 +192,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
             />
           </div>
           <div>
-            <label className="block font-bold text-[#18131A] mb-1">End Date & Time</label>
+            <label className="block font-bold text-white mb-1">End Date & Time</label>
             <input
               type="datetime-local"
               value={endTime}
@@ -203,7 +203,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
         </div>
 
         <div>
-          <label className="block font-bold text-[#18131A] mb-1">Venue / Location *</label>
+          <label className="block font-bold text-white mb-1">Venue / Location *</label>
           <input
             type="text"
             required
@@ -215,7 +215,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
         </div>
 
         <div>
-          <label className="block font-bold text-[#18131A] mb-1">Short Description *</label>
+          <label className="block font-bold text-white mb-1">Short Description *</label>
           <textarea
             rows={2}
             required
@@ -227,8 +227,8 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
         </div>
 
         <div>
-          <label className="block font-bold text-[#18131A] mb-1.5">Event Banner</label>
-          <label className="flex items-center gap-2 px-3.5 py-2.5 bg-white border border-dashed border-[#F3DCE8] hover:border-[#EC4899] rounded-xl cursor-pointer text-[#6B6470] text-xs sm:text-sm transition-colors">
+          <label className="block font-bold text-white mb-1.5">Event Banner</label>
+          <label className="flex items-center gap-2 px-3.5 py-2.5 bg-[#141012] border border-dashed border-[#B3282D] hover:border-[#DC2626] rounded-xl cursor-pointer text-[#B3ABAB] text-xs sm:text-sm transition-colors">
             <ImagePlus className="w-4 h-4" />
             {banner ? banner.name : 'Choose a banner image'}
             <input type="file" accept="image/*" onChange={handleBannerChange} className="hidden" />
@@ -239,7 +239,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
         </div>
 
         <div>
-          <label className="block font-bold text-[#18131A] mb-1">WhatsApp Group Link (optional)</label>
+          <label className="block font-bold text-white mb-1">WhatsApp Group Link (optional)</label>
           <input
             type="url"
             placeholder="https://chat.whatsapp.com/..."
@@ -247,29 +247,29 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
             onChange={(e) => setWhatsappLink(e.target.value)}
             className={inputClass}
           />
-          <p className="text-[11px] text-[#6B6470] mt-1">
+          <p className="text-[11px] text-[#B3ABAB] mt-1">
             Shown to participants right after they complete registration.
           </p>
         </div>
 
-        <div className="pt-3 border-t border-[#F3DCE8]">
+        <div className="pt-3 border-t border-[#3B3535]">
           <div className="flex items-center justify-between mb-2">
-            <label className="block font-bold text-[#18131A]">Registration Form Questions</label>
+            <label className="block font-bold text-white">Registration Form Questions</label>
             <button
               type="button"
               onClick={addField}
-              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold text-[#DB2777] bg-[#FFF1F7] hover:bg-pink-100 rounded-lg cursor-pointer"
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold text-[#E04848] bg-[#141012] hover:bg-red-500/15 rounded-lg cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" /> Add Question
             </button>
           </div>
-          <p className="text-[11px] text-[#6B6470] mb-3">
+          <p className="text-[11px] text-[#B3ABAB] mb-3">
             Name and email are always collected. Add extra questions here if you need more for this event.
           </p>
 
           <div className="space-y-3">
             {fields.map((field) => (
-              <div key={field.id} className="p-3 bg-white border border-[#F3DCE8] rounded-xl space-y-2">
+              <div key={field.id} className="p-3 bg-[#141012] border border-[#B3282D] rounded-xl space-y-2">
                 <div className="flex items-start gap-2">
                   <input
                     type="text"
@@ -281,7 +281,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
                   <button
                     type="button"
                     onClick={() => removeField(field.id)}
-                    className="p-2.5 text-[#6B6470] hover:text-[#DB2777] cursor-pointer"
+                    className="p-2.5 text-[#B3ABAB] hover:text-[#E04848] cursor-pointer"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -297,7 +297,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
                       <option key={t.value} value={t.value}>{t.label}</option>
                     ))}
                   </select>
-                  <label className="flex items-center gap-1.5 text-xs font-semibold text-[#18131A] cursor-pointer">
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-white cursor-pointer">
                     <input
                       type="checkbox"
                       checked={field.required}
@@ -321,7 +321,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
                         <button
                           type="button"
                           onClick={() => removeOption(field.id, idx)}
-                          className="p-2 text-[#6B6470] hover:text-[#DB2777] cursor-pointer"
+                          className="p-2 text-[#B3ABAB] hover:text-[#E04848] cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -330,7 +330,7 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
                     <button
                       type="button"
                       onClick={() => addOption(field.id)}
-                      className="text-[11px] font-bold text-[#DB2777] hover:underline cursor-pointer"
+                      className="text-[11px] font-bold text-[#E04848] hover:underline cursor-pointer"
                     >
                       + Add option
                     </button>
@@ -339,13 +339,13 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onCl
               </div>
             ))}
             {fields.length === 0 && (
-              <p className="text-[11px] text-[#6B6470] italic">No extra questions yet -- click "Add Question" to add one.</p>
+              <p className="text-[11px] text-[#B3ABAB] italic">No extra questions yet -- click "Add Question" to add one.</p>
             )}
           </div>
         </div>
 
-        <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#F3DCE8]">
-          <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-bold text-[#6B6470] hover:text-[#18131A] cursor-pointer">
+        <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#3B3535]">
+          <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-bold text-[#B3ABAB] hover:text-white cursor-pointer">
             Cancel
           </button>
           <GradientButton type="submit" size="md" disabled={submitting}>

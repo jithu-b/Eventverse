@@ -208,3 +208,11 @@ p {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ---- dark red theme overrides ---- */
+:root { --bg-base: #0A0808; --text-primary: #FFFFFF; }
+body { background: #0A0808 !important; color: #FFFFFF; }
+body::before { background: radial-gradient(circle at 15% 0%, rgba(185, 28, 28, 0.22), transparent 45%), radial-gradient(circle at 85% 100%, rgba(185, 28, 28, 0.14), transparent 45%) !important; }
+.glass-nav { background: #141010 !important; border-bottom: 1px solid #2A2323 !important; backdrop-filter: none !important; }
+.text-gradient-pink { background: linear-gradient(90deg, #D32F2F, #E04848) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+strong { color: #E8E2E2; }

@@ -15,23 +15,23 @@ interface SparkleData {
 }
 
 const PINK_SHADES = [
-  '#f472b6', // pink-400
-  '#ec4899', // pink-500
-  '#db2777', // pink-600
-  '#fbcfe8', // pink-200
-  '#fda4af', // rose-300
-  '#fb7185', // rose-400
-  '#f43f5e', // rose-500
+  '#F87171', // red-400
+  '#DC2626', // red-600
+  '#B91C1C', // red-700
+  '#FECACA', // red-200
+  '#FDA4AF', // red-300
+  '#FB7185', // red-400
+  '#F43F48', // red-600
 ];
 
 const MINIMALIST_SHADES = [
-  '#94a3b8', // slate-400
-  '#64748b', // slate-500
-  '#cbd5e1', // slate-300
+  '#94A3B8', // slate-400
+  '#64748B', // slate-500
+  '#CBD5E1', // slate-300
   '#475569', // slate-600
-  '#0f172a', // slate-900
-  '#a1a1aa', // zinc-400
-  '#71717a', // zinc-500
+  '#0F172A', // slate-900
+  '#A1A1AA', // zinc-400
+  '#71717A', // zinc-500
 ];
 
 const ANIMATION_CLASSES = [
@@ -139,7 +139,7 @@ interface SparkleSVGProps {
 
 const SparkleSVG: React.FC<SparkleSVGProps> = ({ type, color, size, isBlush }) => {
   const dropShadowFilter = isBlush
-    ? 'drop-shadow-[0_0_4px_rgba(244,114,182,0.6)]'
+    ? 'drop-shadow-[0_0_4px_rgba(244,114,120,0.6)]'
     : 'drop-shadow-[0_0_4px_rgba(148,163,184,0.45)]';
 
   switch (type) {
@@ -222,7 +222,7 @@ const SparkleSVG: React.FC<SparkleSVGProps> = ({ type, color, size, isBlush }) =
             d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
             fill={color}
           />
-          <circle cx="12" cy="12" r="2" fill="#ffffff" opacity="0.9" />
+          <circle cx="12" cy="12" r="2" fill="#FFFFFF" opacity="0.9" />
         </svg>
       );
   }

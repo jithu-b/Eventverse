@@ -38,19 +38,19 @@ export const EventCard: React.FC<EventCardProps> = ({
       onClick={handleCardClick}
       className="group cursor-pointer"
     >
-      <div className="bg-white/90 backdrop-blur-md border border-[#F3DCE8] rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+      <div className="bg-[#1F1C1C] border border-[#B3282D] rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
         {/* Image */}
-        <div className="relative h-40 sm:h-48 overflow-hidden bg-gray-200">
+        <div className="relative h-40 sm:h-48 overflow-hidden bg-white/10">
           <img
             src={event.thumbnail || event.bannerImage}
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#18131A]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1313]/40 to-transparent" />
 
           {/* Category Badge */}
           <div className="absolute top-3 left-3">
-            <span className="px-2.5 py-1 text-xs font-extrabold uppercase bg-[#EC4899] text-white rounded-lg shadow-md">
+            <span className="px-2.5 py-1 text-xs font-extrabold uppercase bg-[#DC2626] text-white rounded-lg shadow-md">
               {event.category}
             </span>
           </div>
@@ -63,8 +63,8 @@ export const EventCard: React.FC<EventCardProps> = ({
             }}
             className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all cursor-pointer ${
               isBookmarked
-                ? 'bg-[#EC4899] text-white shadow-lg'
-                : 'bg-white/80 text-[#18131A] hover:bg-white'
+                ? 'bg-[#DC2626] text-white shadow-lg'
+                : 'bg-white/5 text-white hover:bg-[#141012]'
             }`}
           >
             <Bookmark className="w-4 h-4" fill={isBookmarked ? 'currentColor' : 'none'} />
@@ -74,18 +74,18 @@ export const EventCard: React.FC<EventCardProps> = ({
         {/* Content */}
         <div className="p-4 sm:p-5 space-y-3">
           {/* Title */}
-          <h3 className="font-extrabold text-sm sm:text-base text-[#18131A] line-clamp-2 group-hover:text-[#EC4899] transition-colors">
+          <h3 className="font-extrabold text-sm sm:text-base text-white line-clamp-2 group-hover:text-[#E04848] transition-colors">
             {event.title}
           </h3>
 
           {/* Meta Info */}
           <div className="space-y-2 text-xs sm:text-sm">
-            <div className="flex items-center gap-2 text-[#6B6470]">
-              <Calendar className="w-3.5 h-3.5 text-[#EC4899]" />
+            <div className="flex items-center gap-2 text-[#B3ABAB]">
+              <Calendar className="w-3.5 h-3.5 text-[#E04848]" />
               <span>{event.date}</span>
             </div>
-            <div className="flex items-center gap-2 text-[#6B6470]">
-              <MapPin className="w-3.5 h-3.5 text-[#EC4899]" />
+            <div className="flex items-center gap-2 text-[#B3ABAB]">
+              <MapPin className="w-3.5 h-3.5 text-[#E04848]" />
               <span>{event.location}</span>
             </div>
           </div>
@@ -93,15 +93,15 @@ export const EventCard: React.FC<EventCardProps> = ({
           {/* Capacity */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#6B6470]">
-                <Users className="w-3.5 h-3.5 text-[#EC4899] inline mr-1" />
+              <span className="text-[#B3ABAB]">
+                <Users className="w-3.5 h-3.5 text-[#E04848] inline mr-1" />
                 {event.registeredCount} registered
               </span>
-              <span className="font-bold text-[#DB2777]">{spotsLeft} spots</span>
+              <span className="font-bold text-[#E04848]">{spotsLeft} spots</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-1.5">
+            <div className="w-full bg-white/10 rounded-full h-1.5">
               <div
-                className="bg-gradient-to-r from-[#EC4899] to-[#A855F7] h-1.5 rounded-full transition-all"
+                className="bg-gradient-to-r from-[#DC2626] to-[#B91C1C] h-1.5 rounded-full transition-all"
                 style={{ width: `${(event.registeredCount / event.totalSpots) * 100}%` }}
               />
             </div>
@@ -112,14 +112,14 @@ export const EventCard: React.FC<EventCardProps> = ({
             {hasEventPassed ? (
               <button
                 disabled
-                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-gray-700 bg-gray-100 border border-gray-300 rounded-xl cursor-not-allowed"
+                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-gray-200 bg-white/5 border border-white/10 rounded-xl cursor-not-allowed"
               >
                 Completed
               </button>
             ) : isRegistered ? (
               <button
                 disabled
-                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-green-700 bg-green-50 border border-green-300 rounded-xl cursor-default"
+                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-[#4ADE80] bg-[#1C3A2A] border border-green-500/30 rounded-xl cursor-default"
               >
                 ✓ Registered
               </button>
@@ -129,14 +129,14 @@ export const EventCard: React.FC<EventCardProps> = ({
                   e.stopPropagation();
                   onRegister(event.id);
                 }}
-                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#EC4899] to-[#A855F7] hover:shadow-lg rounded-xl transition-all cursor-pointer"
+                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#DC2626] to-[#B91C1C] hover:shadow-lg rounded-xl transition-all cursor-pointer"
               >
                 Register
               </button>
             ) : (
               <button
                 disabled
-                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-gray-700 bg-gray-100 border border-gray-300 rounded-xl cursor-not-allowed"
+                className="w-full px-3 py-2 text-xs sm:text-sm font-bold text-gray-200 bg-white/5 border border-white/10 rounded-xl cursor-not-allowed"
               >
                 Registrations Closed
               </button>

@@ -102,13 +102,13 @@ const ResponsiveCameraController: React.FC<CameraControllerProps> = ({
 const StudioLighting: React.FC = () => {
   return (
     <>
-      <ambientLight color="#ffffff" intensity={1.5} />
+      <ambientLight color="#FFFFFF" intensity={1.5} />
 
       {/* Main Warm Key Light */}
       <directionalLight
         position={[-2.5, 4.5, 3.5]}
         intensity={2.5}
-        color="#fffaed"
+        color="#FFFAED"
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -118,10 +118,10 @@ const StudioLighting: React.FC = () => {
       </directionalLight>
 
       {/* TinkerHub Signature Pink Rim Light */}
-      <directionalLight position={[2.8, 3.0, -2.5]} intensity={2.8} color="#ec4899" />
+      <directionalLight position={[2.8, 3.0, -2.5]} intensity={2.8} color="#DC2626" />
 
       {/* Soft Pastel Ambient Fill */}
-      <directionalLight position={[2.0, 1.5, 2.5]} intensity={1.1} color="#fdf2f8" />
+      <directionalLight position={[2.0, 1.5, 2.5]} intensity={1.1} color="#FEF2F2" />
     </>
   );
 };
@@ -155,7 +155,7 @@ const AmbientSparkles: React.FC = () => {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        color="#ec4899"
+        color="#DC2626"
         size={0.045}
         transparent
         opacity={0.75}
@@ -487,20 +487,20 @@ export const ThreeDCharacterScene: React.FC<CharacterSceneProps> = ({
       {/* Dynamic Speech Dialogue Bubble */}
       {!minimal && (
       <div className="w-full max-w-sm mb-2 px-2 z-10">
-        <div className="relative bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-lg shadow-pink-500/10 border border-pink-100 transition-all duration-300">
+        <div className="relative bg-[#1F1C1C] rounded-2xl p-3 shadow-lg shadow-red-600/10 border border-red-100 transition-all duration-300">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[11px] font-bold text-gray-900 tracking-wide uppercase">
+            <span className="text-[11px] font-bold text-gray-200 tracking-wide uppercase">
               {characterName} · 3D Mascot
             </span>
-            <span className="ml-auto text-[10px] text-pink-600 font-semibold px-2 py-0.5 bg-pink-50 rounded-full border border-pink-200">
+            <span className="ml-auto text-[10px] text-red-300 font-semibold px-2 py-0.5 bg-red-500/15 rounded-full border border-red-500/30">
               {characterState === 'IDLE' ? 'LOOKING AT CURSOR' : characterState.replace('_', ' ')}
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-gray-700 font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm text-gray-200 font-medium leading-relaxed">
             {speechMessage}
           </p>
-          <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white/95 border-r border-b border-pink-100 transform rotate-45" />
+          <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white/5 border-r border-b border-red-100 transform rotate-45" />
         </div>
       </div>
       )}
@@ -509,7 +509,7 @@ export const ThreeDCharacterScene: React.FC<CharacterSceneProps> = ({
       <div
         className={minimal
           ? "w-full h-full relative rounded-full overflow-hidden bg-transparent"
-          : "w-full h-[380px] sm:h-[430px] md:h-[470px] relative rounded-3xl overflow-hidden cursor-pointer bg-gradient-to-b from-slate-50/60 via-pink-50/30 to-slate-100/60 shadow-inner group"}
+          : "w-full h-[380px] sm:h-[430px] md:h-[470px] relative rounded-3xl overflow-hidden cursor-pointer bg-gradient-to-b from-slate-50/60 via-red-50/30 to-slate-100/60 shadow-inner group"}
         onClick={minimal ? undefined : triggerFallDown}
         onTouchStart={minimal ? undefined : triggerFallDown}
         title={minimal ? undefined : "Touch or click TinkerBot to make him fall down!"}
@@ -517,19 +517,19 @@ export const ThreeDCharacterScene: React.FC<CharacterSceneProps> = ({
         {!minimal && (
         <>
         {/* Animated Avatar Status Badge */}
-        <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 bg-white/85 backdrop-blur-md rounded-full border border-pink-100 shadow-2xs text-[11px] font-bold text-gray-800 pointer-events-none">
+        <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-2.5 py-1 bg-[#1F1C1C] rounded-full border border-red-100 shadow-2xs text-[11px] font-bold text-gray-200 pointer-events-none">
           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
           <span>3D Cursor Follow</span>
         </div>
 
         {/* Interactive Push Hint Badge */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full border border-pink-200 shadow-md text-[11px] font-bold text-pink-600 group-hover:scale-105 transition-all pointer-events-none">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3 py-1 bg-[#1F1C1C] rounded-full border border-red-500/30 shadow-md text-[11px] font-bold text-red-300 group-hover:scale-105 transition-all pointer-events-none">
           <Zap className="w-3.5 h-3.5 text-amber-500 animate-bounce" />
           <span>Touch or Click me to push me down! 💥</span>
         </div>
 
-        <div className="absolute top-3 right-3 z-20 flex items-center gap-1 px-2.5 py-1 bg-pink-50/90 backdrop-blur-md rounded-full border border-pink-200 text-[10px] font-semibold text-pink-700 pointer-events-none">
-          <Sparkles className="w-3 h-3 text-pink-600 animate-spin" />
+        <div className="absolute top-3 right-3 z-20 flex items-center gap-1 px-2.5 py-1 bg-red-500/15 backdrop-blur-md rounded-full border border-red-500/30 text-[10px] font-semibold text-red-300 pointer-events-none">
+          <Sparkles className="w-3 h-3 text-red-300 animate-spin" />
           <span>Live 3D Engine</span>
         </div>
         </>
@@ -578,7 +578,7 @@ export const ThreeDCharacterScene: React.FC<CharacterSceneProps> = ({
             scale={4.8}
             blur={2.2}
             far={1.6}
-            color="#db2777"
+            color="#B91C1C"
           />
         </Canvas>
       </div>
@@ -591,11 +591,11 @@ export const ThreeDCharacterScene: React.FC<CharacterSceneProps> = ({
           onClick={triggerShowBoard}
           className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 font-bold text-xs rounded-full shadow-md transition-all cursor-pointer ${
             characterState === 'HOLDING_BOARD' || characterState === 'DRAGGING_BOARD' || characterState === 'LIFTING_BOARD'
-              ? 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-pink-500/30 ring-2 ring-pink-400'
-              : 'bg-white hover:bg-pink-50 text-pink-700 border border-pink-200 hover:border-pink-400 shadow-2xs'
+              ? 'bg-gradient-to-r from-red-700 to-red-700 text-white shadow-red-600/30 ring-2 ring-red-400'
+              : 'bg-[#141012] hover:bg-[#3A1A1C] text-[#E04848] border border-red-500/30 hover:border-red-400 shadow-2xs'
           }`}
         >
-          <Megaphone className="w-3.5 h-3.5 text-pink-600" />
+          <Megaphone className="w-3.5 h-3.5 text-red-300" />
           <span>Show Board 🪧</span>
         </button>
 
@@ -604,18 +604,18 @@ export const ThreeDCharacterScene: React.FC<CharacterSceneProps> = ({
           onClick={triggerTrackCursor}
           className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 font-bold text-xs rounded-full shadow-2xs transition-all cursor-pointer ${
             characterState === 'IDLE'
-              ? 'bg-pink-600 text-white shadow-pink-500/25 ring-2 ring-pink-400'
-              : 'bg-white/90 hover:bg-white text-gray-700 border border-pink-100 hover:border-pink-300'
+              ? 'bg-red-700 text-white shadow-red-600/25 ring-2 ring-red-400'
+              : 'bg-white/5 hover:bg-[#141012] text-gray-200 border border-red-100 hover:border-red-500/30'
           }`}
         >
-          <Crosshair className={`w-3.5 h-3.5 ${characterState === 'IDLE' ? 'text-white' : 'text-pink-600'}`} />
+          <Crosshair className={`w-3.5 h-3.5 ${characterState === 'IDLE' ? 'text-white' : 'text-red-300'}`} />
           <span>Track Cursor 🎯</span>
         </button>
 
         <button
           type="button"
           onClick={triggerFallDown}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-gradient-to-r from-amber-500 via-rose-500 to-pink-600 hover:opacity-95 text-white font-bold text-xs rounded-full shadow-md shadow-rose-500/25 active:scale-95 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-gradient-to-r from-amber-500 via-red-600 to-red-700 hover:opacity-95 text-white font-bold text-xs rounded-full shadow-md shadow-red-600/25 active:scale-95 transition-all cursor-pointer"
         >
           <Zap className="w-3.5 h-3.5 fill-white text-white" />
           <span>Poke / Push 💥</span>
@@ -626,36 +626,36 @@ export const ThreeDCharacterScene: React.FC<CharacterSceneProps> = ({
           onClick={triggerLookAway}
           className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 font-bold text-xs rounded-full shadow-2xs transition-all cursor-pointer ${
             characterState === 'LOOKING_AWAY'
-              ? 'bg-pink-600 text-white shadow-pink-500/25 ring-2 ring-pink-400'
-              : 'bg-white/90 hover:bg-white text-gray-700 border border-pink-100 hover:border-pink-300'
+              ? 'bg-red-700 text-white shadow-red-600/25 ring-2 ring-red-400'
+              : 'bg-white/5 hover:bg-[#141012] text-gray-200 border border-red-100 hover:border-red-500/30'
           }`}
         >
-          <EyeOff className={`w-3.5 h-3.5 ${characterState === 'LOOKING_AWAY' ? 'text-white' : 'text-pink-600'}`} />
+          <EyeOff className={`w-3.5 h-3.5 ${characterState === 'LOOKING_AWAY' ? 'text-white' : 'text-red-300'}`} />
           <span>Look Away 👀</span>
         </button>
 
         <button
           type="button"
           onClick={triggerThumbsUp}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/90 hover:bg-white text-gray-700 font-bold text-xs rounded-full border border-pink-100 shadow-2xs hover:border-pink-300 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/5 hover:bg-[#141012] text-gray-200 font-bold text-xs rounded-full border border-red-100 shadow-2xs hover:border-red-500/30 transition-all cursor-pointer"
         >
-          <ThumbsUp className="w-3.5 h-3.5 text-pink-600" />
+          <ThumbsUp className="w-3.5 h-3.5 text-red-300" />
           <span>Thumbs Up 👍</span>
         </button>
 
         <button
           type="button"
           onClick={triggerWave}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/90 hover:bg-white text-gray-700 font-bold text-xs rounded-full border border-pink-100 shadow-2xs hover:border-pink-300 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/5 hover:bg-[#141012] text-gray-200 font-bold text-xs rounded-full border border-red-100 shadow-2xs hover:border-red-500/30 transition-all cursor-pointer"
         >
-          <Hand className="w-3.5 h-3.5 text-pink-600" />
+          <Hand className="w-3.5 h-3.5 text-red-300" />
           <span>Wave 👋</span>
         </button>
 
         <button
           type="button"
           onClick={triggerCelebrate}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/90 hover:bg-white text-gray-700 font-bold text-xs rounded-full border border-pink-100 shadow-2xs hover:border-pink-300 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/5 hover:bg-[#141012] text-gray-200 font-bold text-xs rounded-full border border-red-100 shadow-2xs hover:border-red-500/30 transition-all cursor-pointer"
         >
           <PartyPopper className="w-3.5 h-3.5 text-amber-500" />
           <span>Celebrate 🎉</span>

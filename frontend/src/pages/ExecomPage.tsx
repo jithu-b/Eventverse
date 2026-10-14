@@ -101,7 +101,7 @@ function ExecomPageInner() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden font-sans bg-[#faf7f9] text-[#2e1c24] selection:bg-pink-200 selection:text-pink-900">
+    <div className="relative min-h-screen overflow-x-hidden font-sans bg-[#141012] text-white selection:bg-red-500/15 selection:text-red-950">
       <PinkMeshBackground />
       <FloatingSparkles count={isMobile ? 10 : 34} />
       <ScrollProgressBar targetId="exicom-members" />
@@ -113,7 +113,7 @@ function ExecomPageInner() {
           <div className="flex justify-center mb-6">
             <button
               onClick={() => setIsEditorOpen(true)}
-              className="px-5 py-2.5 rounded-xl bg-pink-500 text-white text-sm font-bold shadow-md hover:bg-pink-600 transition-colors"
+              className="px-5 py-2.5 rounded-xl bg-red-600 text-white text-sm font-bold shadow-md hover:bg-red-700 transition-colors"
             >
               Edit Execom Members
             </button>

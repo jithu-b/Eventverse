@@ -69,50 +69,50 @@ export const RegistrantsPanel: React.FC = () => {
     URL.revokeObjectURL(url);
   }
 
-  if (loading) return <p className="text-center text-sm text-[#6B6470] py-8">Loading events...</p>;
+  if (loading) return <p className="text-center text-sm text-[#B3ABAB] py-8">Loading events...</p>;
 
   if (selected) {
     return (
       <div className="w-full max-w-4xl">
         <button
           onClick={() => setSelected(null)}
-          className="flex items-center gap-1 text-xs font-bold text-[#6B6470] hover:text-[#18131A] mb-4"
+          className="flex items-center gap-1 text-xs font-bold text-[#B3ABAB] hover:text-white mb-4"
         >
           <ChevronLeft className="w-4 h-4" /> Back to Events
         </button>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-[#18131A]">{selected.title} — Registrants</h2>
+          <h2 className="text-lg font-bold text-white">{selected.title} — Registrants</h2>
           <button
             onClick={exportCsv}
             disabled={registrants.length === 0}
-            className="flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl border border-[#F3DCE8] hover:border-[#EC4899] disabled:opacity-40"
+            className="flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl border border-[#B3282D] hover:border-[#DC2626] disabled:opacity-40"
           >
             <Download className="w-3.5 h-3.5" /> Export CSV
           </button>
         </div>
         {loadingRegs ? (
-          <p className="text-sm text-[#6B6470]">Loading registrants...</p>
+          <p className="text-sm text-[#B3ABAB]">Loading registrants...</p>
         ) : registrants.length === 0 ? (
-          <p className="text-sm text-[#6B6470]">No one has registered for this event yet.</p>
+          <p className="text-sm text-[#B3ABAB]">No one has registered for this event yet.</p>
         ) : (
-          <div className="overflow-x-auto border border-[#F3DCE8] rounded-2xl bg-white shadow-sm">
-            <table className="w-full text-xs sm:text-sm bg-white">
+          <div className="overflow-x-auto border border-[#B3282D] rounded-2xl bg-[#141012] shadow-sm">
+            <table className="w-full text-xs sm:text-sm bg-[#141012]">
               <thead>
-                <tr className="bg-[#FFF1F7] text-left">
-                  <th className="px-4 py-2.5 font-bold text-[#18131A]">Name</th>
-                  <th className="px-4 py-2.5 font-bold text-[#18131A]">Email</th>
-                  <th className="px-4 py-2.5 font-bold text-[#18131A]">Department</th>
-                  <th className="px-4 py-2.5 font-bold text-[#18131A]">Year</th>
+                <tr className="bg-[#141012] text-left">
+                  <th className="px-4 py-2.5 font-bold text-white">Name</th>
+                  <th className="px-4 py-2.5 font-bold text-white">Email</th>
+                  <th className="px-4 py-2.5 font-bold text-white">Department</th>
+                  <th className="px-4 py-2.5 font-bold text-white">Year</th>
                   {(selected.registrationFields || []).map((f) => (
-                    <th key={f.id} className="px-4 py-2.5 font-bold text-[#18131A]">{f.label}</th>
+                    <th key={f.id} className="px-4 py-2.5 font-bold text-white">{f.label}</th>
                   ))}
-                  <th className="px-4 py-2.5 font-bold text-[#18131A]">Registered</th>
-                  <th className="px-4 py-2.5 font-bold text-[#18131A]"></th>
+                  <th className="px-4 py-2.5 font-bold text-white">Registered</th>
+                  <th className="px-4 py-2.5 font-bold text-white"></th>
                 </tr>
               </thead>
               <tbody>
                 {registrants.map((r) => (
-                  <tr key={r.id} className="border-t border-[#F3DCE8] bg-white">
+                  <tr key={r.id} className="border-t border-[#3B3535] bg-[#141012]">
                     <td className="px-4 py-2.5">{r.name}</td>
                     <td className="px-4 py-2.5">{r.email}</td>
                     <td className="px-4 py-2.5">{r.dept || '—'}</td>
@@ -122,12 +122,12 @@ export const RegistrantsPanel: React.FC = () => {
                       const display = Array.isArray(val) ? val.join(', ') : (val || '—');
                       return <td key={f.id} className="px-4 py-2.5">{display}</td>;
                     })}
-                    <td className="px-4 py-2.5 text-[#6B6470]">{new Date(r.created_at).toLocaleString()}</td>
+                    <td className="px-4 py-2.5 text-[#B3ABAB]">{new Date(r.created_at).toLocaleString()}</td>
                     <td className="px-4 py-2.5">
                       <button
                         onClick={() => handleDelete(r)}
                         disabled={deletingId === r.id}
-                        className="flex items-center gap-1 text-xs font-bold text-red-600 hover:text-red-700 disabled:opacity-40 cursor-pointer"
+                        className="flex items-center gap-1 text-xs font-bold text-red-300 hover:text-red-300 disabled:opacity-40 cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                         {deletingId === r.id ? 'Removing...' : 'Remove'}
@@ -146,8 +146,8 @@ export const RegistrantsPanel: React.FC = () => {
   return (
     <div className="w-full max-w-3xl">
       <div className="mb-5">
-        <h2 className="text-lg font-bold text-[#18131A]">Select an Event</h2>
-        <p className="text-xs text-[#6B6470] mt-0.5">Choose an event to view and manage its registrants.</p>
+        <h2 className="text-lg font-bold text-white">Select an Event</h2>
+        <p className="text-xs text-[#B3ABAB] mt-0.5">Choose an event to view and manage its registrants.</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {events.map((evt) => (
@@ -156,27 +156,27 @@ export const RegistrantsPanel: React.FC = () => {
             onClick={() => openEvent(evt)}
             className={`group relative text-left p-4 rounded-2xl border hover:shadow-lg transition-all overflow-hidden ${
               evt.status === 'Upcoming'
-                ? 'border-[#BBEBC9] bg-[#F2FBF4] hover:border-[#4ADE80] hover:shadow-[#4ADE80]/10'
-                : 'border-[#F3DCE8] bg-white hover:border-transparent hover:shadow-[#EC4899]/10'
+                ? 'border-[#BBEBC9] bg-[#141012] hover:border-[#4ADE80] hover:shadow-[#4ADE80]/10'
+                : 'border-[#B3282D] bg-[#141012] hover:border-transparent hover:shadow-[#DC2626]/10'
             }`}
           >
             {evt.status === 'Upcoming' && (
-              <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#DCFCE7] text-[#16A34A]">
+              <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#141012] text-[#16A34A]">
                 Live
               </span>
             )}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#FFF1F7] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#141012] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="font-bold text-sm text-[#18131A] truncate">{evt.title}</p>
-                <p className="flex items-center gap-1 text-xs text-[#6B6470] mt-1">
+                <p className="font-bold text-sm text-white truncate">{evt.title}</p>
+                <p className="flex items-center gap-1 text-xs text-[#B3ABAB] mt-1">
                   <Calendar className="w-3 h-3" /> {evt.date}
                 </p>
               </div>
-              <ChevronRight className="w-4 h-4 text-[#D9C3D1] group-hover:text-[#EC4899] transition-colors shrink-0 mt-0.5" />
+              <ChevronRight className="w-4 h-4 text-[#D9C3C4] group-hover:text-[#E04848] transition-colors shrink-0 mt-0.5" />
             </div>
             <div className="relative mt-3 flex items-center gap-1.5">
-              <span className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-[#FFF1F7] text-[#EC4899]">
+              <span className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-[#141012] text-[#E04848]">
                 <Users className="w-3 h-3" /> {evt.registeredCount} registered
               </span>
             </div>

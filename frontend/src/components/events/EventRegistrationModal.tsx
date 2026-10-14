@@ -86,7 +86,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#EC4899', '#DB2777', '#A855F7', '#22D3EE', '#F3E8FF']
+        colors: ['#DC2626', '#B91C1C', '#B91C1C', '#22D3EE', '#FEE2E2']
       });
     } catch {
       // ignore
@@ -123,24 +123,24 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
         />
       ) : !isRegisteredSuccess ? (
         <div className="space-y-5">
-          <div className="flex items-center gap-3 pb-3 border-b border-[#F3DCE8]">
-            <div className="w-12 h-12 rounded-2xl bg-pink-100/90 text-[#EC4899] flex items-center justify-center font-bold">
+          <div className="flex items-center gap-3 pb-3 border-b border-[#3B3535]">
+            <div className="w-12 h-12 rounded-2xl bg-red-500/15 text-[#E04848] flex items-center justify-center font-bold">
               <Sparkles className="w-6 h-6" />
             </div>
             <div>
-              <span className="px-2.5 py-0.5 text-[10px] font-extrabold uppercase bg-[#FFF1F7] text-[#DB2777] rounded-full border border-[#F3DCE8]">
+              <span className="px-2.5 py-0.5 text-[10px] font-extrabold uppercase bg-[#141012] text-[#E04848] rounded-full border border-[#B3282D]">
                 {event.category}
               </span>
-              <h3 className="text-lg font-bold text-[#18131A] tracking-tight mt-0.5">
+              <h3 className="text-lg font-bold text-white tracking-tight mt-0.5">
                 Register for {event.title}
               </h3>
             </div>
           </div>
 
           {/* Event Quick Summary card with Live Spots Progress Bar */}
-          <div className="p-4 bg-[#FFF8FC] rounded-2xl border border-[#F3DCE8] text-xs text-[#6B6470] space-y-3">
-            <div className="flex items-center gap-2 font-semibold text-[#18131A]">
-              <Calendar className="w-4 h-4 text-[#EC4899]" />
+          <div className="p-4 bg-[#141012] rounded-2xl border border-[#B3282D] text-xs text-[#B3ABAB] space-y-3">
+            <div className="flex items-center gap-2 font-semibold text-white">
+              <Calendar className="w-4 h-4 text-[#E04848]" />
               <span>{event.date} · {event.time}</span>
             </div>
             <div className="flex items-center gap-2">
@@ -149,10 +149,10 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
             </div>
 
             {/* Animated Capacity Progress Bar */}
-            <div className="space-y-1 pt-1 border-t border-[#F3DCE8]/60">
+            <div className="space-y-1 pt-1 border-t border-[#3B3535]">
               <div className="flex items-center justify-between text-[11px]">
-                <span className="font-semibold text-[#18131A]">Seat Availability</span>
-                <span className="font-mono text-[#DB2777] font-bold">
+                <span className="font-semibold text-white">Seat Availability</span>
+                <span className="font-mono text-[#E04848] font-bold">
                   {event.totalSpots - event.registeredCount} spots remaining ({spotsFilledPercent}% booked)
                 </span>
               </div>
@@ -169,55 +169,55 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
           {/* Registration form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#18131A] mb-1.5">Full Name</label>
+              <label className="block text-xs font-bold text-white mb-1.5">Full Name</label>
               <div className="relative">
-                <User className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+                <User className="absolute left-3.5 top-3.5 w-4 h-4 text-[#B3ABAB]" />
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#18131A] mb-1.5">Email ID</label>
+              <label className="block text-xs font-bold text-white mb-1.5">Email ID</label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+                <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#B3ABAB]" />
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                  className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-[#18131A] mb-1.5">Department</label>
+                <label className="block text-xs font-bold text-white mb-1.5">Department</label>
                 <div className="relative">
-                  <GraduationCap className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+                  <GraduationCap className="absolute left-3.5 top-3.5 w-4 h-4 text-[#B3ABAB]" />
                   <input
                     type="text"
                     required
                     placeholder="e.g. Computer Science"
                     value={formData.dept}
                     onChange={(e) => setFormData({ ...formData, dept: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold text-[#18131A] mb-1.5">Year / Class</label>
+                <label className="block text-xs font-bold text-white mb-1.5">Year / Class</label>
                 <select
                   required
                   value={formData.year}
                   onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none cursor-pointer"
+                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none cursor-pointer"
                 >
                   <option value="">Select year...</option>
                   <option value="1st Year">1st Year</option>
@@ -229,11 +229,11 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
             </div>
 
             {customFields.length > 0 && (
-              <div className="space-y-4 pt-2 border-t border-[#F3DCE8]">
+              <div className="space-y-4 pt-2 border-t border-[#3B3535]">
                 {customFields.map((field) => (
                   <div key={field.id}>
-                    <label className="block text-xs font-bold text-[#18131A] mb-1.5">
-                      {field.label}{field.required && <span className="text-[#EC4899]"> *</span>}
+                    <label className="block text-xs font-bold text-white mb-1.5">
+                      {field.label}{field.required && <span className="text-[#E04848]"> *</span>}
                     </label>
 
                     {field.type === 'short_text' && (
@@ -242,7 +242,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
                         required={field.required}
                         value={answers[field.id] || ''}
                         onChange={(e) => setAnswer(field.id, e.target.value)}
-                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none"
                       />
                     )}
 
@@ -252,7 +252,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
                         rows={3}
                         value={answers[field.id] || ''}
                         onChange={(e) => setAnswer(field.id, e.target.value)}
-                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none"
                       />
                     )}
 
@@ -261,7 +261,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
                         required={field.required}
                         value={answers[field.id] || ''}
                         onChange={(e) => setAnswer(field.id, e.target.value)}
-                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none cursor-pointer"
+                        className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none cursor-pointer"
                       >
                         <option value="">Select an option...</option>
                         {(field.options || []).map((opt) => (
@@ -280,7 +280,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
                               required={field.required}
                               checked={answers[field.id] === opt}
                               onChange={() => setAnswer(field.id, opt)}
-                              className="accent-[#EC4899]"
+                              className="accent-[#DC2626]"
                             />
                             {opt}
                           </label>
@@ -296,7 +296,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
                               type="checkbox"
                               checked={Array.isArray(answers[field.id]) && answers[field.id].includes(opt)}
                               onChange={() => toggleCheckbox(field.id, opt)}
-                              className="accent-[#EC4899]"
+                              className="accent-[#DC2626]"
                             />
                             {opt}
                           </label>
@@ -312,7 +312,7 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-bold text-[#6B6470] hover:text-[#18131A] cursor-pointer"
+                className="px-4 py-2 text-xs font-bold text-[#B3ABAB] hover:text-white cursor-pointer"
               >
                 Cancel
               </button>
@@ -325,73 +325,73 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
       ) : (
         /* Holographic Digital Pass Preview */
         <div className="space-y-6 text-center">
-          <div className="inline-flex p-3 rounded-full bg-green-100 text-green-600 mb-1 animate-bounce">
+          <div className="inline-flex p-3 rounded-full bg-[#1C3A2A] text-[#4ADE80] mb-1 animate-bounce">
             <CheckCircle2 className="w-8 h-8" />
           </div>
 
           <div>
-            <h3 className="text-2xl font-extrabold text-[#18131A] font-outfit">
+            <h3 className="text-2xl font-extrabold text-white font-outfit">
               You’re In! Spot Confirmed 🎉
             </h3>
-            <p className="text-xs text-[#6B6470] mt-1">
+            <p className="text-xs text-[#B3ABAB] mt-1">
               Your official digital event ticket has been generated and linked to your student profile.
             </p>
           </div>
 
           {/* Ticket pass card */}
-          <div className="relative mx-auto max-w-md bg-gradient-to-br from-white via-[#FFF8FC] to-[#FFF1F7] border-2 border-dashed border-[#EC4899]/50 rounded-3xl p-6 shadow-xl shadow-pink-500/10 text-left overflow-hidden">
+          <div className="relative mx-auto max-w-md bg-gradient-to-br from-[#141012] via-[#141012] to-[#141012] border-2 border-dashed border-[#DC2626]/50 rounded-3xl p-6 shadow-xl shadow-red-600/10 text-left overflow-hidden">
             {/* Watermark logo */}
             <div className="absolute -right-8 -bottom-8 w-36 h-36 opacity-5 pointer-events-none">
-              <Sparkles className="w-full h-full text-pink-600" />
+              <Sparkles className="w-full h-full text-red-300" />
             </div>
 
-            <div className="flex items-center justify-between pb-3 border-b border-[#F3DCE8]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#3B3535]">
               <div>
-                <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#DB2777]">
+                <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#E04848]">
                   TINKERHUB SBCE OFFICIAL PASS
                 </span>
-                <h4 className="text-base font-extrabold text-[#18131A] line-clamp-1">{event.title}</h4>
+                <h4 className="text-base font-extrabold text-white line-clamp-1">{event.title}</h4>
               </div>
-              <div className="px-2.5 py-1 text-[10px] font-bold bg-green-100 text-green-800 rounded-lg">
+              <div className="px-2.5 py-1 text-[10px] font-bold bg-[#1C3A2A] text-[#4ADE80] rounded-lg">
                 CONFIRMED
               </div>
             </div>
 
             <div className="py-4 grid grid-cols-2 gap-4 text-xs">
               <div>
-                <span className="text-[10px] font-semibold uppercase text-[#6B6470] block">Attendee</span>
-                <span className="font-bold text-[#18131A]">{formData.name}</span>
-                <span className="text-[10px] text-[#6B6470] block">{formData.dept}</span>
+                <span className="text-[10px] font-semibold uppercase text-[#B3ABAB] block">Attendee</span>
+                <span className="font-bold text-white">{formData.name}</span>
+                <span className="text-[10px] text-[#B3ABAB] block">{formData.dept}</span>
               </div>
               <div>
-                <span className="text-[10px] font-semibold uppercase text-[#6B6470] block">Date & Venue</span>
-                <span className="font-bold text-[#18131A]">{event.date}</span>
-                <span className="text-[10px] text-[#6B6470] block truncate">{event.location}</span>
+                <span className="text-[10px] font-semibold uppercase text-[#B3ABAB] block">Date & Venue</span>
+                <span className="font-bold text-white">{event.date}</span>
+                <span className="text-[10px] text-[#B3ABAB] block truncate">{event.location}</span>
               </div>
               <div>
-                <span className="text-[10px] font-semibold uppercase text-[#6B6470] block">Ticket ID</span>
-                <span className="font-mono text-xs font-bold text-[#DB2777]">
+                <span className="text-[10px] font-semibold uppercase text-[#B3ABAB] block">Ticket ID</span>
+                <span className="font-mono text-xs font-bold text-[#E04848]">
                   TH-SBCE-{Math.floor(100000 + Math.random() * 900000)}
                 </span>
               </div>
               <div>
-                <span className="text-[10px] font-semibold uppercase text-[#6B6470] block">Entry Gate</span>
-                <span className="font-bold text-[#18131A]">Hall 1 · Main Block</span>
+                <span className="text-[10px] font-semibold uppercase text-[#B3ABAB] block">Entry Gate</span>
+                <span className="font-bold text-white">Hall 1 · Main Block</span>
               </div>
             </div>
 
             {/* QR Code simulation bar */}
-            <div className="pt-3 border-t border-[#F3DCE8] flex items-center justify-between">
+            <div className="pt-3 border-t border-[#3B3535] flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-white rounded-xl border border-[#F3DCE8] shadow-xs">
-                  <QrCode className="w-8 h-8 text-[#18131A]" />
+                <div className="p-2 bg-[#141012] rounded-xl border border-[#B3282D] shadow-xs">
+                  <QrCode className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-[10px] text-[#6B6470]">
+                <div className="text-[10px] text-[#B3ABAB]">
                   <span>Scan for instant check-in</span>
-                  <p className="font-mono text-[9px] text-[#EC4899]">VERIFIED-ATTENDEE</p>
+                  <p className="font-mono text-[9px] text-[#E04848]">VERIFIED-ATTENDEE</p>
                 </div>
               </div>
-              <span className="text-[10px] font-bold text-[#6B6470] bg-white px-2 py-1 rounded-lg border border-[#F3DCE8]">
+              <span className="text-[10px] font-bold text-[#B3ABAB] bg-[#141012] px-2 py-1 rounded-lg border border-[#B3282D]">
                 Confirmed
               </span>
             </div>
@@ -400,9 +400,9 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold bg-white hover:bg-pink-50 text-[#18131A] border border-[#F3DCE8] rounded-xl transition-all cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold bg-[#141012] hover:bg-red-500/15 text-white border border-[#B3282D] rounded-xl transition-all cursor-pointer shadow-xs"
             >
-              {copied ? <Check className="w-4 h-4 text-green-600" /> : <Share2 className="w-4 h-4 text-[#EC4899]" />}
+              {copied ? <Check className="w-4 h-4 text-[#4ADE80]" /> : <Share2 className="w-4 h-4 text-[#E04848]" />}
               <span>{copied ? 'Copied to Clipboard!' : 'Share Pass'}</span>
             </button>
 
@@ -425,17 +425,17 @@ export const EventRegistrationModal: React.FC<EventRegistrationModalProps> = ({
 function WhatsappJoinStep({ whatsappLink, onContinue }: { whatsappLink: string; onContinue: () => void }) {
   return (
     <div className="space-y-6 text-center py-4">
-      <div className="inline-flex p-4 rounded-full bg-green-100 text-green-600">
+      <div className="inline-flex p-4 rounded-full bg-[#1C3A2A] text-[#4ADE80]">
         <svg viewBox="0 0 24 24" className="w-9 h-9" fill="currentColor">
           <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.2c-.22.62-1.28 1.18-1.77 1.24-.45.06-1.02.09-1.65-.1-.38-.12-.87-.28-1.5-.55-2.64-1.14-4.36-3.8-4.5-3.98-.13-.18-1.08-1.44-1.08-2.74s.68-1.94.92-2.2c.24-.26.53-.33.7-.33h.5c.16 0 .38-.06.6.46.22.52.75 1.8.82 1.93.07.13.11.28.02.46-.09.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.27.27-.12.53.16.26.7 1.15 1.5 1.87 1.04.93 1.9 1.22 2.16 1.36.26.13.42.11.57-.07.16-.18.66-.77.84-1.03.18-.26.35-.22.6-.13.24.09 1.53.72 1.79.85.26.13.44.2.5.31.07.1.07.6-.15 1.22z"/>
         </svg>
       </div>
 
       <div>
-        <h3 className="text-2xl font-extrabold text-[#18131A] font-outfit">
+        <h3 className="text-2xl font-extrabold text-white font-outfit">
           One Last Step
         </h3>
-        <p className="text-sm text-[#6B6470] mt-2 max-w-sm mx-auto">
+        <p className="text-sm text-[#B3ABAB] mt-2 max-w-sm mx-auto">
           Join the official event WhatsApp group to get updates, reminders, and important announcements.
         </p>
       </div>
@@ -451,7 +451,7 @@ function WhatsappJoinStep({ whatsappLink, onContinue }: { whatsappLink: string; 
 
       <button
         onClick={onContinue}
-        className="text-xs font-bold text-[#6B6470] hover:text-[#18131A] cursor-pointer"
+        className="text-xs font-bold text-[#B3ABAB] hover:text-white cursor-pointer"
       >
         Continue to my ticket
       </button>

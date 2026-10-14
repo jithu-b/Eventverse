@@ -195,7 +195,7 @@ function AppContent() {
 
 
   return (
-    <div className="min-h-screen relative flex flex-col font-sans text-[#18131A] selection:bg-pink-200 selection:text-[#DB2777]">
+    <div className="min-h-screen relative flex flex-col font-sans text-white selection:bg-red-500/15 selection:text-[#E04848]">
       {/* 1. Living Background Canvas */}
       <LivingBackground />
       <ScrollProgressBar />
@@ -453,9 +453,9 @@ function AppContent() {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-[#18131A] text-white rounded-2xl shadow-xl flex items-center gap-2.5 border border-pink-500/30 text-xs font-semibold"
+            className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-[#1A1313] text-white rounded-2xl shadow-xl flex items-center gap-2.5 border border-red-600/30 text-xs font-semibold"
           >
-            <span className="w-2 h-2 rounded-full bg-[#EC4899] animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-[#DC2626] animate-ping" />
             <span>{toastMessage}</span>
           </motion.div>
         )}

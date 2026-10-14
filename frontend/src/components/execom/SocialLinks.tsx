@@ -45,21 +45,21 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
       name: 'Instagram',
       url: social.instagram,
       icon: Instagram,
-      color: 'hover:text-pink-600 hover:border-pink-300 hover:bg-pink-50'
+      color: 'hover:text-white300 hover:border-red-500/30 hover:bg-red-500/15'
     },
     {
       key: 'github',
       name: 'GitHub',
       url: social.github,
       icon: Github,
-      color: 'hover:text-zinc-900 hover:border-pink-300 hover:bg-pink-50'
+      color: 'hover:text-gray-200 hover:border-red-500/30 hover:bg-red-500/15'
     },
     {
       key: 'linkedin',
       name: 'LinkedIn',
       url: social.linkedin,
       icon: Linkedin,
-      color: 'hover:text-pink-700 hover:border-pink-300 hover:bg-pink-50'
+      color: 'hover:text-white300 hover:border-red-500/30 hover:bg-red-500/15'
     },
     ...(social.twitter
       ? [
@@ -68,7 +68,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
             name: 'Twitter / X',
             url: social.twitter,
             icon: Twitter,
-            color: 'hover:text-pink-600 hover:border-pink-300 hover:bg-pink-50'
+            color: 'hover:text-white300 hover:border-red-500/30 hover:bg-red-500/15'
           }
         ]
       : []),
@@ -79,7 +79,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
             name: 'Email',
             url: `mailto:${social.email}`,
             icon: Mail,
-            color: 'hover:text-pink-600 hover:border-pink-300 hover:bg-pink-50'
+            color: 'hover:text-white300 hover:border-red-500/30 hover:bg-red-500/15'
           }
         ]
       : [])
@@ -152,7 +152,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
                 damping: 20
               }
             }}
-            className={`group relative flex items-center justify-center rounded-full bg-white/90 border border-pink-100/90 text-pink-900/70 shadow-xs backdrop-blur-xs transition-colors duration-200 ${buttonSizes[size]} ${link.color} focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-1`}
+            className={`group relative flex items-center justify-center rounded-full bg-white/5 border border-red-100/90 text-white950/70 shadow-xs backdrop-blur-xs transition-colors duration-200 ${buttonSizes[size]} ${link.color} focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-1`}
           >
             {isCopied ? (
               <motion.div
@@ -160,7 +160,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 20 }}
               >
-                <Check className={`${iconSizes[size]} text-emerald-600`} />
+                <Check className={`${iconSizes[size]} text-emerald-300`} />
               </motion.div>
             ) : (
               <motion.div
@@ -183,7 +183,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 2, scale: 0.9 }}
                   transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                  className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-pink-950 px-2 py-0.5 text-[10px] font-medium tracking-wide text-pink-50 shadow-md whitespace-nowrap z-30"
+                  className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-red-950 px-2 py-0.5 text-[10px] font-medium tracking-wide text-white50 shadow-md whitespace-nowrap z-30"
                 >
                   {isCopied ? 'Copied URL!' : link.name}
                 </motion.span>

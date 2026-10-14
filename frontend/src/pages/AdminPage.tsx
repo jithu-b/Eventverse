@@ -6,7 +6,7 @@ import { GradientButton } from '../components/common/GradientButton';
 import { RegistrantsPanel } from '../components/admin/RegistrantsPanel';
 
 const inputClass =
-  'w-full pl-10 pr-4 py-2.5 text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none';
+  'w-full pl-10 pr-4 py-2.5 text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none';
 
 export function AdminPage() {
   const { authUser, login, logout } = useAuth();
@@ -22,8 +22,8 @@ export function AdminPage() {
       <div className="max-w-6xl mx-auto px-4 py-10">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-xl font-bold text-[#18131A]">Admin — Event Registrants</h1>
-            <p className="text-xs text-[#6B6470] mt-1">TinkerHub SBCE Campus Chapter</p>
+            <h1 className="text-xl font-bold text-white">Admin — Event Registrants</h1>
+            <p className="text-xs text-[#B3ABAB] mt-1">TinkerHub SBCE Campus Chapter</p>
           </div>
           <GradientButton size="sm" onClick={logout}>Log Out</GradientButton>
         </div>
@@ -50,22 +50,22 @@ export function AdminPage() {
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-sm bg-white/80 backdrop-blur-md border border-[#F3DCE8] rounded-3xl shadow-xl p-8"
+        className="w-full max-w-sm bg-[#1F1C1C] border border-[#B3282D] rounded-3xl shadow-xl p-8"
       >
         <div className="flex flex-col items-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#EC4899] to-[#A855F7] flex items-center justify-center mb-3">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#DC2626] to-[#B91C1C] flex items-center justify-center mb-3">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-xl font-bold text-[#18131A]">Admin Login</h1>
-          <p className="text-xs text-[#6B6470] mt-1">TinkerHub SBCE Campus Chapter</p>
+          <h1 className="text-xl font-bold text-white">Admin Login</h1>
+          <p className="text-xs text-[#B3ABAB] mt-1">TinkerHub SBCE Campus Chapter</p>
         </div>
 
         {isAdmin ? (
           <div className="text-center space-y-4">
-            <div className="mx-auto w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+            <div className="mx-auto w-10 h-10 rounded-full bg-[#1C3A2A] text-[#4ADE80] flex items-center justify-center">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <p className="text-sm text-[#18131A] font-semibold">You're logged in as Admin</p>
+            <p className="text-sm text-white font-semibold">You're logged in as Admin</p>
             <GradientButton size="md" className="w-full justify-center" onClick={logout}>
               Log Out
             </GradientButton>
@@ -73,12 +73,12 @@ export function AdminPage() {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="px-3 py-2 rounded-xl bg-[#FFF1F7] border border-[#F3DCE8] text-[#DB2777] text-xs font-semibold">
+              <div className="px-3 py-2 rounded-xl bg-[#141012] border border-[#B3282D] text-[#E04848] text-xs font-semibold">
                 {error}
               </div>
             )}
             <div className="relative">
-              <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+              <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#B3ABAB]" />
               <input
                 type="email"
                 required
@@ -91,7 +91,7 @@ export function AdminPage() {
               />
             </div>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-3.5 w-4 h-4 text-[#6B6470]" />
+              <Lock className="absolute left-3.5 top-3.5 w-4 h-4 text-[#B3ABAB]" />
               <input
                 type="password"
                 required

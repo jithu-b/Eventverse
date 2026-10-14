@@ -95,7 +95,7 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
             href={pdfUrl}
             download
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/5 text-white text-sm transition-colors"
           >
             <Download className="w-4 h-4" /> Download
           </a>
@@ -105,7 +105,7 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
                 e.stopPropagation();
                 onClose();
               }}
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/5 text-white transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -143,7 +143,7 @@ export default function PdfFlipViewer({ pdfUrl, title, eventTitle, onClose }: Pd
             <img
               src={pages[currentPage]}
               alt={`${displayTitle} — page ${currentPage + 1}`}
-              className="max-w-full max-h-[80vh] rounded-lg shadow-2xl bg-white"
+              className="max-w-full max-h-[80vh] rounded-lg shadow-2xl bg-[#141012]"
             />
 
             <button

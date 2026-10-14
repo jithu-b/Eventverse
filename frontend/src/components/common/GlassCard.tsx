@@ -19,12 +19,12 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   const getIntensityClass = () => {
     switch (intensity) {
       case 'light':
-        return 'bg-white/60 backdrop-blur-md border border-[#F3DCE8]/60 shadow-sm';
+        return 'bg-[#1F1C1C] border border-[#B3282D] shadow-sm';
       case 'solid':
-        return 'bg-white/95 backdrop-blur-xl border border-[#F3DCE8] shadow-md shadow-pink-500/5';
+        return 'bg-[#1F1C1C] border border-[#B3282D] shadow-md shadow-red-600/5';
       case 'medium':
       default:
-        return 'bg-white/80 backdrop-blur-lg border border-[#F3DCE8] shadow-md shadow-pink-500/5';
+        return 'bg-[#1F1C1C] border border-[#B3282D] shadow-md shadow-red-600/5';
     }
   };
 

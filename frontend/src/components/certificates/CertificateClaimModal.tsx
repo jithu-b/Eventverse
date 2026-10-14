@@ -154,7 +154,7 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
           particleCount: 120,
           spread: 80,
           origin: { y: 0.5 },
-          colors: ['#EC4899', '#DB2777', '#A855F7', '#22D3EE', '#F3E8FF'],
+          colors: ['#DC2626', '#B91C1C', '#B91C1C', '#22D3EE', '#FEE2E2'],
         });
       } catch {
         // ignore
@@ -225,7 +225,7 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
       maxWidth="2xl"
       title={
         <div className="flex items-center gap-2">
-          <Award className="w-5 h-5 text-[#EC4899]" />
+          <Award className="w-5 h-5 text-[#E04848]" />
           <span>Certificate Claim & Verification Portal</span>
         </div>
       }
@@ -234,13 +234,13 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
     >
       <div className="space-y-6">
         {/* Multi-Step Header Animated Progress Bar */}
-        <div className="p-4 bg-gradient-to-r from-[#FFF8FC] to-[#FFF1F7] rounded-2xl border border-[#F3DCE8] space-y-2.5">
+        <div className="p-4 bg-gradient-to-r from-[#141012] to-[#141012] rounded-2xl border border-[#B3282D] space-y-2.5">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-[#18131A] flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#EC4899]" />
+            <span className="font-bold text-white flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-[#E04848]" />
               Credential Issuance Workflow
             </span>
-            <span className="font-mono text-[#DB2777] font-bold">
+            <span className="font-mono text-[#E04848] font-bold">
               {currentStep === 4 ? 'Complete · 100%' : `Step ${currentStep} of ${totalSteps} · ${Math.round(((currentStep - 1) / (totalSteps - 1)) * 100)}%`}
             </span>
           </div>
@@ -257,11 +257,11 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
           />
 
           {/* Step Labels */}
-          <div className="grid grid-cols-4 gap-1 text-center text-[10px] font-semibold text-[#6B6470] pt-1">
-            <span className={currentStep >= 1 ? 'text-[#EC4899] font-bold' : ''}>1. Eligibility</span>
-            <span className={currentStep >= 2 ? 'text-[#EC4899] font-bold' : ''}>2. Details</span>
-            <span className={currentStep >= 3 ? 'text-[#EC4899] font-bold' : ''}>3. Cryptography</span>
-            <span className={currentStep >= 4 ? 'text-green-700 font-bold' : ''}>4. Ready</span>
+          <div className="grid grid-cols-4 gap-1 text-center text-[10px] font-semibold text-[#B3ABAB] pt-1">
+            <span className={currentStep >= 1 ? 'text-[#E04848] font-bold' : ''}>1. Eligibility</span>
+            <span className={currentStep >= 2 ? 'text-[#E04848] font-bold' : ''}>2. Details</span>
+            <span className={currentStep >= 3 ? 'text-[#E04848] font-bold' : ''}>3. Cryptography</span>
+            <span className={currentStep >= 4 ? 'text-[#4ADE80] font-bold' : ''}>4. Ready</span>
           </div>
         </div>
 
@@ -277,67 +277,67 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
               className="space-y-4"
             >
               <div className="space-y-1">
-                <h3 className="text-base sm:text-lg font-bold text-[#18131A]">
+                <h3 className="text-base sm:text-lg font-bold text-white">
                   Step 1: Automated Attendance & Eligibility Verification
                 </h3>
-                <p className="text-xs text-[#6B6470]">
+                <p className="text-xs text-[#B3ABAB]">
                   Verifying completion criteria on TinkerHub SBCE Campus Event logs.
                 </p>
               </div>
 
               {/* Verification Checklist Cards */}
               <div className="space-y-2.5">
-                <div className="p-3.5 bg-white rounded-2xl border border-[#F3DCE8] flex items-center justify-between">
+                <div className="p-3.5 bg-[#141012] rounded-2xl border border-[#B3282D] flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-green-50 text-green-700 border border-green-200">
+                    <div className="p-2 rounded-xl bg-[#1C3A2A] text-[#4ADE80] border border-green-500/30">
                       <CheckCircle2 className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-[#18131A]">Event Registration & Seat</h4>
-                      <p className="text-[11px] text-[#6B6470]">Verified on student profile ({user.email})</p>
+                      <h4 className="text-xs font-bold text-white">Event Registration & Seat</h4>
+                      <p className="text-[11px] text-[#B3ABAB]">Verified on student profile ({user.email})</p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 text-[10px] font-bold bg-green-100 text-green-800 rounded-lg">
+                  <span className="px-2 py-0.5 text-[10px] font-bold bg-[#1C3A2A] text-[#4ADE80] rounded-lg">
                     VERIFIED
                   </span>
                 </div>
 
-                <div className="p-3.5 bg-white rounded-2xl border border-[#F3DCE8] flex items-center justify-between">
+                <div className="p-3.5 bg-[#141012] rounded-2xl border border-[#B3282D] flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-green-50 text-green-700 border border-green-200">
+                    <div className="p-2 rounded-xl bg-[#1C3A2A] text-[#4ADE80] border border-green-500/30">
                       <CheckCircle2 className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-[#18131A]">Attendance QR Check-In</h4>
-                      <p className="text-[11px] text-[#6B6470]">Logged via SBCE On-site Terminal</p>
+                      <h4 className="text-xs font-bold text-white">Attendance QR Check-In</h4>
+                      <p className="text-[11px] text-[#B3ABAB]">Logged via SBCE On-site Terminal</p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 text-[10px] font-bold bg-green-100 text-green-800 rounded-lg">
+                  <span className="px-2 py-0.5 text-[10px] font-bold bg-[#1C3A2A] text-[#4ADE80] rounded-lg">
                     VERIFIED
                   </span>
                 </div>
 
-                <div className="p-3.5 bg-white rounded-2xl border border-[#F3DCE8] flex items-center justify-between">
+                <div className="p-3.5 bg-[#141012] rounded-2xl border border-[#B3282D] flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-pink-50 text-[#DB2777] border border-pink-200">
+                    <div className="p-2 rounded-xl bg-red-500/15 text-[#E04848] border border-red-500/30">
                       <Zap className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-[#18131A]">Technical Competency Score</h4>
-                      <p className="text-[11px] text-[#6B6470]">Passed threshold (≥ 60%) with distinction</p>
+                      <h4 className="text-xs font-bold text-white">Technical Competency Score</h4>
+                      <p className="text-[11px] text-[#B3ABAB]">Passed threshold (≥ 60%) with distinction</p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 text-[10px] font-bold bg-pink-100 text-[#DB2777] rounded-lg">
+                  <span className="px-2 py-0.5 text-[10px] font-bold bg-red-500/15 text-[#E04848] rounded-lg">
                     ELIGIBLE 🏆
                   </span>
                 </div>
               </div>
 
-              <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#F3DCE8]">
+              <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#3B3535]">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 text-xs font-bold text-[#6B6470] hover:text-[#18131A] cursor-pointer"
+                  className="px-4 py-2 text-xs font-bold text-[#B3ABAB] hover:text-white cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -362,73 +362,73 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
               className="space-y-4"
             >
               <div className="space-y-1">
-                <h3 className="text-base sm:text-lg font-bold text-[#18131A]">
+                <h3 className="text-base sm:text-lg font-bold text-white">
                   Step 2: Credential Details & Student Identification
                 </h3>
-                <p className="text-xs text-[#6B6470]">
+                <p className="text-xs text-[#B3ABAB]">
                   Confirm your name and academic credentials as they will appear on the final certificate.
                 </p>
               </div>
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-bold text-[#18131A] mb-1">
+                  <label className="block text-xs font-bold text-white mb-1">
                     Student Full Name (Printed on Certificate) *
                   </label>
                   <div className="relative">
-                    <User className="absolute left-3.5 top-3 w-4 h-4 text-[#6B6470]" />
+                    <User className="absolute left-3.5 top-3 w-4 h-4 text-[#B3ABAB]" />
                     <input
                       type="text"
                       required
                       value={formData.recipientName}
                       onChange={(e) => setFormData({ ...formData, recipientName: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                      className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-[#18131A] mb-1">
+                    <label className="block text-xs font-bold text-white mb-1">
                       College Registration / Roll No *
                     </label>
                     <div className="relative">
-                      <GraduationCap className="absolute left-3.5 top-3 w-4 h-4 text-[#6B6470]" />
+                      <GraduationCap className="absolute left-3.5 top-3 w-4 h-4 text-[#B3ABAB]" />
                       <input
                         type="text"
                         required
                         value={formData.collegeRollNo}
                         onChange={(e) => setFormData({ ...formData, collegeRollNo: e.target.value })}
-                        className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none font-mono"
+                        className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none font-mono"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#18131A] mb-1">
+                    <label className="block text-xs font-bold text-white mb-1">
                       Academic Department *
                     </label>
                     <div className="relative">
-                      <Building className="absolute left-3.5 top-3 w-4 h-4 text-[#6B6470]" />
+                      <Building className="absolute left-3.5 top-3 w-4 h-4 text-[#B3ABAB]" />
                       <input
                         type="text"
                         required
                         value={formData.department}
                         onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                        className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none"
+                        className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#18131A] mb-1">
+                  <label className="block text-xs font-bold text-white mb-1">
                     Recognition / Distinction Level
                   </label>
                   <select
                     value={formData.distinction}
                     onChange={(e) => setFormData({ ...formData, distinction: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-[#F3DCE8] focus:border-[#EC4899] rounded-xl focus:outline-none cursor-pointer"
+                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-[#141012] border border-[#B3282D] focus:border-[#DC2626] rounded-xl focus:outline-none cursor-pointer"
                   >
                     <option value="High Distinction (Top 5% Innovator)">High Distinction (Top 5% Innovator)</option>
                     <option value="Distinction in Technical Excellence">Distinction in Technical Excellence</option>
@@ -438,11 +438,11 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
                 </div>
               </div>
 
-              <div className="pt-3 flex items-center justify-between border-t border-[#F3DCE8]">
+              <div className="pt-3 flex items-center justify-between border-t border-[#3B3535]">
                 <button
                   type="button"
                   onClick={() => setCurrentStep(1)}
-                  className="flex items-center gap-1 px-4 py-2 text-xs font-bold text-[#6B6470] hover:text-[#18131A] cursor-pointer"
+                  className="flex items-center gap-1 px-4 py-2 text-xs font-bold text-[#B3ABAB] hover:text-white cursor-pointer"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" /> Back
                 </button>
@@ -471,18 +471,18 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-                  className="w-full h-full rounded-full border-4 border-[#FFF1F7] border-t-[#EC4899] border-r-[#A855F7]"
+                  className="w-full h-full rounded-full border-4 border-[#FFF1F2] border-t-[#DC2626] border-r-[#B91C1C]"
                 />
-                <div className="absolute inset-0 flex items-center justify-center text-[#EC4899]">
+                <div className="absolute inset-0 flex items-center justify-center text-[#E04848]">
                   <Lock className="w-8 h-8 animate-pulse" />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-lg font-bold text-[#18131A] font-outfit">
+                <h3 className="text-lg font-bold text-white font-outfit">
                   Signing & Generating Verifiable Credential
                 </h3>
-                <p className="text-xs text-[#6B6470] font-mono">
+                <p className="text-xs text-[#B3ABAB] font-mono">
                   {mintingStepText}
                 </p>
               </div>
@@ -498,9 +498,9 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
                 />
               </div>
 
-              <div className="p-3 bg-[#FFF8FC] rounded-2xl border border-[#F3DCE8] max-w-md mx-auto text-xs text-[#6B6470] flex items-center justify-between">
+              <div className="p-3 bg-[#141012] rounded-2xl border border-[#B3282D] max-w-md mx-auto text-xs text-[#B3ABAB] flex items-center justify-between">
                 <span className="font-mono text-[11px]">Signer: TinkerHub SBCE Faculty Key</span>
-                <span className="font-mono text-[11px] text-[#DB2777]">SHA-256 RSA-2048</span>
+                <span className="font-mono text-[11px] text-[#E04848]">SHA-256 RSA-2048</span>
               </div>
             </motion.div>
           )}
@@ -514,41 +514,41 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
               className="space-y-6"
             >
               <div className="text-center space-y-1">
-                <span className="px-3 py-1 text-[11px] font-extrabold uppercase rounded-full bg-green-100 text-green-800">
+                <span className="px-3 py-1 text-[11px] font-extrabold uppercase rounded-full bg-[#1C3A2A] text-[#4ADE80]">
                   🎉 Credential Successfully Minted & Verified
                 </span>
-                <h3 className="text-xl font-extrabold text-[#18131A] font-outfit mt-1">
+                <h3 className="text-xl font-extrabold text-white font-outfit mt-1">
                   Your Certificate is Ready!
                 </h3>
-                <p className="text-xs text-[#6B6470]">
+                <p className="text-xs text-[#B3ABAB]">
                   Official tamper-proof credential anchored on the campus verification registry.
                 </p>
               </div>
 
               {/* Mini Interactive Certificate Frame Preview */}
-              <div className="p-6 rounded-3xl bg-gradient-to-br from-white via-[#FFF8FC] to-[#FFF1F7] border-2 border-[#F3DCE8] shadow-xl text-center space-y-3 relative overflow-hidden">
-                <div className="flex items-center justify-between text-[10px] text-[#6B6470] border-b border-[#F3DCE8] pb-2 font-mono">
+              <div className="p-6 rounded-3xl bg-gradient-to-br from-[#141012] via-[#141012] to-[#141012] border-2 border-[#B3282D] shadow-xl text-center space-y-3 relative overflow-hidden">
+                <div className="flex items-center justify-between text-[10px] text-[#B3ABAB] border-b border-[#3B3535] pb-2 font-mono">
                   <span>TINKERHUB SBCE CHAPTER</span>
-                  <span className="font-bold text-[#DB2777]">{claimedCert.certificateCode}</span>
+                  <span className="font-bold text-[#E04848]">{claimedCert.certificateCode}</span>
                 </div>
 
                 <div className="py-2 space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#EC4899]">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#E04848]">
                     Certificate of Excellence
                   </span>
-                  <h4 className="text-xl font-extrabold text-[#18131A] font-outfit">
+                  <h4 className="text-xl font-extrabold text-white font-outfit">
                     {claimedCert.recipientName}
                   </h4>
-                  <p className="text-xs text-[#6B6470] max-w-sm mx-auto">
-                    for outstanding performance in <strong className="text-[#18131A]">{claimedCert.eventTitle}</strong>
+                  <p className="text-xs text-[#B3ABAB] max-w-sm mx-auto">
+                    for outstanding performance in <strong className="text-white">{claimedCert.eventTitle}</strong>
                   </p>
-                  <span className="inline-block mt-1 px-2.5 py-0.5 text-[10px] font-bold bg-[#FFF1F7] text-[#DB2777] rounded-full border border-[#F3DCE8]">
+                  <span className="inline-block mt-1 px-2.5 py-0.5 text-[10px] font-bold bg-[#141012] text-[#E04848] rounded-full border border-[#B3282D]">
                     {claimedCert.gradeOrRank}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between text-[10px] text-[#6B6470] pt-2 border-t border-[#F3DCE8]">
-                  <span className="flex items-center gap-1 text-green-700 font-bold">
+                <div className="flex items-center justify-between text-[10px] text-[#B3ABAB] pt-2 border-t border-[#3B3535]">
+                  <span className="flex items-center gap-1 text-[#4ADE80] font-bold">
                     <ShieldCheck className="w-3.5 h-3.5" /> Verified
                   </span>
                   <span>Issued on 26 AUG 2026</span>
@@ -557,8 +557,8 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
 
               {/* Animated Download Progress Bar when triggered */}
               {downloading && (
-                <div className="p-3.5 bg-pink-50 rounded-2xl border border-pink-200 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-semibold text-[#DB2777]">
+                <div className="p-3.5 bg-red-500/15 rounded-2xl border border-red-500/30 space-y-2">
+                  <div className="flex items-center justify-between text-xs font-semibold text-[#E04848]">
                     <span>Exporting High-Res Vector Certificate...</span>
                     <span>{downloadProgress}%</span>
                   </div>
@@ -576,9 +576,9 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
               <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
                 <button
                   onClick={handleShare}
-                  className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold bg-white hover:bg-pink-50 text-[#18131A] border border-[#F3DCE8] rounded-xl transition-all cursor-pointer shadow-xs"
+                  className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold bg-[#141012] hover:bg-red-500/15 text-white border border-[#B3282D] rounded-xl transition-all cursor-pointer shadow-xs"
                 >
-                  {copied ? <Check className="w-4 h-4 text-green-600" /> : <Share2 className="w-4 h-4 text-[#EC4899]" />}
+                  {copied ? <Check className="w-4 h-4 text-[#4ADE80]" /> : <Share2 className="w-4 h-4 text-[#E04848]" />}
                   <span>{copied ? 'Verification URL Copied!' : 'Share Credential Link'}</span>
                 </button>
 
@@ -589,7 +589,7 @@ export const CertificateClaimModal: React.FC<CertificateClaimModalProps> = ({
                         onClose();
                         onViewCertificate(claimedCert);
                       }}
-                      className="px-4 py-2.5 text-xs font-bold text-[#DB2777] bg-[#FFF1F7] border border-[#F3DCE8] rounded-xl hover:bg-pink-100 cursor-pointer"
+                      className="px-4 py-2.5 text-xs font-bold text-[#E04848] bg-[#141012] border border-[#B3282D] rounded-xl hover:bg-red-500/15 cursor-pointer"
                     >
                       Full View 📜
                     </button>

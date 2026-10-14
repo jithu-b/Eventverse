@@ -19,17 +19,17 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold tracking-wider uppercase mb-8 backdrop-blur-xl shadow-xs transition-colors duration-300 ${
-          isBlush ? 'text-pink-800' : 'text-slate-800'
+          isBlush ? 'text-white300' : 'text-gray-200'
         }`}
       >
         <span
           className={`flex h-2 w-2 rounded-full animate-pulse ${
-            isBlush ? 'bg-pink-500 ring-2 ring-pink-300' : 'bg-slate-800 ring-2 ring-slate-400'
+            isBlush ? 'bg-red-600 ring-2 ring-red-300' : 'bg-slate-800 ring-2 ring-slate-400'
           }`}
         />
         <span>Executive Committee 2026–2027</span>
-        <span className={isBlush ? 'text-pink-300' : 'text-slate-300'}>•</span>
-        <span className={isBlush ? 'text-pink-900/60 font-medium' : 'text-slate-600 font-medium'}>
+        <span className={isBlush ? 'text-white300' : 'text-slate-300'}>•</span>
+        <span className={isBlush ? 'text-white950/60 font-medium' : 'text-gray-400 font-medium'}>
           Student Tech Community
         </span>
       </motion.div>
@@ -40,8 +40,8 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
           style={{ fontSize: 'clamp(2.5rem, 13vw, 10.5rem)' }}
           className={`font-display whitespace-nowrap font-extrabold tracking-tight leading-none text-transparent bg-clip-text select-none transition-all duration-500 ${
             isBlush
-              ? 'bg-gradient-to-b from-[#2e1220] via-[#5c1c3c] to-[#9d174d]'
-              : 'bg-gradient-to-b from-[#090d16] via-[#1e293b] to-[#475569]'
+              ? 'bg-gradient-to-b from-[#2E1213] via-[#5C1C1F] to-[#7F1D1D]'
+              : 'bg-gradient-to-b from-[#090D16] via-[#1E293B] to-[#475569]'
           }`}
           initial="hidden"
           animate="visible"
@@ -59,7 +59,7 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
             <motion.span
               key={index}
               className={`inline-block transition-transform duration-300 hover:scale-105 ${
-                isBlush ? 'hover:text-pink-600' : 'hover:text-slate-600'
+                isBlush ? 'hover:text-white300' : 'hover:text-gray-400'
               }`}
               variants={{
                 hidden: {
@@ -90,7 +90,7 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`font-editorial text-xl sm:text-2xl md:text-3xl lg:text-4xl italic font-normal tracking-wide mb-6 transition-colors duration-300 ${
-          isBlush ? 'text-pink-900/90' : 'text-slate-800'
+          isBlush ? 'text-white950/90' : 'text-gray-200'
         }`}
       >
         THE PEOPLE BEHIND THE COMMUNITY
@@ -104,7 +104,7 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
           transition={{ duration: 1.1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className={`h-[1.5px] w-full bg-gradient-to-r ${
             isBlush
-              ? 'from-transparent via-pink-400 to-transparent'
+              ? 'from-transparent via-red-400 to-transparent'
               : 'from-transparent via-slate-400 to-transparent'
           }`}
         />
@@ -116,14 +116,14 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
         className={`font-body text-base sm:text-lg md:text-xl max-w-2xl font-normal leading-relaxed mb-10 transition-colors duration-300 ${
-          isBlush ? 'text-pink-950/70' : 'text-slate-600'
+          isBlush ? 'text-white950/70' : 'text-gray-400'
         }`}
       >
         Meet the people who{' '}
-        <span className={`font-semibold ${isBlush ? 'text-pink-900' : 'text-slate-900'}`}>lead</span>,{' '}
-        <span className={`font-semibold ${isBlush ? 'text-pink-900' : 'text-slate-900'}`}>build</span>,{' '}
-        <span className={`font-semibold ${isBlush ? 'text-pink-900' : 'text-slate-900'}`}>connect</span>, and{' '}
-        <span className={`font-semibold ${isBlush ? 'text-pink-900' : 'text-slate-900'}`}>grow</span> our student
+        <span className={`font-semibold ${isBlush ? 'text-white950' : 'text-gray-200'}`}>lead</span>,{' '}
+        <span className={`font-semibold ${isBlush ? 'text-white950' : 'text-gray-200'}`}>build</span>,{' '}
+        <span className={`font-semibold ${isBlush ? 'text-white950' : 'text-gray-200'}`}>connect</span>, and{' '}
+        <span className={`font-semibold ${isBlush ? 'text-white950' : 'text-gray-200'}`}>grow</span> our student
         technology collective.
       </motion.p>
 
@@ -136,26 +136,26 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
       >
         <div
           className={`flex items-center gap-2 px-5 py-2.5 rounded-[24px] glass-card text-sm font-medium shadow-xs transition-colors duration-300 ${
-            isBlush ? 'text-pink-950/90' : 'text-slate-800'
+            isBlush ? 'text-white950/90' : 'text-gray-200'
           }`}
         >
-          <Users className={`w-4 h-4 ${isBlush ? 'text-pink-600' : 'text-slate-700'}`} />
+          <Users className={`w-4 h-4 ${isBlush ? 'text-white300' : 'text-gray-200'}`} />
           <span>6 Core Leaders</span>
         </div>
         <div
           className={`flex items-center gap-2 px-5 py-2.5 rounded-[24px] glass-card text-sm font-medium shadow-xs transition-colors duration-300 ${
-            isBlush ? 'text-pink-950/90' : 'text-slate-800'
+            isBlush ? 'text-white950/90' : 'text-gray-200'
           }`}
         >
-          <Sparkles className={`w-4 h-4 ${isBlush ? 'text-pink-500' : 'text-slate-700'}`} />
+          <Sparkles className={`w-4 h-4 ${isBlush ? 'text-white300' : 'text-gray-200'}`} />
           <span>500+ Active Members</span>
         </div>
         <div
           className={`flex items-center gap-2 px-5 py-2.5 rounded-[24px] glass-card text-sm font-medium shadow-xs transition-colors duration-300 ${
-            isBlush ? 'text-pink-950/90' : 'text-slate-800'
+            isBlush ? 'text-white950/90' : 'text-gray-200'
           }`}
         >
-          <Award className={`w-4 h-4 ${isBlush ? 'text-pink-600' : 'text-slate-700'}`} />
+          <Award className={`w-4 h-4 ${isBlush ? 'text-white300' : 'text-gray-200'}`} />
           <span>12+ Annual Initiatives</span>
         </div>
       </motion.div>
@@ -168,7 +168,7 @@ export const ExicomHero: React.FC<ExicomHeroProps> = ({ onScrollToMembers }) => 
         onClick={onScrollToMembers}
         className={`group relative inline-flex items-center gap-2.5 px-7 py-3 rounded-full text-white font-medium text-sm tracking-wide shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer hover:-translate-y-0.5 ${
           isBlush
-            ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 shadow-pink-300/40 hover:shadow-lg hover:shadow-pink-300/60 focus:ring-pink-400'
+            ? 'bg-gradient-to-r from-red-600 via-red-600 to-red-700 shadow-red-300/40 hover:shadow-lg hover:shadow-red-300/60 focus:ring-red-400'
             : 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-950 shadow-slate-400/30 hover:shadow-lg hover:shadow-slate-400/50 focus:ring-slate-700'
         }`}
       >

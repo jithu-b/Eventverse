@@ -72,13 +72,13 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className={`flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 mb-12 pb-6 border-b transition-colors duration-300 ${
-          isBlush ? 'border-pink-200/60' : 'border-slate-200'
+          isBlush ? 'border-red-500/30' : 'border-white/10'
         }`}
       >
         <div>
           <div
             className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors duration-300 ${
-              isBlush ? 'text-pink-600' : 'text-slate-600'
+              isBlush ? 'text-white300' : 'text-gray-400'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -86,7 +86,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
           </div>
           <h2
             className={`font-editorial text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight transition-colors duration-300 ${
-              isBlush ? 'text-pink-950' : 'text-slate-900'
+              isBlush ? 'text-white950' : 'text-gray-200'
             }`}
           >
             The Executive Council
@@ -99,14 +99,14 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
           <div
             id="exicom-member-counter-display"
             className={`flex items-center gap-3 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-2xl glass-card backdrop-blur-xl border shadow-xs transition-colors duration-300 ${
-              isBlush ? 'border-pink-200/80' : 'border-slate-200'
+              isBlush ? 'border-red-500/30' : 'border-white/10'
             }`}
           >
             {/* Number Index in Editorial Typography */}
             <div className="flex items-baseline gap-1">
               <span
                 className={`text-[10px] uppercase font-bold tracking-widest mr-0.5 ${
-                  isBlush ? 'text-pink-500' : 'text-slate-500'
+                  isBlush ? 'text-white300' : 'text-gray-400'
                 }`}
               >
                 No.
@@ -117,14 +117,14 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25 }}
                 className={`font-editorial text-2xl sm:text-3xl font-bold tracking-tight inline-block min-w-[1.75ch] transition-colors duration-300 ${
-                  isBlush ? 'text-pink-950' : 'text-slate-900'
+                  isBlush ? 'text-white950' : 'text-gray-200'
                 }`}
               >
                 {activeFormattedIndex}
               </motion.span>
               <span
                 className={`font-editorial text-base sm:text-lg font-medium ${
-                  isBlush ? 'text-pink-400' : 'text-slate-400'
+                  isBlush ? 'text-white400' : 'text-slate-400'
                 }`}
               >
                 / {totalFormattedCount}
@@ -132,7 +132,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
             </div>
 
             {/* Subtle Divider */}
-            <div className={`h-6 w-px ${isBlush ? 'bg-pink-200/70' : 'bg-slate-200'}`} />
+            <div className={`h-6 w-px ${isBlush ? 'bg-red-500/15' : 'bg-white/10'}`} />
 
             {/* Interactive Index Pill Buttons */}
             <div className="flex items-center gap-1">
@@ -148,11 +148,11 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
                     className={`font-editorial text-xs sm:text-sm font-bold w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center transition-all duration-200 cursor-pointer ${
                       isActive
                         ? isBlush
-                          ? 'bg-pink-500 text-white shadow-xs scale-105 ring-1 ring-pink-400'
+                          ? 'bg-red-600 text-white shadow-xs scale-105 ring-1 ring-red-400'
                           : 'bg-slate-900 text-white shadow-xs scale-105 ring-1 ring-slate-700'
                         : isBlush
-                        ? 'text-pink-800/80 hover:text-pink-950 hover:bg-pink-100/70'
-                        : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
+                        ? 'text-white300/80 hover:text-white950 hover:bg-red-500/15'
+                        : 'text-gray-400 hover:text-gray-200 hover:bg-white/5'
                     }`}
                   >
                     {member.number}
@@ -164,10 +164,10 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
             {/* Active Member Tooltip Tag (Desktop) */}
             <div
               className={`hidden xl:flex items-center gap-1.5 pl-1.5 text-xs border-l max-w-[160px] truncate ${
-                isBlush ? 'text-pink-900 border-pink-200/60' : 'text-slate-700 border-slate-200'
+                isBlush ? 'text-white950 border-red-500/30' : 'text-gray-200 border-white/10'
               }`}
             >
-              <User className={`w-3 h-3 shrink-0 ${isBlush ? 'text-pink-500' : 'text-slate-500'}`} />
+              <User className={`w-3 h-3 shrink-0 ${isBlush ? 'text-white300' : 'text-gray-400'}`} />
               <span className="font-medium truncate">{currentActiveMember?.name}</span>
             </div>
           </div>
@@ -179,11 +179,11 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
                 viewMode === 'editorial'
                   ? isBlush
-                    ? 'bg-pink-500 text-white shadow-xs shadow-pink-300'
+                    ? 'bg-red-600 text-white shadow-xs shadow-red-300'
                     : 'bg-slate-900 text-white shadow-xs shadow-slate-300'
                   : isBlush
-                  ? 'text-pink-800 hover:text-pink-950 hover:bg-pink-50/80'
-                  : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+                  ? 'text-white300 hover:text-white950 hover:bg-red-500/15'
+                  : 'text-gray-200 hover:text-gray-200 hover:bg-white/5'
               }`}
             >
               <Columns className="w-3.5 h-3.5" />
@@ -194,11 +194,11 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
                 viewMode === 'grid'
                   ? isBlush
-                    ? 'bg-pink-500 text-white shadow-xs shadow-pink-300'
+                    ? 'bg-red-600 text-white shadow-xs shadow-red-300'
                     : 'bg-slate-900 text-white shadow-xs shadow-slate-300'
                   : isBlush
-                  ? 'text-pink-800 hover:text-pink-950 hover:bg-pink-50/80'
-                  : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+                  ? 'text-white300 hover:text-white950 hover:bg-red-500/15'
+                  : 'text-gray-200 hover:text-gray-200 hover:bg-white/5'
               }`}
             >
               <LayoutGrid className="w-3.5 h-3.5" />
@@ -226,7 +226,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
                 <div className="mb-3 hidden md:block">
                   <span
                     className={`text-[11px] font-bold uppercase tracking-widest ${
-                      isBlush ? 'text-pink-500' : 'text-slate-600'
+                      isBlush ? 'text-white300' : 'text-gray-400'
                     }`}
                   >
                     Leadership Anchor
@@ -248,7 +248,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
                 <div className="mb-3 hidden md:block">
                   <span
                     className={`text-[11px] font-bold uppercase tracking-widest ${
-                      isBlush ? 'text-pink-500' : 'text-slate-600'
+                      isBlush ? 'text-white300' : 'text-gray-400'
                     }`}
                   >
                     Technical Foundation
@@ -274,17 +274,17 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
               viewport={{ once: true, margin: '-50px' }}
               className="relative my-10 py-10 px-6 sm:px-12 rounded-[32px] sm:rounded-[36px] glass-card text-center max-w-4xl mx-auto shadow-xs"
             >
-              <Quote className={`w-8 h-8 mx-auto mb-3 ${isBlush ? 'text-pink-400' : 'text-slate-400'}`} />
+              <Quote className={`w-8 h-8 mx-auto mb-3 ${isBlush ? 'text-white400' : 'text-slate-400'}`} />
               <p
                 className={`font-editorial text-lg sm:text-xl md:text-2xl italic leading-snug ${
-                  isBlush ? 'text-pink-900/90' : 'text-slate-800'
+                  isBlush ? 'text-white950/90' : 'text-gray-200'
                 }`}
               >
                 "Cultivating an open engineering culture where curiosity fuels code, hardware, and lifelong friendships."
               </p>
               <div
                 className={`mt-4 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-widest ${
-                  isBlush ? 'text-pink-600' : 'text-slate-600'
+                  isBlush ? 'text-white300' : 'text-gray-400'
                 }`}
               >
                 <span>Executive Leadership Guild</span>
@@ -296,7 +296,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
               <div className="text-center mb-4">
                 <span
                   className={`inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-0.5 rounded-full ${
-                    isBlush ? 'text-pink-600 bg-pink-100/70' : 'text-slate-700 bg-slate-100'
+                    isBlush ? 'text-white300 bg-red-500/15' : 'text-gray-200 bg-white/5'
                   }`}
                 >
                   Educational Core & Dev Pathways
@@ -319,7 +319,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
                 <div className="mb-3 hidden md:block">
                   <span
                     className={`text-[11px] font-bold uppercase tracking-widest ${
-                      isBlush ? 'text-pink-400' : 'text-slate-500'
+                      isBlush ? 'text-white400' : 'text-gray-400'
                     }`}
                   >
                     Operations & Summit Lead
@@ -340,7 +340,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
                 <div className="mb-3 hidden md:block">
                   <span
                     className={`text-[11px] font-bold uppercase tracking-widest ${
-                      isBlush ? 'text-pink-400' : 'text-slate-500'
+                      isBlush ? 'text-white400' : 'text-gray-400'
                     }`}
                   >
                     Infrastructure & Sourcing
@@ -362,7 +362,7 @@ export const ExicomGrid: React.FC<ExicomGridProps> = ({ members, onSelectMember 
               <div className="text-center mb-4">
                 <span
                   className={`inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-0.5 rounded-full ${
-                    isBlush ? 'text-pink-600 bg-pink-100/70' : 'text-slate-700 bg-slate-100'
+                    isBlush ? 'text-white300 bg-red-500/15' : 'text-gray-200 bg-white/5'
                   }`}
                 >
                   External Alliances & Community Growth

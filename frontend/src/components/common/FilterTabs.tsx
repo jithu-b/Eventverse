@@ -20,7 +20,7 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
   return (
     <div
       id={id}
-      className={`flex items-center gap-1.5 p-1.5 bg-white/75 backdrop-blur-md border border-[#F3DCE8] rounded-2xl overflow-x-auto no-scrollbar shadow-sm ${className}`}
+      className={`flex items-center gap-1.5 p-1.5 bg-[#1F1C1C] border border-[#B3282D] rounded-2xl overflow-x-auto no-scrollbar shadow-sm ${className}`}
     >
       {categories.map((cat) => {
         const isActive = activeCategory === cat;
@@ -29,13 +29,13 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
             key={cat}
             onClick={() => onSelectCategory(cat)}
             className={`relative px-4 py-2 text-xs md:text-sm font-semibold rounded-xl transition-colors duration-200 whitespace-nowrap cursor-pointer z-10 select-none ${
-              isActive ? 'text-white' : 'text-[#6B6470] hover:text-[#EC4899] hover:bg-pink-50/50'
+              isActive ? 'text-white' : 'text-[#B3ABAB] hover:text-[#E04848] hover:bg-red-500/15'
             }`}
           >
             {isActive && (
               <motion.div
                 layoutId="activeFilterPill"
-                className="absolute inset-0 bg-gradient-to-r from-[#EC4899] to-[#A855F7] rounded-xl -z-10 shadow-sm shadow-pink-500/20"
+                className="absolute inset-0 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] rounded-xl -z-10 shadow-sm shadow-red-600/20"
                 transition={{ type: 'spring', stiffness: 450, damping: 32 }}
               />
             )}

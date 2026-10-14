@@ -51,7 +51,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
   if (loading) {
     return (
       <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#EC4899]" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#DC2626]" />
       </div>
     );
   }
@@ -59,16 +59,16 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
   return (
     <div className="max-w-7xl mx-auto">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 sm:mb-10 text-center px-2">
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#18131A] mb-2 sm:mb-4">Event Reports</h1>
-        <p className="text-sm sm:text-lg text-[#6B6470] max-w-2xl mx-auto">Flip through detailed reports from our events</p>
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-4">Event Reports</h1>
+        <p className="text-sm sm:text-lg text-[#B3ABAB] max-w-2xl mx-auto">Flip through detailed reports from our events</p>
         {isAdmin && events.length > 0 && (
-          <p className="text-xs font-semibold text-[#DB2777] mt-2">
+          <p className="text-xs font-semibold text-[#E04848] mt-2">
             {reports.length} of {events.length} event{events.length === 1 ? '' : 's'} have reports uploaded
           </p>
         )}
       </motion.div>
       {isAdmin && eventsWithoutReports.length > 0 && (
-        <div className="mb-8 max-w-md mx-auto bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800 text-left">
+        <div className="mb-8 max-w-md mx-auto bg-amber-500/15 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-300 text-left">
           <p className="font-bold mb-1">Missing reports for {eventsWithoutReports.length} event{eventsWithoutReports.length === 1 ? '' : 's'}:</p>
           <ul className="list-disc list-inside space-y-0.5">
             {eventsWithoutReports.map((ev) => (
@@ -82,7 +82,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
         <div className="mb-8 flex justify-center">
           <button
             onClick={() => setShowUpload(true)}
-            className="flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white rounded-xl font-bold hover:shadow-lg transition-all"
+            className="flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white rounded-xl font-bold hover:shadow-lg transition-all"
           >
             <Upload className="w-4 h-4" /> Upload Report
           </button>
@@ -91,8 +91,8 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
 
       {reports.length === 0 ? (
         <div className="text-center py-16">
-          <FileText className="w-16 h-16 text-[#EC4899] mx-auto mb-4 opacity-50" />
-          <p className="text-lg text-[#6B6470]">No reports yet</p>
+          <FileText className="w-16 h-16 text-[#E04848] mx-auto mb-4 opacity-50" />
+          <p className="text-lg text-[#B3ABAB]">No reports yet</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:gap-6 px-2 sm:px-0">
@@ -104,10 +104,10 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
               transition={{ delay: idx * 0.05 }}
               className="group"
             >
-              <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1">
+              <div className="bg-[#141012] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1">
                 <div
                   onClick={() => setViewing(report)}
-                  className="relative h-36 sm:h-48 bg-gradient-to-br from-[#EC4899] to-[#A855F7] overflow-hidden cursor-pointer"
+                  className="relative h-36 sm:h-48 bg-gradient-to-br from-[#DC2626] to-[#B91C1C] overflow-hidden cursor-pointer"
                 >
                   {report.event_thumbnail ? (
                     <img
@@ -122,16 +122,16 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
                   )}
                 </div>
                 <div className="p-4 sm:p-6">
-                  <h3 className="text-base sm:text-xl font-bold text-[#18131A] mb-1 line-clamp-2">
+                  <h3 className="text-base sm:text-xl font-bold text-white mb-1 line-clamp-2">
                     {report.title || report.event_title}
                   </h3>
-                  <p className="text-xs text-[#6B6470] mb-4">
+                  <p className="text-xs text-[#B3ABAB] mb-4">
                     {new Date(report.uploaded_at).toLocaleDateString()}
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setViewing(report)}
-                      className="flex-1 bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white py-2 rounded-xl font-bold hover:shadow-lg text-sm"
+                      className="flex-1 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white py-2 rounded-xl font-bold hover:shadow-lg text-sm"
                     >
                       Read Report
                     </button>
@@ -143,7 +143,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({ events }) => {
                             fetchReports();
                           }
                         }}
-                        className="w-10 h-10 flex items-center justify-center bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-colors"
+                        className="w-10 h-10 flex items-center justify-center bg-red-500/15 hover:bg-[#3A1A1C] text-[#E04848] rounded-xl transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -212,23 +212,23 @@ const UploadReportModal: React.FC<UploadReportModalProps> = ({ events, onClose, 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4"
+        className="bg-[#141012] rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4"
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold text-[#18131A]">Upload Event Report</h3>
-          <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full">
+          <h3 className="text-xl font-bold text-white">Upload Event Report</h3>
+          <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-white/5 rounded-full">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && <div className="bg-red-100 text-red-700 p-3 rounded-lg text-sm">{error}</div>}
+          {error && <div className="bg-[#3A1A1C] text-[#E04848] p-3 rounded-lg text-sm">{error}</div>}
 
           <select
             required
             value={eventId}
             onChange={(e) => setEventId(e.target.value)}
-            className="w-full px-4 py-2 border border-[#F3DCE8] rounded-xl focus:border-[#EC4899] focus:outline-none"
+            className="w-full px-4 py-2 border border-[#B3282D] rounded-xl focus:border-[#DC2626] focus:outline-none"
           >
             <option value="">Select event...</option>
             {events.map((ev) => (
@@ -243,7 +243,7 @@ const UploadReportModal: React.FC<UploadReportModalProps> = ({ events, onClose, 
             placeholder="Report title (optional)"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-2 border border-[#F3DCE8] rounded-xl focus:border-[#EC4899] focus:outline-none"
+            className="w-full px-4 py-2 border border-[#B3282D] rounded-xl focus:border-[#DC2626] focus:outline-none"
           />
 
           <input
@@ -257,7 +257,7 @@ const UploadReportModal: React.FC<UploadReportModalProps> = ({ events, onClose, 
           <button
             type="submit"
             disabled={uploading}
-            className="w-full bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white py-3 rounded-xl font-bold hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white py-3 rounded-xl font-bold hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
           >
             <Upload className="w-4 h-4" />
             {uploading ? 'Uploading...' : 'Upload Report'}

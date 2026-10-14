@@ -25,7 +25,7 @@ import { useStudentAuth } from '../../context/StudentAuthContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserRole, NotificationItem, UserProfile } from '../../types';
 import { GradientButton } from './GradientButton';
-import tinkerhubLogo from '../../assets/tinkerhub-logo.png';
+import { RedLogo } from './RedLogo';
 
 interface NavbarProps {
   currentView: string;
@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-nav transition-all duration-300">
+    <header className="sticky top-0 z-40 w-full bg-[#141010] border-b border-[#2A2323] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Brand Wordmark & Logo */}
@@ -100,34 +100,25 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center gap-3 cursor-pointer group select-none"
             id="brand-logo-btn"
           >
-            <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#EC4899] via-[#DB2777] to-[#A855F7] p-0.5 shadow-[0_0_10px_2px_rgba(255,255,255,0.35),0_0_14px_4px_rgba(236,72,153,0.18)] transition-transform duration-300 group-hover:scale-105">
-              <div className="relative w-full h-full bg-white/10 backdrop-blur-sm rounded-[14px] flex items-center justify-center text-white overflow-hidden">
-                <div className="absolute inset-0 rounded-[14px] shadow-[inset_0_0_10px_2px_rgba(255,255,255,0.55)] pointer-events-none" />
-                <img
-                  src={tinkerhubLogo}
-                  alt="TinkerHub"
-                  className="w-6 h-6 object-contain relative z-10 drop-shadow-[0_0_6px_rgba(255,255,255,0.8)]"
-                />
-              </div>
-            </div>
+            <RedLogo className="w-10 h-10" />
 
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-xl font-extrabold tracking-tight text-[#18131A] font-outfit">
+                <span className="text-xl font-extrabold tracking-tight text-white font-outfit">
                   Event<span className="text-gradient-pink">Verse</span>
                 </span>
-                <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-[#FFF1F7] text-[#DB2777] rounded-full border border-[#F3DCE8]">
+                <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-[#3A1A1C] text-[#E04848] rounded-full border border-[#7A2020]">
                   SBCE
                 </span>
               </div>
-              <span className="hidden sm:inline text-[10px] font-medium tracking-wide text-[#6B6470]">
+              <span className="hidden sm:inline text-[10px] font-medium tracking-wide text-[#B3ABAB]">
                 TinkerHub Campus Chapter
               </span>
             </div>
           </div>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden lg:flex items-center gap-1 bg-white/70 backdrop-blur-md p-1.5 rounded-2xl border border-[#F3DCE8]/80 shadow-xs">
+          <nav className="hidden lg:flex items-center gap-1 bg-[#141010] p-1.5 rounded-2xl border border-[#7A2020]">
             {navLinks.map((link) => {
               const isActive = currentView === link.id;
               const Icon = link.icon;
@@ -138,18 +129,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className={`relative flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl transition-all cursor-pointer select-none ${
                     isActive
                       ? 'text-white'
-                      : 'text-[#6B6470] hover:text-[#EC4899] hover:bg-pink-50/60'
+                      : 'text-[#B8B0B0] hover:text-white hover:bg-[#B91C1C]/25'
                   }`}
                   id={`nav-link-${link.id}`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activeNavIndicator"
-                      className="absolute inset-0 bg-gradient-to-r from-[#EC4899] to-[#A855F7] rounded-xl -z-10 shadow-sm shadow-pink-500/25"
+                      className="absolute inset-0 bg-gradient-to-r from-[#B91C1C] to-[#D32F2F] rounded-xl -z-10 shadow-sm shadow-red-600/25"
                       transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                     />
                   )}
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#6B6470]'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#B3ABAB]'}`} />
                   <span>{link.label}</span>
                 </button>
               );
@@ -162,10 +153,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             {activeRole === 'admin' && (
               <button
                 onClick={onCreateEvent}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold bg-[#FFF1F7] hover:bg-pink-100 text-[#DB2777] border border-[#F3DCE8] rounded-xl transition-all cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold bg-[#3A1A1C] hover:bg-[#4A2024] text-[#E04848] border border-[#7A2020] rounded-xl transition-all cursor-pointer"
                 id="create-event-top-btn"
               >
-                <PlusCircle className="w-4 h-4 text-[#EC4899]" />
+                <PlusCircle className="w-4 h-4 text-[#E04848]" />
                 <span>New Event</span>
               </button>
             )}
@@ -174,13 +165,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="relative" ref={notifRef}>
               <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="relative p-2.5 text-[#6B6470] hover:text-[#EC4899] bg-white/80 hover:bg-pink-50/70 border border-[#F3DCE8] rounded-xl transition-all cursor-pointer shadow-xs"
+                className="relative p-2.5 text-[#B8B0B0] hover:text-white bg-[#272424] hover:bg-[#332E2E] border border-[#3A3434] rounded-xl transition-all cursor-pointer shadow-xs"
                 aria-label="Notifications"
                 id="notifications-bell-btn"
               >
                 <Bell className="w-4 h-4" />
                 {unreadNotifs.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] font-bold text-white bg-[#EC4899] rounded-full flex items-center justify-center animate-bounce shadow-xs">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] font-bold text-white bg-[#DC2626] rounded-full flex items-center justify-center animate-bounce shadow-xs">
                     {unreadNotifs.length}
                   </span>
                 )}
@@ -193,14 +184,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 8 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-2 w-80 sm:w-96 bg-white/95 backdrop-blur-xl border border-[#F3DCE8] rounded-2xl shadow-xl shadow-pink-500/10 p-4 z-50"
+                    className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#1F1C1C] border border-[#3A3434] rounded-2xl shadow-xl shadow-red-600/10 p-4 z-50"
                   >
-                    <div className="flex items-center justify-between pb-3 border-b border-[#F3DCE8]">
+                    <div className="flex items-center justify-between pb-3 border-b border-[#3B3535]">
                       <div className="flex items-center gap-2">
-                        <Bell className="w-4 h-4 text-[#EC4899]" />
-                        <h4 className="text-sm font-bold text-[#18131A]">Campus Updates</h4>
+                        <Bell className="w-4 h-4 text-[#E04848]" />
+                        <h4 className="text-sm font-bold text-white">Campus Updates</h4>
                       </div>
-                      <span className="text-xs font-medium text-[#DB2777]">
+                      <span className="text-xs font-medium text-[#E04848]">
                         {unreadNotifs.length} new
                       </span>
                     </div>
@@ -211,13 +202,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                           key={notif.id}
                           className={`p-3 rounded-xl border text-xs transition-colors ${
                             notif.read
-                              ? 'bg-gray-50/50 border-gray-100 text-[#6B6470]'
-                              : 'bg-[#FFF1F7]/80 border-[#F3DCE8] text-[#18131A]'
+                              ? 'bg-white/5 border-white/10 text-[#B3ABAB]'
+                              : 'bg-[#3A1A1C] border-[#7A2020] text-white'
                           }`}
                         >
                           <div className="flex items-center justify-between font-bold mb-1">
-                            <span className="text-[#DB2777]">{notif.title}</span>
-                            <span className="text-[10px] text-[#6B6470]">{notif.time}</span>
+                            <span className="text-[#E04848]">{notif.title}</span>
+                            <span className="text-[10px] text-[#B3ABAB]">{notif.time}</span>
                           </div>
                           <p className="line-clamp-2">{notif.message}</p>
                         </div>
@@ -233,13 +224,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="relative" ref={profileRef}>
               <button
                 onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                className="flex items-center gap-2 p-1 pl-1.5 pr-2.5 bg-white/80 hover:bg-pink-50 border border-[#F3DCE8] rounded-2xl transition-all cursor-pointer shadow-xs"
+                className="flex items-center gap-2 p-1 pl-1.5 pr-2.5 bg-[#272424] hover:bg-[#332E2E] border border-[#3A3434] rounded-2xl transition-all cursor-pointer shadow-xs"
                 id="user-profile-btn"
               >
-                <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-[#EC4899] to-[#A855F7] flex items-center justify-center text-white text-xs font-bold ring-2 ring-pink-400/40">
+                <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-[#DC2626] to-[#B91C1C] flex items-center justify-center text-white text-xs font-bold ring-2 ring-red-400/40">
                   {authUser?.name ? authUser.name.charAt(0).toUpperCase() : '?'}
                 </div>
-                <span className="text-xs font-bold text-[#18131A] hidden sm:inline">
+                <span className="text-xs font-bold text-white hidden sm:inline">
                   {authUser?.name ? authUser.name.split(' ')[0] : ''}
                 </span>
               </button>
@@ -250,12 +241,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                     initial={{ opacity: 0, scale: 0.95, y: 8 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 8 }}
-                    className="absolute right-0 mt-2 w-60 bg-white/95 backdrop-blur-xl border border-[#F3DCE8] rounded-2xl shadow-xl shadow-pink-500/10 p-2 z-50"
+                    className="absolute right-0 mt-2 w-60 bg-[#1F1C1C] border border-[#3A3434] rounded-2xl shadow-xl shadow-red-600/10 p-2 z-50"
                   >
-                    <div className="px-3 py-2 border-b border-[#F3DCE8] mb-1">
-                      <p className="text-xs font-bold text-[#18131A]">{authUser?.name}</p>
-                      <p className="text-[10px] text-[#6B6470]">{authUser?.email}</p>
-                      <p className="text-[10px] text-[#DB2777] font-semibold mt-0.5">SBCE</p>
+                    <div className="px-3 py-2 border-b border-[#3B3535] mb-1">
+                      <p className="text-xs font-bold text-white">{authUser?.name}</p>
+                      <p className="text-[10px] text-[#B3ABAB]">{authUser?.email}</p>
+                      <p className="text-[10px] text-[#E04848] font-semibold mt-0.5">SBCE</p>
                     </div>
 
                     <button
@@ -263,9 +254,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onNavigate('calendar');
                         setProfileMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 text-xs font-medium text-[#18131A] hover:bg-[#FFF1F7] hover:text-[#DB2777] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs font-medium text-white hover:bg-[#141012] hover:text-[#E04848] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
                     >
-                      <LayoutDashboard className="w-4 h-4 text-[#EC4899]" />
+                      <LayoutDashboard className="w-4 h-4 text-[#E04848]" />
                       <span>Calendar</span>
                     </button>
 
@@ -274,13 +265,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onNavigate('my-events');
                         setProfileMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 text-xs font-medium text-[#18131A] hover:bg-[#FFF1F7] hover:text-[#DB2777] rounded-xl flex items-center justify-between cursor-pointer transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs font-medium text-white hover:bg-[#141012] hover:text-[#E04848] rounded-xl flex items-center justify-between cursor-pointer transition-colors"
                     >
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-[#A855F7]" />
+                        <Calendar className="w-4 h-4 text-[#E04848]" />
                         <span>My Registered Events</span>
                       </div>
-                      <span className="px-2 py-0.5 text-[10px] font-bold bg-pink-100 text-[#DB2777] rounded-full">
+                      <span className="px-2 py-0.5 text-[10px] font-bold bg-red-500/15 text-[#E04848] rounded-full">
                         {totalRegistered}
                       </span>
                     </button>
@@ -290,21 +281,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onNavigate('calendar');
                         setProfileMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 text-xs font-medium text-[#18131A] hover:bg-[#FFF1F7] hover:text-[#DB2777] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs font-medium text-white hover:bg-[#141012] hover:text-[#E04848] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
                     >
                       <Award className="w-4 h-4 text-[#22D3EE]" />
                       <span>Certificates ({user?.certificates?.length || 3})</span>
                     </button>
 
-                    <div className="my-1 border-t border-[#F3DCE8]" />
+                    <div className="my-1 border-t border-[#3B3535]" />
 
-                    <div className="px-3 py-1.5 flex items-center justify-between text-[11px] text-[#6B6470]">
+                    <div className="px-3 py-1.5 flex items-center justify-between text-[11px] text-[#B3ABAB]">
                       <span>Role:</span>
-                      <span className="font-bold text-[#DB2777] uppercase">{activeRole}</span>
+                      <span className="font-bold text-[#E04848] uppercase">{activeRole}</span>
                     </div>
                     <button
                       onClick={() => { logout(); studentLogout(); setProfileMenuOpen(false); }}
-                      className="w-full text-left px-3 py-2 text-xs font-medium text-[#DB2777] hover:bg-[#FFF1F7] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs font-medium text-[#E04848] hover:bg-[#141012] rounded-xl flex items-center gap-2 cursor-pointer transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
                       <span>Log out</span>
@@ -319,7 +310,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile Nav Row - compact, single line, horizontally scrollable */}
-      <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#F3DCE8] px-3 py-2 shadow-sm">
+      <div className="lg:hidden bg-[#141010] border-b border-[#2A2323] px-3 py-2 shadow-sm">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
           {navLinks
             .filter((link) => link.id !== 'my-events')
@@ -332,8 +323,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => onNavigate(link.id)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold rounded-full transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white shadow-sm'
-                      : 'bg-[#FFF1F7] text-[#6B6470] hover:text-[#EC4899] border border-[#F3DCE8]'
+                      ? 'bg-gradient-to-r from-[#B91C1C] to-[#D32F2F] text-white shadow-sm'
+                      : 'bg-transparent text-[#B8B0B0] hover:text-white border border-[#7A2020]'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />

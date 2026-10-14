@@ -54,41 +54,41 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
 
   return (
     <div className="max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#18131A] tracking-tight mb-6">
-        Campus <span className="bg-gradient-to-br from-[#DB2777] to-[#9333EA] bg-clip-text text-transparent">Calendar</span>
+      <h1 className="font-display text-4xl sm:text-5xl font-bold text-white tracking-tight mb-6">
+        Campus <span className="bg-gradient-to-br from-[#B91C1C] to-[#991B1B] bg-clip-text text-transparent">Calendar</span>
       </h1>
-      <div className="relative overflow-hidden rounded-[2rem] p-[1px] mb-6 bg-gradient-to-br from-white/60 via-pink-200/40 to-purple-300/40 shadow-xl shadow-pink-200/40">
-        <div className="relative overflow-hidden rounded-[calc(2rem-1px)] bg-gradient-to-br from-pink-50/90 via-rose-50/80 to-purple-50/90 backdrop-blur-xl p-6 sm:p-8 lg:p-10">
+      <div className="relative overflow-hidden rounded-[2rem] p-[1px] mb-6 bg-gradient-to-br from-[#141012]/60 via-red-200/40 to-red-300/40 shadow-xl shadow-red-200/40">
+        <div className="relative overflow-hidden rounded-[calc(2rem-1px)] bg-gradient-to-br from-red-50/90 via-red-50/80 to-red-50/90 backdrop-blur-xl p-6 sm:p-8 lg:p-10">
           {/* Soft glow orbs — pastel, low opacity */}
-          <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-pink-200/40 blur-3xl" />
-          <div className="absolute -bottom-20 -left-10 w-48 h-48 rounded-full bg-purple-200/40 blur-3xl" />
-          <div className="absolute top-1/2 left-1/3 w-24 h-24 rounded-full bg-rose-100/30 blur-2xl" />
+          <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-red-500/15 blur-3xl" />
+          <div className="absolute -bottom-20 -left-10 w-48 h-48 rounded-full bg-red-500/15 blur-3xl" />
+          <div className="absolute top-1/2 left-1/3 w-24 h-24 rounded-full bg-red-500/15 blur-2xl" />
           {/* Subtle grid texture */}
           <div
             className="absolute inset-0 opacity-[0.04]"
             style={{
-              backgroundImage: `radial-gradient(#DB2777 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(#B91C1C 1px, transparent 1px)`,
               backgroundSize: '22px 22px',
             }}
           />
           {/* Top sheen line */}
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#141012]/80 to-transparent" />
 
           <div className="relative flex items-end justify-between flex-wrap gap-4">
             <div>
-              <p className="flex items-center gap-1.5 text-[#DB2777]/70 text-[11px] font-bold uppercase tracking-[0.15em] mb-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#EC4899]/70 animate-pulse" />
+              <p className="flex items-center gap-1.5 text-[#E04848]/70 text-[11px] font-bold uppercase tracking-[0.15em] mb-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DC2626]/70 animate-pulse" />
                 Now Viewing
               </p>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-[#DB2777] to-[#9333EA] bg-clip-text text-transparent tracking-tight leading-[1.15] pb-1">
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-[#B91C1C] to-[#991B1B] bg-clip-text text-transparent tracking-tight leading-[1.15] pb-1">
                 {monthName}
               </h2>
             </div>
-            <div className="flex items-center gap-3 bg-white/60 backdrop-blur-md rounded-2xl pl-4 pr-5 py-3 lg:px-7 lg:py-4 border border-white/80 shadow-sm">
-              <span className="text-3xl lg:text-4xl font-extrabold text-[#DB2777] leading-none tabular-nums">
+            <div className="flex items-center gap-3 bg-[#1F1C1C] rounded-2xl pl-4 pr-5 py-3 lg:px-7 lg:py-4 border border-white/10 shadow-sm">
+              <span className="text-3xl lg:text-4xl font-extrabold text-[#E04848] leading-none tabular-nums">
                 {monthEventCount}
               </span>
-              <span className="text-[#6B6470] text-xs lg:text-sm font-bold leading-tight max-w-[64px] lg:max-w-[80px]">
+              <span className="text-[#B3ABAB] text-xs lg:text-sm font-bold leading-tight max-w-[64px] lg:max-w-[80px]">
                 {monthEventCount === 1 ? 'event this month' : 'events this month'}
               </span>
             </div>
@@ -98,23 +98,23 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
       <GlassCard className="p-5 lg:p-8 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CalendarIcon className="w-4 h-4 text-[#EC4899]" />
-            <h4 className="font-display text-xs font-bold uppercase tracking-[0.15em] text-[#18131A]">
+            <CalendarIcon className="w-4 h-4 text-[#E04848]" />
+            <h4 className="font-display text-xs font-bold uppercase tracking-[0.15em] text-white">
               Campus Calendar
             </h4>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))}
-              className="p-1 rounded-lg hover:bg-pink-50 text-[#6B6470] hover:text-[#EC4899] transition-colors cursor-pointer"
+              className="p-1 rounded-lg hover:bg-red-500/15 text-[#B3ABAB] hover:text-[#E04848] transition-colors cursor-pointer"
               aria-label="Previous month"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="font-display text-xs font-bold text-[#DB2777] w-24 text-center">{monthName}</span>
+            <span className="font-display text-xs font-bold text-[#E04848] w-24 text-center">{monthName}</span>
             <button
               onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))}
-              className="p-1 rounded-lg hover:bg-pink-50 text-[#6B6470] hover:text-[#EC4899] transition-colors cursor-pointer"
+              className="p-1 rounded-lg hover:bg-red-500/15 text-[#B3ABAB] hover:text-[#E04848] transition-colors cursor-pointer"
               aria-label="Next month"
             >
               <ChevronRight className="w-4 h-4" />
@@ -124,7 +124,7 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
 
         <div className="grid grid-cols-7 gap-1 lg:gap-2 text-center text-[10px] lg:text-xs">
           {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((d) => (
-            <span key={d} className="font-bold text-[#6B6470] py-1 lg:py-2">
+            <span key={d} className="font-bold text-[#B3ABAB] py-1 lg:py-2">
               {d}
             </span>
           ))}
@@ -151,7 +151,7 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
                 style={
                   bannerImg
                     ? {
-                        backgroundImage: `linear-gradient(rgba(255,255,255,0.72), rgba(255,255,255,0.72)), url(${bannerImg})`,
+                        backgroundImage: `linear-gradient(rgba(20,16,18,0.72), rgba(20,16,18,0.72)), url(${bannerImg})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                       }
@@ -159,46 +159,46 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
                 }
                 className={`py-1.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-all relative overflow-hidden lg:text-base ${
                   isToday
-                    ? 'bg-[#EC4899] text-white font-bold shadow-xs'
+                    ? 'bg-[#DC2626] text-white font-bold shadow-xs'
                     : isCompletedDay
-                    ? 'hover:brightness-95 cursor-pointer font-bold' + (bannerImg ? ' text-green-800' : ' bg-green-100 text-green-700')
+                    ? 'hover:brightness-95 cursor-pointer font-bold' + (bannerImg ? ' text-[#4ADE80]' : ' bg-[#1C3A2A] text-[#4ADE80]')
                     : hasEvent
-                    ? 'bg-pink-100 text-[#DB2777] hover:bg-pink-200 cursor-pointer font-bold'
-                    : 'text-[#18131A] hover:bg-pink-50/60'
+                    ? 'bg-red-500/15 text-[#E04848] hover:bg-red-500/15 cursor-pointer font-bold'
+                    : 'text-white hover:bg-red-500/15'
                 }`}
               >
                 <span className="relative z-10">{day}</span>
                 {hasEvent && !isToday && (
                   <span
                     className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full z-10 ${
-                      isCompletedDay ? 'bg-green-600' : 'bg-[#EC4899]'
+                      isCompletedDay ? 'bg-green-600' : 'bg-[#DC2626]'
                     }`}
                   />
                 )}
               </button>
             );
           })}
-          <div className="col-span-7 flex items-center justify-center gap-4 pt-2 text-[10px] font-semibold text-[#6B6470]">
+          <div className="col-span-7 flex items-center justify-center gap-4 pt-2 text-[10px] font-semibold text-[#B3ABAB]">
             <span className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-[#EC4899]" /> Upcoming
+              <span className="w-2 h-2 rounded-full bg-[#DC2626]" /> Upcoming
             </span>
             <span className="flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-green-600" /> Completed
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-[#EC4899] ring-2 ring-pink-200" /> Today
+              <span className="w-2 h-2 rounded-full bg-[#DC2626] ring-2 ring-red-200" /> Today
             </span>
           </div>
         </div>
       </GlassCard>
 
       <GlassCard className="p-4 mt-6 overflow-hidden">
-        <h4 className="font-display text-xs font-bold uppercase tracking-[0.15em] text-[#18131A] mb-3 flex items-center gap-2">
-          <ImageIcon className="w-4 h-4 text-[#EC4899]" />
+        <h4 className="font-display text-xs font-bold uppercase tracking-[0.15em] text-white mb-3 flex items-center gap-2">
+          <ImageIcon className="w-4 h-4 text-[#E04848]" />
           {monthName} Gallery
         </h4>
         {monthPhotos.length === 0 ? (
-          <div className="h-32 rounded-xl bg-pink-50 flex items-center justify-center text-xs text-[#6B6470]">
+          <div className="h-32 rounded-xl bg-red-500/15 flex items-center justify-center text-xs text-[#B3ABAB]">
             No photos for this month yet
           </div>
         ) : (
@@ -214,13 +214,13 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
                 <img
                   src={photo.photo_url}
                   alt={photo.caption || photo.event_title}
-                  className="w-28 h-28 lg:w-36 lg:h-36 object-cover rounded-xl shadow-md ring-2 ring-white"
+                  className="w-28 h-28 lg:w-36 lg:h-36 object-cover rounded-xl shadow-md ring-2 ring-[#141012]"
                   style={{
                     ['--drift' as any]: drift,
                     animation: `floatDrift ${duration}s ease-in-out ${delay}s infinite`,
                   }}
                 />
-                <p className="text-[10px] font-semibold text-[#6B6470] mt-1 max-w-28 truncate">
+                <p className="text-[10px] font-semibold text-[#B3ABAB] mt-1 max-w-28 truncate">
                   {photo.event_title}
                 </p>
               </div>

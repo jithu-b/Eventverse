@@ -36,13 +36,13 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
   const getVariantStyles = () => {
     switch (variant) {
       case 'primary':
-        return 'bg-gradient-to-r from-[#EC4899] via-[#E11D48] to-[#A855F7] text-white hover:opacity-95 hover:shadow-lg hover:shadow-pink-500/25 active:scale-[0.98] border border-pink-400/30';
+        return 'bg-gradient-to-r from-[#DC2626] via-[#E11D27] to-[#B91C1C] text-white hover:opacity-95 hover:shadow-lg hover:shadow-red-600/25 active:scale-[0.98] border border-red-400/30';
       case 'secondary':
-        return 'bg-[#FFF1F7] text-[#DB2777] hover:bg-[#FCE7F3] border border-[#F3DCE8] active:scale-[0.98]';
+        return 'bg-[#141012] text-[#E04848] hover:bg-[#141012] border border-[#B3282D] active:scale-[0.98]';
       case 'outline':
-        return 'bg-white/70 backdrop-blur-sm text-[#18131A] hover:text-[#EC4899] border border-[#F3DCE8] hover:border-[#EC4899] hover:bg-pink-50/50 active:scale-[0.98]';
+        return 'bg-white/5 backdrop-blur-sm text-white hover:text-[#E04848] border border-[#B3282D] hover:border-[#DC2626] hover:bg-red-500/15 active:scale-[0.98]';
       case 'ghost':
-        return 'bg-transparent text-[#6B6470] hover:text-[#EC4899] hover:bg-pink-50/60 active:scale-[0.98]';
+        return 'bg-transparent text-[#B3ABAB] hover:text-[#E04848] hover:bg-red-500/15 active:scale-[0.98]';
     }
   };
 

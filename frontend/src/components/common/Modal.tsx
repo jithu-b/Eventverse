@@ -64,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeOnBackdropClick ? onClose : undefined}
-            className="fixed inset-0 bg-[#18131A]/30 backdrop-blur-sm"
+            className="fixed inset-0 bg-[#1A1313]/30 backdrop-blur-sm"
           />
 
           {/* Modal Card */}
@@ -73,22 +73,22 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className={`relative w-full ${getMaxWidthClass()} bg-white/95 backdrop-blur-xl border border-[#F3DCE8] rounded-3xl shadow-2xl shadow-pink-500/15 overflow-hidden z-10 my-auto`}
+            className={`relative w-full ${getMaxWidthClass()} bg-[#1F1C1C] border border-[#B3282D] rounded-3xl shadow-2xl shadow-red-600/15 overflow-hidden z-10 my-auto`}
           >
             {/* Header */}
             {(title || subtitle) && (
-              <div className="px-6 pt-6 pb-4 border-b border-[#F3DCE8]/70 flex items-start justify-between gap-4">
+              <div className="px-6 pt-6 pb-4 border-b border-[#3B3535] flex items-start justify-between gap-4">
                 <div>
                   {typeof title === 'string' ? (
-                    <h3 className="text-xl font-bold text-[#18131A] tracking-tight">{title}</h3>
+                    <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
                   ) : (
                     title
                   )}
-                  {subtitle && <p className="text-xs text-[#6B6470] mt-1">{subtitle}</p>}
+                  {subtitle && <p className="text-xs text-[#B3ABAB] mt-1">{subtitle}</p>}
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-xl text-[#6B6470] hover:text-[#EC4899] hover:bg-pink-50 transition-colors cursor-pointer shrink-0"
+                  className="p-2 rounded-xl text-[#B3ABAB] hover:text-[#E04848] hover:bg-red-500/15 transition-colors cursor-pointer shrink-0"
                   aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />
@@ -99,7 +99,7 @@ export const Modal: React.FC<ModalProps> = ({
             {!title && !subtitle && (
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/80 hover:bg-pink-50 text-[#6B6470] hover:text-[#EC4899] border border-[#F3DCE8] transition-colors cursor-pointer shadow-sm"
+                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/5 hover:bg-red-500/15 text-[#B3ABAB] hover:text-[#E04848] border border-[#B3282D] transition-colors cursor-pointer shadow-sm"
                 aria-label="Close modal"
               >
                 <X className="w-4 h-4" />

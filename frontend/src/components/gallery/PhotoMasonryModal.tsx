@@ -86,23 +86,23 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className="fixed inset-0 z-50 bg-[#FFF8FC] overflow-y-auto min-h-screen"
+        className="fixed inset-0 z-50 bg-[#141012] overflow-y-auto min-h-screen"
       >
-        <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-10 py-4 bg-white/90 backdrop-blur-xl border-b border-[#F3DCE8]">
+        <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-10 py-4 bg-[#1F1C1C] border-b border-[#3B3535]">
           <button
             onClick={onClose}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-pink-50 hover:bg-[#EC4899] hover:text-white text-[#DB2777] transition-all border border-pink-200 cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-red-500/15 hover:bg-[#DC2626] hover:text-white text-[#E04848] transition-all border border-red-500/30 cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>All Events</span>
           </button>
 
-          <span className="hidden sm:block text-xs font-bold text-[#18131A] truncate max-w-sm">{deck.title}</span>
+          <span className="hidden sm:block text-xs font-bold text-white truncate max-w-sm">{deck.title}</span>
 
           <button
             id="event-modal-close-button"
             onClick={onClose}
-            className="p-2 rounded-full bg-pink-50 hover:bg-pink-100 text-[#DB2777] border border-pink-200 transition-colors cursor-pointer"
+            className="p-2 rounded-full bg-red-500/15 hover:bg-red-500/15 text-[#E04848] border border-red-500/30 transition-colors cursor-pointer"
             aria-label="Close gallery"
           >
             <X className="w-4 h-4" />
@@ -114,30 +114,30 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
             {deck.photos[0] && (
               <img src={mediaUrl(deck.photos[0].photo_url)} alt="" className="w-full h-full object-cover filter brightness-[0.75] scale-105" />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#FFF8FC] via-[#FFF8FC]/10 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#18131A]/35 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#141012] via-[#141012]/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1A1313]/35 via-transparent to-transparent" />
           </div>
 
           <div className="relative z-10 w-full max-w-6xl mx-auto space-y-3">
             <div className="flex flex-wrap items-center gap-2 text-xs">
               {deck.category && (
-                <span className="px-3 py-1 rounded-full font-bold tracking-widest uppercase bg-white/20 text-white border border-white/30 text-[10px] backdrop-blur-md">
+                <span className="px-3 py-1 rounded-full font-bold tracking-widest uppercase bg-white/5 text-white border border-white/10 text-[10px] backdrop-blur-md">
                   {deck.category}
                 </span>
               )}
               {deck.date && (
-                <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white border border-white/20 text-xs">
+                <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1F1C1C] text-white border border-white/10 text-xs">
                   <Calendar className="w-3.5 h-3.5" />
                   {deck.date}
                 </span>
               )}
               {deck.location && (
-                <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white border border-white/20 text-xs">
+                <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1F1C1C] text-white border border-white/10 text-xs">
                   <MapPin className="w-3.5 h-3.5" />
                   {deck.location}
                 </span>
               )}
-              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white border border-white/20 text-xs">
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1F1C1C] text-white border border-white/10 text-xs">
                 <Layers className="w-3.5 h-3.5" />
                 {deck.photos.length} Photos
               </span>
@@ -154,7 +154,7 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.5) }}
-                className="break-inside-avoid group relative rounded-2xl overflow-hidden bg-white border border-[#F3DCE8] hover:border-[#EC4899]/40 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+                className="break-inside-avoid group relative rounded-2xl overflow-hidden bg-[#141012] border border-[#B3282D] hover:border-[#DC2626]/40 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
                 onClick={() => setLightboxIndex(index)}
               >
                 <img
@@ -189,32 +189,32 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
           </div>
         </main>
 
-        <footer className="border-t border-[#F3DCE8] bg-white py-10 px-4 md:px-10 mt-8">
+        <footer className="border-t border-[#3B3535] bg-[#141012] py-10 px-4 md:px-10 mt-8">
           <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <button
               onClick={() => { onSelectDeck(prevDeck); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className="flex items-center gap-3 p-3 rounded-2xl bg-pink-50/60 hover:bg-pink-100 border border-[#F3DCE8] transition-all text-left group w-full sm:w-auto cursor-pointer"
+              className="flex items-center gap-3 p-3 rounded-2xl bg-red-500/15 hover:bg-red-500/15 border border-[#B3282D] transition-all text-left group w-full sm:w-auto cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4 text-[#EC4899]" />
+              <ArrowLeft className="w-4 h-4 text-[#E04848]" />
               <div>
-                <div className="text-[10px] font-bold text-[#6B6470] uppercase">Previous</div>
-                <div className="text-sm font-bold text-[#18131A]">{prevDeck.title}</div>
+                <div className="text-[10px] font-bold text-[#B3ABAB] uppercase">Previous</div>
+                <div className="text-sm font-bold text-white">{prevDeck.title}</div>
               </div>
             </button>
             <button
               onClick={onClose}
-              className="px-6 py-2.5 rounded-full bg-pink-100 hover:bg-[#EC4899] hover:text-white text-xs font-bold text-[#DB2777] border border-pink-200 transition-colors cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-red-500/15 hover:bg-[#DC2626] hover:text-white text-xs font-bold text-[#E04848] border border-red-500/30 transition-colors cursor-pointer"
             >
               Back to All Events
             </button>
             <button
               onClick={() => { onSelectDeck(nextDeck); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className="flex items-center gap-3 p-3 rounded-2xl bg-pink-50/60 hover:bg-pink-100 border border-[#F3DCE8] transition-all text-right group w-full sm:w-auto sm:flex-row-reverse cursor-pointer"
+              className="flex items-center gap-3 p-3 rounded-2xl bg-red-500/15 hover:bg-red-500/15 border border-[#B3282D] transition-all text-right group w-full sm:w-auto sm:flex-row-reverse cursor-pointer"
             >
-              <ArrowRight className="w-4 h-4 text-[#EC4899]" />
+              <ArrowRight className="w-4 h-4 text-[#E04848]" />
               <div>
-                <div className="text-[10px] font-bold text-[#6B6470] uppercase">Next</div>
-                <div className="text-sm font-bold text-[#18131A]">{nextDeck.title}</div>
+                <div className="text-[10px] font-bold text-[#B3ABAB] uppercase">Next</div>
+                <div className="text-sm font-bold text-white">{nextDeck.title}</div>
               </div>
             </button>
           </div>
@@ -224,21 +224,21 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
             <button
               onClick={() => downloadImage(mediaUrl(lightboxPhoto.photo_url), `${deck.title}-${lightboxPhoto.id}.jpg`)}
-              className="absolute top-5 right-16 z-10 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full cursor-pointer"
+              className="absolute top-5 right-16 z-10 p-2.5 bg-white/5 hover:bg-white/5 text-white rounded-full cursor-pointer"
               aria-label="Download photo"
             >
               <Download className="w-5 h-5" />
             </button>
             <button
               onClick={() => setLightboxIndex(null)}
-              className="absolute top-5 right-5 z-10 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full cursor-pointer"
+              className="absolute top-5 right-5 z-10 p-2.5 bg-white/5 hover:bg-white/5 text-white rounded-full cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
             {isAdmin && (
               <button
                 onClick={() => { onDeletePhoto(lightboxPhoto.id); setLightboxIndex(null); }}
-                className="absolute top-5 left-5 z-10 p-2.5 bg-white/10 hover:bg-red-600 text-white rounded-full cursor-pointer"
+                className="absolute top-5 left-5 z-10 p-2.5 bg-white/5 hover:bg-red-600 text-white rounded-full cursor-pointer"
               >
                 <Trash2 className="w-5 h-5" />
               </button>
@@ -247,13 +247,13 @@ export const PhotoMasonryModal: React.FC<PhotoMasonryModalProps> = ({
               <>
                 <button
                   onClick={() => setLightboxIndex((lightboxIndex! - 1 + deck.photos.length) % deck.photos.length)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full cursor-pointer"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 bg-white/5 hover:bg-white/5 text-white rounded-full cursor-pointer"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setLightboxIndex((lightboxIndex! + 1) % deck.photos.length)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 bg-white/5 hover:bg-white/5 text-white rounded-full cursor-pointer"
                 >
                   <ArrowRight className="w-5 h-5" />
                 </button>

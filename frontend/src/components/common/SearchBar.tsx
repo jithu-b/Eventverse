@@ -23,9 +23,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <div 
       id={id}
-      className={`relative flex items-center w-full bg-white/90 backdrop-blur-md border border-[#F3DCE8] focus-within:border-[#EC4899] focus-within:ring-4 focus-within:ring-pink-500/10 rounded-2xl shadow-sm transition-all duration-200 ${className}`}
+      className={`relative flex items-center w-full bg-[#1F1C1C] border border-[#B3282D] focus-within:border-[#DC2626] focus-within:ring-4 focus-within:ring-red-600/10 rounded-2xl shadow-sm transition-all duration-200 ${className}`}
     >
-      <div className="pl-4 pr-2 text-[#EC4899] flex items-center pointer-events-none">
+      <div className="pl-4 pr-2 text-[#E04848] flex items-center pointer-events-none">
         <Search className="w-5 h-5" />
       </div>
 
@@ -34,13 +34,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full py-3.5 pr-3 text-sm text-[#18131A] placeholder-[#6B6470]/60 bg-transparent focus:outline-none"
+        className="w-full py-3.5 pr-3 text-sm text-white placeholder-[#A8A0A0]/60 bg-transparent focus:outline-none"
       />
 
       {value && (
         <button
           onClick={() => onChange('')}
-          className="p-1.5 mr-2 text-[#6B6470] hover:text-[#EC4899] hover:bg-pink-50 rounded-lg transition-colors cursor-pointer"
+          className="p-1.5 mr-2 text-[#B3ABAB] hover:text-[#E04848] hover:bg-red-500/15 rounded-lg transition-colors cursor-pointer"
           title="Clear search"
         >
           <X className="w-4 h-4" />
@@ -52,8 +52,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           onClick={onFilterToggle}
           className={`flex items-center gap-1.5 px-3 py-1.5 mr-2 text-xs font-semibold rounded-xl border transition-all cursor-pointer ${
             filterActive
-              ? 'bg-[#FFF1F7] text-[#EC4899] border-[#EC4899]'
-              : 'bg-white text-[#6B6470] border-[#F3DCE8] hover:border-pink-300'
+              ? 'bg-[#141012] text-[#E04848] border-[#DC2626]'
+              : 'bg-[#141012] text-[#B3ABAB] border-[#B3282D] hover:border-red-500/30'
           }`}
         >
           <SlidersHorizontal className="w-3.5 h-3.5" />

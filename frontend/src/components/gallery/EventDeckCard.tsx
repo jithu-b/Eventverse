@@ -78,12 +78,12 @@ export const EventDeckCard: React.FC<EventDeckCardProps> = ({ deck, index, onSel
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         animate={{ y: isHovered ? -8 : 0 }}
         transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-        className="relative w-full rounded-2xl p-4 md:p-5 bg-white/90 backdrop-blur-xl border border-[#F3DCE8] hover:border-[#EC4899]/50 shadow-lg hover:shadow-[0_25px_60px_-20px_rgba(236,72,153,0.35)] transition-all duration-500"
+        className="relative w-full rounded-2xl p-4 md:p-5 bg-[#1F1C1C] border border-[#B3282D] hover:border-[#DC2626]/50 shadow-lg hover:shadow-[0_25px_60px_-20px_rgba(236,72,80,0.35)] transition-all duration-500"
       >
-        <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-pink-400/15 via-purple-300/10 to-pink-200/15 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -z-10" />
+        <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-red-400/15 via-red-300/10 to-red-200/15 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -z-10" />
 
         <div className="relative w-full aspect-[4/3] mb-5 flex items-center justify-center">
-          <div className={`absolute bottom-1 w-4/5 h-7 bg-pink-900/10 rounded-full blur-xl transition-all duration-500 ${isHovered ? 'scale-110 opacity-80 translate-y-2' : 'scale-95 opacity-40'}`} />
+          <div className={`absolute bottom-1 w-4/5 h-7 bg-red-950/10 rounded-full blur-xl transition-all duration-500 ${isHovered ? 'scale-110 opacity-80 translate-y-2' : 'scale-95 opacity-40'}`} />
 
           {behind.map((url, i) => {
             const cfg = layerConfigs[i] || layerConfigs[0];
@@ -99,10 +99,10 @@ export const EventDeckCard: React.FC<EventDeckCardProps> = ({ deck, index, onSel
                   opacity: isHovered ? 0.95 : cfg.opacity,
                 }}
                 transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-                className="absolute inset-0 w-full h-full rounded-xl overflow-hidden shadow-xl border border-white/60 bg-pink-50 pointer-events-none origin-bottom"
+                className="absolute inset-0 w-full h-full rounded-xl overflow-hidden shadow-xl border border-white/10 bg-red-500/15 pointer-events-none origin-bottom"
               >
                 <img src={url} alt="" loading="lazy" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/10 via-transparent to-purple-500/10" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-red-600/10 via-transparent to-red-700/10" />
               </motion.div>
             );
           })}
@@ -111,27 +111,27 @@ export const EventDeckCard: React.FC<EventDeckCardProps> = ({ deck, index, onSel
             style={{ zIndex: 40 }}
             animate={{ scale: isHovered ? 1.02 : 1 }}
             transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-            className="relative w-full h-full rounded-xl overflow-hidden shadow-xl border border-white/70 bg-pink-50"
+            className="relative w-full h-full rounded-xl overflow-hidden shadow-xl border border-white/10 bg-red-500/15"
           >
             {cover ? (
               <img src={cover} alt={deck.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[#DB2777]/40">
+              <div className="w-full h-full flex items-center justify-center text-[#E04848]/40">
                 <ImageIcon className="w-10 h-10" />
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/5 to-white/0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/5 to-[#141012]/0" />
 
             <div className="absolute top-3 right-3 z-10">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-white/90 backdrop-blur-md text-[#DB2777] border border-pink-200 shadow-sm tracking-wide">
-                <Layers className="w-3 h-3 text-[#EC4899]" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-[#1F1C1C] text-[#E04848] border border-red-500/30 shadow-sm tracking-wide">
+                <Layers className="w-3 h-3 text-[#E04848]" />
                 {totalPhotos} PHOTO{totalPhotos !== 1 ? 'S' : ''}
               </span>
             </div>
 
             {deck.category && (
               <div className="absolute top-3 left-3 z-10">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-black/50 backdrop-blur-md text-white border border-white/20">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-black/50 backdrop-blur-md text-white border border-white/10">
                   {deck.category}
                 </span>
               </div>
@@ -139,18 +139,18 @@ export const EventDeckCard: React.FC<EventDeckCardProps> = ({ deck, index, onSel
 
           </motion.div>
         </div>
-            <div className="relative rounded-xl overflow-hidden border border-[#F3DCE8] shadow-md mt-4">
+            <div className="relative rounded-xl overflow-hidden border border-[#B3282D] shadow-md mt-4">
               {(deck.bannerImage || cover) && (
                 <img src={deck.bannerImage || cover} alt="" className="absolute inset-0 w-full h-full object-cover" />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
               <div className="relative px-3.5 py-3">
                 {deck.date && (
-                  <p className="text-[10px] uppercase tracking-widest text-pink-100 mb-1 font-bold">{deck.date}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-red-100 mb-1 font-bold">{deck.date}</p>
                 )}
                 <div className="flex items-center justify-between gap-2">
                   <h4 className="text-base font-extrabold text-white tracking-tight line-clamp-1 font-outfit drop-shadow-sm">{deck.title}</h4>
-                  <span className="flex items-center gap-1 text-[10px] uppercase font-bold text-white bg-white/20 group-hover:bg-[#EC4899] px-2.5 py-1 rounded-full border border-white/25 shrink-0 transition-colors">
+                  <span className="flex items-center gap-1 text-[10px] uppercase font-bold text-white bg-white/5 group-hover:bg-[#DC2626] px-2.5 py-1 rounded-full border border-white/10 shrink-0 transition-colors">
                     <span>Open</span>
                     <ArrowUpRight className="w-3 h-3" />
                   </span>
@@ -160,8 +160,8 @@ export const EventDeckCard: React.FC<EventDeckCardProps> = ({ deck, index, onSel
 
         <div className="space-y-1.5">
           {deck.location && (
-            <span className="flex items-center gap-1.5 text-xs text-[#6B6470]">
-              <MapPin className="w-3.5 h-3.5 text-[#EC4899]/80 shrink-0" />
+            <span className="flex items-center gap-1.5 text-xs text-[#B3ABAB]">
+              <MapPin className="w-3.5 h-3.5 text-[#E04848]/80 shrink-0" />
               <span className="truncate">{deck.location}</span>
             </span>
           )}

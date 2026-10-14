@@ -19,14 +19,14 @@ function createSignboardTexture(): THREE.CanvasTexture {
 
   // 1. Solid High-Contrast Dark Slate Cyber Backing Plate
   const bgGrad = ctx.createLinearGradient(0, 0, 1400, 880);
-  bgGrad.addColorStop(0, '#090d16');
-  bgGrad.addColorStop(0.5, '#0f172a');
-  bgGrad.addColorStop(1, '#1e1b4b');
+  bgGrad.addColorStop(0, '#090D16');
+  bgGrad.addColorStop(0.5, '#0F172A');
+  bgGrad.addColorStop(1, '#1E1B4B');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, 1400, 880);
 
   // Subtle clean cyber grid (sharp, zero blur)
-  ctx.strokeStyle = 'rgba(236, 72, 153, 0.15)';
+  ctx.strokeStyle = 'rgba(236, 72, 80, 0.15)';
   ctx.lineWidth = 2;
   for (let x = 50; x < 1400; x += 70) {
     ctx.beginPath();
@@ -42,30 +42,30 @@ function createSignboardTexture(): THREE.CanvasTexture {
   }
 
   // Crisp Solid Outer Border (Vivid Neon Pink, no blurry glow)
-  ctx.strokeStyle = '#ec4899';
+  ctx.strokeStyle = '#DC2626';
   ctx.lineWidth = 16;
   ctx.strokeRect(20, 20, 1360, 840);
 
   // Crisp Inner White Wireframe Border
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+  ctx.strokeStyle = 'rgba(20,16,18,0.4)';
   ctx.lineWidth = 3;
   ctx.strokeRect(36, 36, 1328, 808);
 
   // 2. Top Header Pill Badge: "⚡ JITHU HERE ⚡"
   const pillGrad = ctx.createLinearGradient(380, 52, 1020, 132);
-  pillGrad.addColorStop(0, '#ec4899');
-  pillGrad.addColorStop(0.5, '#f43f5e');
-  pillGrad.addColorStop(1, '#ec4899');
+  pillGrad.addColorStop(0, '#DC2626');
+  pillGrad.addColorStop(0.5, '#F43F48');
+  pillGrad.addColorStop(1, '#DC2626');
   ctx.fillStyle = pillGrad;
   ctx.beginPath();
   ctx.roundRect(380, 52, 640, 78, 39);
   ctx.fill();
 
-  ctx.strokeStyle = '#ffffff';
+  ctx.strokeStyle = '#FFFFFF';
   ctx.lineWidth = 3.5;
   ctx.stroke();
 
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = '#FFFFFF';
   ctx.font = '900 42px "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -73,20 +73,20 @@ function createSignboardTexture(): THREE.CanvasTexture {
 
   // 3. Central Big Message Box Container (Crisp Solid Border, No Blur)
   const boxGrad = ctx.createLinearGradient(70, 155, 1330, 725);
-  boxGrad.addColorStop(0, '#0f172a');
-  boxGrad.addColorStop(0.5, '#2e1065');
-  boxGrad.addColorStop(1, '#0f172a');
+  boxGrad.addColorStop(0, '#0F172A');
+  boxGrad.addColorStop(0.5, '#651014');
+  boxGrad.addColorStop(1, '#0F172A');
   ctx.fillStyle = boxGrad;
   ctx.beginPath();
   ctx.roundRect(65, 155, 1270, 570, 28);
   ctx.fill();
 
-  ctx.strokeStyle = '#f43f5e';
+  ctx.strokeStyle = '#F43F48';
   ctx.lineWidth = 5;
   ctx.stroke();
 
   // Inner decorative crisp cyan corner brackets (sharp lines, zero blur)
-  ctx.strokeStyle = '#38bdf8';
+  ctx.strokeStyle = '#38BDF8';
   ctx.lineWidth = 5;
   // Top-left corner bracket
   ctx.beginPath();
@@ -115,32 +115,32 @@ function createSignboardTexture(): THREE.CanvasTexture {
 
   // 4. GIANT, CRISP, BRIGHT, ULTRA-VISIBLE TYPOGRAPHY (NO GLOW / BLUR)
   // Line 1: "Jithu here —"
-  ctx.fillStyle = '#fde047'; // Bright Vivid Amber / Golden Yellow
+  ctx.fillStyle = '#FDE047'; // Bright Vivid Amber / Golden Yellow
   ctx.font = '900 102px "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif';
   ctx.fillText('Jithu here —', 700, 310);
 
   // Line 2: "Don't hurt my bot"
-  ctx.fillStyle = '#ffffff'; // Bright Pure Solid White
+  ctx.fillStyle = '#FFFFFF'; // Bright Pure Solid White
   ctx.font = '900 100px "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif';
   ctx.fillText("Don't hurt my bot", 700, 470);
 
   // Accent icon badge below line 2
-  ctx.fillStyle = '#38bdf8'; // Bright Electric Cyan
+  ctx.fillStyle = '#38BDF8'; // Bright Electric Cyan
   ctx.font = '900 68px "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif';
   ctx.fillText('🤖 ⚡ 🦾', 700, 615);
 
   // 5. Bottom TinkerHub Subtext
-  ctx.fillStyle = '#93c5fd';
+  ctx.fillStyle = '#93C5FD';
   ctx.font = '800 30px "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif';
   ctx.fillText('✦ TinkerHub SBCE Campus Edition · Pure Vibes Only ✦', 700, 795);
 
   // 6. Corner Decorative Metal Hex Screws
   const drawScrew = (x: number, y: number) => {
-    ctx.fillStyle = '#ec4899';
+    ctx.fillStyle = '#DC2626';
     ctx.beginPath();
     ctx.arc(x, y, 14, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#FFFFFF';
     ctx.beginPath();
     ctx.arc(x, y, 7, 0, Math.PI * 2);
     ctx.fill();
@@ -251,7 +251,7 @@ export class TinkerHubMascot3D {
     // ==========================================
     // Primary Crisp White Hoodie Fabric with subtle micro-sheen
     const hoodieMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#f8fafc'),
+      color: new THREE.Color('#F8FAFC'),
       roughness: 0.55,
       metalness: 0.04,
     });
@@ -259,7 +259,7 @@ export class TinkerHubMascot3D {
 
     // Accent Icy-Slate Hoodie Trim
     const hoodieTrimMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#cbd5e1'),
+      color: new THREE.Color('#CBD5E1'),
       roughness: 0.5,
       metalness: 0.12,
     });
@@ -267,8 +267,8 @@ export class TinkerHubMascot3D {
 
     // High-Contrast Cyber Pink Accent Material
     const cyberPinkMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#ec4899'),
-      emissive: new THREE.Color('#db2777'),
+      color: new THREE.Color('#DC2626'),
+      emissive: new THREE.Color('#B91C1C'),
       emissiveIntensity: 0.9,
       roughness: 0.2,
       metalness: 0.1,
@@ -277,7 +277,7 @@ export class TinkerHubMascot3D {
 
     // Shiny Polished Chrome Metal
     const chromeMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#f1f5f9'),
+      color: new THREE.Color('#F1F5F9'),
       metalness: 0.95,
       roughness: 0.15,
     });
@@ -285,7 +285,7 @@ export class TinkerHubMascot3D {
 
     // Dark Gunmetal Tech Accents
     const darkGunmetalMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#0f172a'),
+      color: new THREE.Color('#0F172A'),
       metalness: 0.85,
       roughness: 0.25,
     });
@@ -293,7 +293,7 @@ export class TinkerHubMascot3D {
 
     // Deep Charcoal Athletic Cargo Pants Fabric
     const cargoPantsMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#1e293b'),
+      color: new THREE.Color('#1E293B'),
       roughness: 0.78,
       metalness: 0.05,
     });
@@ -308,14 +308,14 @@ export class TinkerHubMascot3D {
 
     // Athletic Neon / Crisp White Side Piping
     const pipingWhiteMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#ffffff'),
+      color: new THREE.Color('#FFFFFF'),
       roughness: 0.4,
     });
     this.materials.push(pipingWhiteMat);
 
     const pipingPinkMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#f43f5e'),
-      emissive: new THREE.Color('#e11d48'),
+      color: new THREE.Color('#F43F48'),
+      emissive: new THREE.Color('#E11D27'),
       emissiveIntensity: 0.7,
       roughness: 0.3,
     });
@@ -323,7 +323,7 @@ export class TinkerHubMascot3D {
 
     // Sculpted Skin Tone for Hands & Neck Base
     const skinMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#e2a17b'),
+      color: new THREE.Color('#E2A17B'),
       roughness: 0.48,
       metalness: 0.02,
     });
@@ -331,30 +331,30 @@ export class TinkerHubMascot3D {
 
     // Sneaker Materials
     const sneakerWhiteMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#ffffff'),
+      color: new THREE.Color('#FFFFFF'),
       roughness: 0.3,
       metalness: 0.05,
     });
     this.materials.push(sneakerWhiteMat);
 
     const sneakerOrangeMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#fb923c'),
-      emissive: new THREE.Color('#ea580c'),
+      color: new THREE.Color('#FB923C'),
+      emissive: new THREE.Color('#EA580C'),
       emissiveIntensity: 0.3,
       roughness: 0.4,
     });
     this.materials.push(sneakerOrangeMat);
 
     const sneakerDarkMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#090d16'),
+      color: new THREE.Color('#090D16'),
       roughness: 0.85,
     });
     this.materials.push(sneakerDarkMat);
 
     // Translucent Air Cushion Sole Material
     const airCushionMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#38bdf8'),
-      emissive: new THREE.Color('#0284c7'),
+      color: new THREE.Color('#38BDF8'),
+      emissive: new THREE.Color('#0284C7'),
       emissiveIntensity: 0.8,
       transparent: true,
       opacity: 0.7,
@@ -366,7 +366,7 @@ export class TinkerHubMascot3D {
 
     // Translucent Glass Visor Dome
     const glassVisorMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#fbcfe8'),
+      color: new THREE.Color('#FECACA'),
       transparent: true,
       opacity: 0.32,
       roughness: 0.06,
@@ -395,8 +395,8 @@ export class TinkerHubMascot3D {
 
     // TinkerHub 3D Logo Block Materials
     const logoBlockWhiteMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#ffffff'),
-      emissive: new THREE.Color('#ffffff'),
+      color: new THREE.Color('#FFFFFF'),
+      emissive: new THREE.Color('#FFFFFF'),
       emissiveIntensity: 0.6,
       roughness: 0.1,
       metalness: 0.1,
@@ -404,8 +404,8 @@ export class TinkerHubMascot3D {
     this.materials.push(logoBlockWhiteMat);
 
     const logoBlockPinkMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#ec4899'),
-      emissive: new THREE.Color('#db2777'),
+      color: new THREE.Color('#DC2626'),
+      emissive: new THREE.Color('#B91C1C'),
       emissiveIntensity: 1.2,
       roughness: 0.15,
       metalness: 0.2,
@@ -414,8 +414,8 @@ export class TinkerHubMascot3D {
 
     // Star Material
     const starMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#fbbf24'),
-      emissive: new THREE.Color('#f59e0b'),
+      color: new THREE.Color('#FBBF24'),
+      emissive: new THREE.Color('#F59E0B'),
       emissiveIntensity: 0.9,
       roughness: 0.15,
       metalness: 0.5,
@@ -1502,7 +1502,7 @@ export class TinkerHubMascot3D {
       map: this.signboardTexture,
       roughness: 0.28,
       metalness: 0.15,
-      emissive: new THREE.Color('#381224'),
+      emissive: new THREE.Color('#381214'),
       emissiveIntensity: 0.45,
     });
     this.materials.push(signFaceMat);

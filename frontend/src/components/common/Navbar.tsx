@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Sparkles, 
-  Search, 
-  Bell, 
+  Search,
+  Bell,
   Menu, 
   X, 
   Calendar,
@@ -23,9 +23,9 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { useStudentAuth } from '../../context/StudentAuthContext';
 import { motion, AnimatePresence } from 'motion/react';
-import { UserRole, NotificationItem, UserProfile } from '../../types';
 import { GradientButton } from './GradientButton';
 import { RedLogo } from './RedLogo';
+import { UserRole, UserProfile } from '../../types';
 
 interface NavbarProps {
   currentView: string;
@@ -34,44 +34,39 @@ interface NavbarProps {
   userRole?: UserRole;
   onChangeRole?: (role: UserRole) => void;
   onRoleChange?: (role: UserRole) => void;
-  notifications?: NotificationItem[];
   onOpenSearch?: () => void;
   onCreateEvent?: () => void;
   registeredCount?: number;
+  events?: any[];
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentView,
   onNavigate,
   user,
-  userRole,
   onChangeRole,
+  userRole,
   onRoleChange,
-  notifications = [],
   onOpenSearch = () => {},
   onCreateEvent = () => {},
   registeredCount,
 }) => {
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
 
-  const notifRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
   const { logout, authUser } = useAuth();
+  const notifRef = useRef<HTMLDivElement>(null);
   const { student, logout: studentLogout } = useStudentAuth();
   const activeRole: UserRole = (authUser?.role as UserRole) || 'participant';
 
-  const safeNotifications = Array.isArray(notifications) ? notifications : [];
-  const unreadNotifs = safeNotifications.filter((n) => !n?.read);
   const totalRegistered = registeredCount !== undefined ? registeredCount : (user?.registeredEventIds?.length || 0);
 
   // Close menus on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
-        setNotificationsOpen(false);
-      }
       if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
         setProfileMenuOpen(false);
       }
@@ -80,6 +75,25 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+
+  useEffect(() => {
+    // Fetch upcoming events from Supabase or mock data
+    const fetchUpcomingEvents = async () => {
+      try {
+        // Import INITIAL_EVENTS from mockData
+        const { INITIAL_EVENTS } = await import('../../data/mockData');
+        const now = new Date();
+        const upcoming = INITIAL_EVENTS.filter((event: any) => {
+          const eventDate = new Date(event.rawDate);
+          return eventDate >= now && (event.status === 'Upcoming' || event.status === 'Ongoing');
+        }).slice(0, 5); // Show top 5
+        setUpcomingEvents(upcoming);
+      } catch (error) {
+        console.error('Error fetching upcoming events:', error);
+      }
+    };
+    fetchUpcomingEvents();
+  }, []);
   const navLinks = [
     { id: 'home', label: 'Home', icon: Sparkles },
     { id: 'discover', label: 'Events', icon: Compass },
@@ -159,22 +173,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <PlusCircle className="w-4 h-4 text-[#E04848]" />
                 <span>New Event</span>
               </button>
-            )}
 
-            {/* Notifications Dropdown */}
+            )}
+            {/* Notifications Bell - Upcoming Events */}
             <div className="relative" ref={notifRef}>
               <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
                 className="relative p-2.5 text-[#B8B0B0] hover:text-white bg-[#272424] hover:bg-[#332E2E] border border-[#3A3434] rounded-xl transition-all cursor-pointer shadow-xs"
-                aria-label="Notifications"
-                id="notifications-bell-btn"
+                aria-label="Upcoming Events"
               >
                 <Bell className="w-4 h-4" />
-                {unreadNotifs.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] font-bold text-white bg-[#DC2626] rounded-full flex items-center justify-center animate-bounce shadow-xs">
-                    {unreadNotifs.length}
-                  </span>
-                )}
               </button>
 
               <AnimatePresence>
@@ -184,41 +192,25 @@ export const Navbar: React.FC<NavbarProps> = ({
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 8 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#1F1C1C] border border-[#3A3434] rounded-2xl shadow-xl shadow-red-600/10 p-4 z-50"
+                    className="absolute right-0 mt-2 w-80 bg-[#1F1C1C] border border-[#3A3434] rounded-2xl shadow-xl shadow-red-600/10 p-4 z-50"
                   >
-                    <div className="flex items-center justify-between pb-3 border-b border-[#3B3535]">
-                      <div className="flex items-center gap-2">
-                        <Bell className="w-4 h-4 text-[#E04848]" />
-                        <h4 className="text-sm font-bold text-white">Campus Updates</h4>
-                      </div>
-                      <span className="text-xs font-medium text-[#E04848]">
-                        {unreadNotifs.length} new
-                      </span>
-                    </div>
-
-                    <div className="mt-3 space-y-2.5 max-h-72 overflow-y-auto pr-1">
-                      {safeNotifications.map((notif) => (
-                        <div
-                          key={notif.id}
-                          className={`p-3 rounded-xl border text-xs transition-colors ${
-                            notif.read
-                              ? 'bg-white/5 border-white/10 text-[#B3ABAB]'
-                              : 'bg-[#3A1A1C] border-[#7A2020] text-white'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between font-bold mb-1">
-                            <span className="text-[#E04848]">{notif.title}</span>
-                            <span className="text-[10px] text-[#B3ABAB]">{notif.time}</span>
+                    <h4 className="text-sm font-bold text-white mb-3">Upcoming Events</h4>
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {upcomingEvents.length > 0 ? (
+                        upcomingEvents.map((event) => (
+                          <div key={event.id} className="p-3 bg-[#3A1A1C] border border-[#7A2020] rounded-lg text-xs text-white hover:bg-[#4A2424] cursor-pointer transition" onClick={() => onNavigate('event-details', event.id)}>
+                            <p className="font-bold text-[#E04848]">{event.title}</p>
+                            <p className="text-[#B3ABAB]">{event.date} · {event.time}</p>
                           </div>
-                          <p className="line-clamp-2">{notif.message}</p>
-                        </div>
-                      ))}
+                        ))
+                      ) : (
+                        <p className="text-[#B3ABAB] text-center py-4">No upcoming events</p>
+                      )}
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-
 
             {/* Profile Avatar Dropdown */}
             <div className="relative" ref={profileRef}>

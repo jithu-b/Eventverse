@@ -57,8 +57,8 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
       <h1 className="font-display text-4xl sm:text-5xl font-bold text-white tracking-tight mb-6">
         Campus <span className="bg-gradient-to-br from-[#B91C1C] to-[#991B1B] bg-clip-text text-transparent">Calendar</span>
       </h1>
-      <div className="relative overflow-hidden rounded-[2rem] p-[1px] mb-6 bg-gradient-to-br from-[#141012]/60 via-red-200/40 to-red-300/40 shadow-xl shadow-red-200/40">
-        <div className="relative overflow-hidden rounded-[calc(2rem-1px)] bg-gradient-to-br from-red-50/90 via-red-50/80 to-red-50/90 backdrop-blur-xl p-6 sm:p-8 lg:p-10">
+      <div className="relative overflow-hidden rounded-[2rem] p-[1px] mb-6 bg-gradient-to-br from-red-500/30 via-red-500/20 to-red-500/30 shadow-xl shadow-red-900/20">
+        <div className="relative overflow-hidden rounded-[calc(2rem-1px)] bg-[#141012] p-6 sm:p-8 lg:p-10">
           {/* Soft glow orbs — pastel, low opacity */}
           <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-red-500/15 blur-3xl" />
           <div className="absolute -bottom-20 -left-10 w-48 h-48 rounded-full bg-red-500/15 blur-3xl" />
@@ -80,7 +80,7 @@ export function CalendarPage({ events, onSelectEvent }: CalendarPageProps) {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#DC2626]/70 animate-pulse" />
                 Now Viewing
               </p>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-[#B91C1C] to-[#991B1B] bg-clip-text text-transparent tracking-tight leading-[1.15] pb-1">
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-[#E04848] to-[#B91C1C] bg-clip-text text-transparent tracking-tight leading-[1.15] pb-1">
                 {monthName}
               </h2>
             </div>

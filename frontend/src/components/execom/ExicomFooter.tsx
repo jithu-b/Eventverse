@@ -14,8 +14,8 @@ export const ExicomFooter: React.FC<ExicomFooterProps> = ({ onScrollToTop }) => 
     <footer
       className={`relative mt-24 border-t overflow-hidden transition-colors duration-500 ${
         isBlush
-          ? 'border-red-500/30 bg-gradient-to-b from-transparent via-red-50/50 to-red-100/60'
-          : 'border-white/10 bg-gradient-to-b from-transparent via-slate-50/50 to-slate-100/60'
+          ? 'border-red-500/30 bg-transparent'
+          : 'border-white/10 bg-transparent'
       }`}
     >
       {/* Subtle bottom mesh ambient glow */}
@@ -24,8 +24,8 @@ export const ExicomFooter: React.FC<ExicomFooterProps> = ({ onScrollToTop }) => 
           className="animate-morph-1 absolute -bottom-[30%] left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full blur-[100px] transition-all duration-500"
           style={{
             background: isBlush
-              ? 'radial-gradient(circle, rgba(254,205,207,0.9) 0%, rgba(254,226,227,0.4) 60%, transparent 80%)'
-              : 'radial-gradient(circle, rgba(226,232,240,0.9) 0%, rgba(241,245,249,0.4) 60%, transparent 80%)',
+              ? 'radial-gradient(circle, rgba(220,38,38,0.18) 0%, rgba(220,38,38,0.06) 60%, transparent 80%)'
+              : 'radial-gradient(circle, rgba(220,38,38,0.18) 0%, rgba(220,38,38,0.06) 60%, transparent 80%)',
             opacity: isBlush ? 0.6 : 0.4,
           }}
         />

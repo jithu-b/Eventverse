@@ -25,14 +25,24 @@ export const WelcomeEventPopup: React.FC<Props> = ({ onRegister }) => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setVisible(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [visible]);
+
   if (!visible || !event) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4">
-      <div className="relative w-full max-w-sm bg-[#141012] rounded-3xl shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4" onClick={() => setVisible(false)}>
+      <div className="relative w-full max-w-sm bg-[#141012] rounded-3xl shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={() => setVisible(false)}
-          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center shadow"
+            aria-label="Close"
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow cursor-pointer"
         >
           <X className="w-4 h-4 text-white" />
         </button>

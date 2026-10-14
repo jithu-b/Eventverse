@@ -285,12 +285,12 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 <div
                   className={`mt-5 p-4 rounded-2xl border-l-4 shadow-xs ${
                     isBlush
-                      ? 'bg-gradient-to-r from-red-50 via-red-50 to-red-50 border-red-600 text-white950'
-                      : 'bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 border-slate-700 text-gray-200'
+                      ? 'bg-[#1F1C1C] border-red-600 text-white'
+                      : 'bg-[#1F1C1C] border-red-600 text-white'
                   }`}
                 >
                   <div className="flex items-start gap-2">
-                    <Quote className={`w-4 h-4 shrink-0 mt-0.5 ${isBlush ? 'text-white400' : 'text-gray-400'}`} />
+                    <Quote className={`w-4 h-4 shrink-0 mt-0.5 ${isBlush ? 'text-[#E04848]' : 'text-gray-400'}`} />
                     <p
                       className={`font-editorial text-sm sm:text-base italic leading-relaxed ${
                         isBlush ? 'text-white950' : 'text-gray-200'
